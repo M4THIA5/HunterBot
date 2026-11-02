@@ -20,7 +20,7 @@ HALF_FOV_KNOWN = pi / 3     # hors de ce cône, on n'a pas d'information visuell
 CANDIDATES = [i * pi / 16 for i in range(-16, 16)]
 
 
-def _ray_clearance(c: float, obstacles) -> float:
+def ray_clearance(c: float, obstacles) -> float:
     free = LOOKAHEAD
     for d, b, ext in obstacles:
         delta = wrap(c - b)
@@ -65,7 +65,7 @@ def choose_direction(obs: Observation, desired: float | None, mem: Memory, ignor
         desired = 0.0
     best_c, best_score, best_free = 0.0, -1e9, 0.0
     for c in CANDIDATES:
-        free = _ray_clearance(c, obstacles)
+        free = ray_clearance(c, obstacles)
         if abs(c) > HALF_FOV_KNOWN:
             free = min(free, LOOKAHEAD * 0.7)  # inconnu : un peu pénalisé
         score = 2.0 * min(free, LOOKAHEAD) - 1.6 * abs(wrap(c - desired)) - 0.3 * abs(c)
