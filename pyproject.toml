@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rl-arena-course"
+version = "0.2.1"
+description = "RL Arena student training kit"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+graphics = ["arcade==3.3.3"]
+
+[tool.setuptools.packages.find]
+include = ["rl_arena*"]

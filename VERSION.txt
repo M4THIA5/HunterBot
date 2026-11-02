@@ -1,0 +1,3 @@
+RL Arena - Kit étudiant V1
+Moteur d'entraînement : 0.2.x
+Contrat public : V1
