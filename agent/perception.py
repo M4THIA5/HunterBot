@@ -150,6 +150,12 @@ class Memory:
     # Catégories temporairement ignorées après des Pickup sans effet
     # (inventaire plein, trop lourd, objet inaccessible...).
     kind_cooldown: dict = field(default_factory=dict)
+    # Mémoire spatiale par odométrie (agent/spatial.py) ; désactivable pour A/B.
+    use_spatial: bool = True
+    # Ablation (results/spatial_ab.md) : portes et exploration vers l'inconnu dégradent
+    # (dérive de l'odométrie) ; seule la mémoire des ressources est conservée.
+    spatial_uses: frozenset = frozenset({"items"})
+    spatial: object = None
 
     def heading_to_bearing(self, heading: float, orientation: float) -> float:
         return wrap(heading - orientation)
@@ -157,6 +163,13 @@ class Memory:
     def update(self, obs: Observation) -> None:
         s = obs.self_state
         self.tick = obs.tick
+        if self.use_spatial:
+            if self.spatial is None:
+                from .spatial import SpatialMap
+
+                self.spatial = SpatialMap()
+            self.spatial.integrate(obs)
+            self.spatial.observe(obs)
         self.ticks_since_damage += 1
         self.damage_recent *= 0.85
         self.threat_age += 1

@@ -17,13 +17,17 @@ from .perception import Memory, is_armed, weapon_mode, equipped_item
 class OptionRunner:
     """Exécute une option choisie par une politique ; gère commutation et durée."""
 
-    def __init__(self, seed: int = 0) -> None:
+    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None) -> None:
         self._seed = seed
+        self.use_spatial = use_spatial
+        self.spatial_uses = spatial_uses
         self.reset()
 
     def reset(self) -> None:
         self.rng = Random(self._seed)
-        self.mem = Memory()
+        self.mem = Memory(use_spatial=self.use_spatial)
+        if self.spatial_uses is not None:
+            self.mem.spatial_uses = frozenset(self.spatial_uses)
         self.options = make_options(self.rng)
         self.current: Option | None = None
         self.history: dict[str, int] = {}
@@ -39,7 +43,11 @@ class OptionRunner:
     def step(self, obs: Observation) -> Action:
         assert self.current is not None
         self.history[self.current.name] = self.history.get(self.current.name, 0) + 1
-        return self.current.step(obs, self.mem)
+        action = self.current.step(obs, self.mem)
+        if self.mem.spatial is not None:
+            # Odométrie : le mouvement commandé sert à intégrer le tick suivant.
+            self.mem.spatial.last_move = None if action.rest else action.movement
+        return action
 
 
 def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> str:
@@ -86,8 +94,8 @@ def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> s
 class ScriptedAgent:
     """Agent complet : runner d'options + politique scriptée."""
 
-    def __init__(self, seed: int = 0) -> None:
-        self.runner = OptionRunner(seed)
+    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None) -> None:
+        self.runner = OptionRunner(seed, use_spatial, spatial_uses)
 
     def reset(self) -> None:
         self.runner.reset()

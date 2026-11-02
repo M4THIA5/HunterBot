@@ -30,6 +30,15 @@ def make_agent(name: str):
         from agent.scripted import ScriptedAgent
 
         return ScriptedAgent()
+    if name.startswith("scripted_map_"):
+        # Ablation : scripted_map_items, scripted_map_doors, scripted_map_novelty...
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(spatial_uses=frozenset(name.removeprefix("scripted_map_").split("+")))
+    if name == "scripted_nomap":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(use_spatial=False)
     if name == "qlearned":
         # Q-table : variable d'environnement RL_QTABLE, sinon agent/q_table.json.
         import os

@@ -204,16 +204,42 @@ class Explore(Option):
 
         desired = None
         ignore = None
-        if mem.door_cooldown == 0:
+        sp = mem.spatial
+        uses = mem.spatial_uses
+        if sp is not None and "items" in uses:
+            # 1. Ressource nécessaire mémorisée hors de vue.
+            needed = set()
+            kinds = {i.kind for i in s.inventory}
+            if s.hydration < 0.7 and ObjectKind.DRINK not in kinds:
+                needed.add(ObjectKind.DRINK)
+            if s.satiety < 0.7 and ObjectKind.FOOD not in kinds:
+                needed.add(ObjectKind.FOOD)
+            if s.health < 0.5 and ObjectKind.MEDICINE not in kinds:
+                needed.add(ObjectKind.MEDICINE)
+            lm = sp.nearest_item(needed) if needed else None
+            if lm is not None:
+                desired, _ = sp.bearing_to(lm.x, lm.y, s.orientation)
+        if desired is None and mem.door_cooldown == 0:
             doors = [d for d in obs.vision if d.kind is ObjectKind.DOOR and d.distance < 8.0]
             if doors:
                 d = min(doors, key=lambda x: x.distance)
                 desired, ignore = d.bearing, d.ref
                 if d.distance < 0.4 and door_is_closed(d) is not True:
                     mem.door_cooldown = 25  # on vient de franchir la porte
+        if desired is None and sp is not None and "doors" in uses and mem.door_cooldown == 0:
+            # 2. Porte mémorisée jamais franchie (accès probable à un bâtiment).
+            door = sp.unvisited_door()
+            if door is not None:
+                b, dist = sp.bearing_to(door.x, door.y, s.orientation)
+                if dist < 15.0:
+                    desired = b
         if desired is None:
             if mem.wander_heading is None or mem.wander_ticks <= 0:
-                mem.wander_heading = wrap(s.orientation + self.rng.uniform(-1.2, 1.2))
+                if sp is not None and "novelty" in uses:
+                    # 3. Direction la moins visitée.
+                    mem.wander_heading = wrap(sp.novelty_heading(s.orientation) + self.rng.uniform(-0.3, 0.3))
+                else:
+                    mem.wander_heading = wrap(s.orientation + self.rng.uniform(-1.2, 1.2))
                 mem.wander_ticks = self.rng.randint(10, 25)
             mem.wander_ticks -= 1
             desired = mem.heading_to_bearing(mem.wander_heading, s.orientation)
