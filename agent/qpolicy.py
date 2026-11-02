@@ -36,6 +36,7 @@ class QTable:
         self.n_options = n_options
         self.q: dict[str, list[float]] = {}
         self.n: dict[str, list[int]] = {}
+        self.meta: dict = {}
 
     def values(self, key: str) -> list[float] | None:
         return self.q.get(key)
@@ -66,6 +67,28 @@ class QTable:
             return None
         return max(tried, key=lambda i: q[i])
 
+    def greedy_with_prior(self, key: str, valid: list[int], prior: int | None, bonus: float,
+                          kappa: float) -> int | None:
+        """argmax Q + bonus sur l'option à priori (choix scripté).
+
+        Le bonus vaut `bonus * kappa / (kappa + N(s))`, ou `bonus` constant si
+        `kappa <= 0` : la politique apprise ne s'écarte du scripté que si Q y
+        voit un avantage supérieur au bonus. Option à priori jamais essayée
+        dans cet état : on la joue (repli).
+        """
+        q, n = self.q.get(key), self.n.get(key)
+        if prior is not None and prior not in valid:
+            prior = None
+        if q is None:
+            return None
+        if prior is not None and n[prior] == 0:
+            return prior
+        tried = [i for i in valid if n[i] > 0]
+        if not tried:
+            return None
+        w = bonus if kappa <= 0 else bonus * kappa / (kappa + sum(n))
+        return max(tried, key=lambda i: q[i] + (w if i == prior else 0.0))
+
     # Sérialisation ------------------------------------------------------
     def to_json(self, meta: dict | None = None) -> dict:
         return {"options": list(OPTION_NAMES), "fields": list(State._fields), "meta": meta or {},
@@ -79,6 +102,7 @@ class QTable:
     def from_json(cls, data: dict) -> "QTable":
         names = data.get("options", list(OPTION_NAMES))
         table = cls()
+        table.meta = dict(data.get("meta", {}))
         # Réordonner si l'ordre des options a changé entre deux versions.
         remap = [names.index(o) if o in names else None for o in OPTION_NAMES]
         for key, vals in data.get("q", {}).items():
@@ -108,8 +132,13 @@ class QAgent:
 
     def __init__(self, table: QTable | None = None, epsilon: float = 0.0, seed: int = 0,
                  gamma: float = 0.998, transition_sink: Callable[[Transition], None] | None = None,
-                 explore_scripted: float = 0.0) -> None:
+                 explore_scripted: float = 0.0, prior_bonus: float | None = None,
+                 prior_kappa: float | None = None) -> None:
         self.table = table if table is not None else QTable()
+        # Paramètres de l'à priori scripté : arguments, sinon méta-données de la table.
+        prior = self.table.meta.get("prior", {})
+        self.prior_bonus = prior_bonus if prior_bonus is not None else float(prior.get("bonus", 0.0))
+        self.prior_kappa = prior_kappa if prior_kappa is not None else float(prior.get("kappa", 0.0))
         self.epsilon = epsilon
         self.gamma = gamma
         self.sink = transition_sink
@@ -149,7 +178,11 @@ class QAgent:
             if self.explore_scripted and self.rng.random() < self.explore_scripted:
                 return OPTION_INDEX[scripted_choice(obs, self.runner.mem, self.runner.options)]
             return self.rng.choice(valid)
-        best = self.table.greedy(key, valid)
+        if self.prior_bonus > 0:
+            name = scripted_choice(obs, self.runner.mem, self.runner.options)
+            best = self.table.greedy_with_prior(key, valid, OPTION_INDEX[name], self.prior_bonus, self.prior_kappa)
+        else:
+            best = self.table.greedy(key, valid)
         if best is None:
             self.decisions["fallback"] += 1
             name = scripted_choice(obs, self.runner.mem, self.runner.options)

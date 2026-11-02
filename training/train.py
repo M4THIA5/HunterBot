@@ -66,14 +66,16 @@ class EpisodeOutcome:
 
 
 def play_episode(table: QTable, epsilon: float, stage: int, seed: int, explore_scripted: float,
-                 learn: bool = True, replay: float = 0.2, spec=None) -> EpisodeOutcome:
+                 learn: bool = True, replay: float = 0.2, spec=None, prior: tuple[float, float] = (0.0, 0.0)
+                 ) -> EpisodeOutcome:
     rng = Random(seed)
     if spec is None:
         spec = sample_curriculum_spec(stage, rng, seed, replay=replay)
     spec.config.reward = RewardConfig(**TRAIN_REWARD)
     transitions: list[Transition] = []
     agent = QAgent(table, epsilon=epsilon, seed=seed, gamma=GAMMA,
-                   transition_sink=transitions.append if learn else None, explore_scripted=explore_scripted)
+                   transition_sink=transitions.append if learn else None, explore_scripted=explore_scripted,
+                   prior_bonus=prior[0], prior_kappa=prior[1])
     env = build_env(spec)  # contrôle externe : on récupère les récompenses
     obs = env.reset(seed=seed)[STUDENT_ID]
     agent.reset()
@@ -97,10 +99,10 @@ def _collect(args) -> EpisodeOutcome:
 
 
 def _eval_one(args) -> tuple[int, bool, str | None]:
-    table, stage, seed = args
+    table, stage, seed, prior = args
     rng = Random(seed)
     spec = STAGES[stage].sample_spec(rng, seed)  # pas de rejeu : étape pure
-    out = play_episode(table, 0.0, stage, seed, 0.0, learn=False, spec=spec)
+    out = play_episode(table, 0.0, stage, seed, 0.0, learn=False, spec=spec, prior=prior)
     return out.survival, out.died, out.killer
 
 
@@ -137,9 +139,9 @@ def epsilon_at(episode: int, total: int, start: float, end: float, frac: float) 
     return max(end, start - (start - end) * episode / horizon)
 
 
-def evaluate_stage(pool, table: QTable, stage: int, episodes: int) -> dict:
+def evaluate_stage(pool, table: QTable, stage: int, episodes: int, prior=(0.0, 0.0)) -> dict:
     seeds = list(EVAL_SEEDS)[:episodes]
-    rows = list(pool.map(_eval_one, [(table, stage, s) for s in seeds], chunksize=1))
+    rows = list(pool.map(_eval_one, [(table, stage, s, prior) for s in seeds], chunksize=1))
     surv = [r[0] for r in rows]
     return {
         "mean": statistics.fmean(surv), "median": statistics.median(surv), "p10": percentile(surv, 0.1),
@@ -163,10 +165,17 @@ def main() -> None:
     p.add_argument("--explore-scripted", type=float, default=0.3,
                    help="part des actions exploratoires tirées de la politique scriptée")
     p.add_argument("--init", type=Path, help="Q-table de départ")
+    p.add_argument("--prior-bonus", type=float, default=0.0,
+                   help="bonus de Q ajouté à l'option scriptée au choix glouton (0 : désactivé)")
+    p.add_argument("--prior-kappa", type=float, default=0.0,
+                   help="décroissance du bonus : bonus*κ/(κ+N(s)) ; <= 0 : bonus constant")
+    p.add_argument("--skip-reference", action="store_true", help="ne pas réévaluer le scripté")
     p.add_argument("--workers", type=int, default=None)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--out", type=Path, default=Path("results/phase3"))
     args = p.parse_args()
+    prior = (args.prior_bonus, args.prior_kappa)
+    prior_meta = {"prior": {"bonus": args.prior_bonus, "kappa": args.prior_kappa}}
 
     args.out.mkdir(parents=True, exist_ok=True)
     learner = Learner(QTable.load(args.init) if args.init else None)
@@ -187,7 +196,7 @@ def main() -> None:
     t0 = time.time()
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         # Référence : Q-table vide => repli scripté à 100 %, mêmes seeds d'éval.
-        for stage in args.stages:
+        for stage in ([] if args.skip_reference else args.stages):
             m = evaluate_stage(pool, QTable(), stage, args.eval_episodes)
             ev.writerow([0, stage, f"{m['mean']:.1f}", f"{m['median']:.1f}", f"{m['p10']:.1f}",
                          f"{m['combat']:.3f}", f"{m['physio']:.3f}", 0, "scripted"])
@@ -204,7 +213,7 @@ def main() -> None:
                 eps = epsilon_at(episode, total, args.eps_start, args.eps_end, args.eps_frac)
                 n = min(args.round, budget - done_in_stage)
                 seeds = [rng.randrange(0, 1_000_000) for _ in range(n)]
-                jobs = [(learner.table, eps, stage, s, args.explore_scripted) for s in seeds]
+                jobs = [(learner.table, eps, stage, s, args.explore_scripted, True, 0.2, None, prior) for s in seeds]
                 outcomes = list(pool.map(_collect, jobs, chunksize=1))
                 for out in outcomes:
                     for tr in out.transitions:
@@ -227,9 +236,9 @@ def main() -> None:
                 last = done_in_stage >= budget
                 if since_eval >= args.eval_every or last:
                     since_eval = 0
-                    m = evaluate_stage(pool, learner.table, stage, args.eval_episodes)
+                    m = evaluate_stage(pool, learner.table, stage, args.eval_episodes, prior)
                     snap = args.out / f"q_ep{episode:05d}.json"
-                    learner.table.save(snap, {"episode": episode, "stage": stage, "eval": m})
+                    learner.table.save(snap, {"episode": episode, "stage": stage, "eval": m} | prior_meta)
                     ev.writerow([episode, stage, f"{m['mean']:.1f}", f"{m['median']:.1f}", f"{m['p10']:.1f}",
                                  f"{m['combat']:.3f}", f"{m['physio']:.3f}", len(learner.table.q), snap.name])
                     eval_f.flush()
@@ -243,7 +252,7 @@ def main() -> None:
                         print(f"  critère atteint ({m['mean']:.0f} >= {threshold:.0f}) : étape suivante")
                         break
 
-    learner.table.save(args.out / "q_final.json", {"episode": episode})
+    learner.table.save(args.out / "q_final.json", {"episode": episode} | prior_meta)
     if best["path"] is not None:
         (args.out / "q_best.json").write_text(best["path"].read_text(encoding="utf-8"), encoding="utf-8")
     (args.out / "run.json").write_text(json.dumps({k: str(v) for k, v in vars(args).items()} |

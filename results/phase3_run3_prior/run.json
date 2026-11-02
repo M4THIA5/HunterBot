@@ -1,0 +1,30 @@
+{
+ "stages": "[0, 1]",
+ "episodes": "[800, 1200]",
+ "advance": "[]",
+ "round": "32",
+ "eval_every": "200",
+ "eval_episodes": "48",
+ "eps_start": "1.0",
+ "eps_end": "0.05",
+ "eps_frac": "0.6",
+ "explore_scripted": "0.3",
+ "init": "None",
+ "prior_bonus": "1.5",
+ "prior_kappa": "0.0",
+ "skip_reference": "True",
+ "workers": "None",
+ "seed": "0",
+ "out": "results/phase3_run3_prior",
+ "best": "results/phase3_run3_prior/q_ep01248.json",
+ "options": [
+  "EXPLORE",
+  "FLEE",
+  "HIDE",
+  "REST",
+  "SEEK_ITEM",
+  "CONSUME",
+  "ARM",
+  "FIGHT"
+ ]
+}
