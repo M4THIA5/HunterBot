@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" font-family="sans-serif" font-size="12">
+<rect width="900" height="420" fill="white"/>
+<text x="70" y="22" font-size="15" font-weight="bold">Q-learning SMDP sur options : survie (ticks)</text>
+<line x1="70" x2="710" y1="370.0" y2="370.0" stroke="#eee"/>
+<text x="62" y="374.0" text-anchor="end">0</text>
+<line x1="70" x2="710" y1="304.0" y2="304.0" stroke="#eee"/>
+<text x="62" y="308.0" text-anchor="end">477</text>
+<line x1="70" x2="710" y1="238.0" y2="238.0" stroke="#eee"/>
+<text x="62" y="242.0" text-anchor="end">955</text>
+<line x1="70" x2="710" y1="172.0" y2="172.0" stroke="#eee"/>
+<text x="62" y="176.0" text-anchor="end">1432</text>
+<line x1="70" x2="710" y1="106.0" y2="106.0" stroke="#eee"/>
+<text x="62" y="110.0" text-anchor="end">1910</text>
+<line x1="70" x2="710" y1="40.0" y2="40.0" stroke="#eee"/>
+<text x="62" y="44.0" text-anchor="end">2387</text>
+<text x="70.0" y="388" text-anchor="middle">0</text>
+<text x="198.0" y="388" text-anchor="middle">102</text>
+<text x="326.0" y="388" text-anchor="middle">205</text>
+<text x="454.0" y="388" text-anchor="middle">307</text>
+<text x="582.0" y="388" text-anchor="middle">410</text>
+<text x="710.0" y="388" text-anchor="middle">512</text>
+<text x="390.0" y="408" text-anchor="middle">épisodes d'entraînement</text>
+<line x1="70" x2="710" y1="370.0" y2="370.0" stroke="#333"/>
+<line x1="70" x2="70" y1="40" y2="370.0" stroke="#333"/>
+<text x="74" y="52" fill="#666">étape 0</text>
+<polyline points="110.0,98.1 150.0,99.8 190.0,97.1 230.0,95.8 270.0,94.4 310.0,94.8 350.0,98.6 390.0,97.1 430.0,98.4 470.0,97.3 510.0,96.3 550.0,93.4 590.0,96.5 630.0,91.2 670.0,87.4 710.0,84.0" fill="none" stroke="#9aa5b1" stroke-width="1.5"/>
+<polyline points="350.0,150.8 630.0,147.9" fill="none" stroke="#1f6feb" stroke-width="2.2"/>
+<circle cx="350.0" cy="150.8" r="3" fill="#1f6feb"/>
+<circle cx="630.0" cy="147.9" r="3" fill="#1f6feb"/>
+<polyline points="350.0,204.9 630.0,201.1" fill="none" stroke="#d1242f" stroke-width="2.2"/>
+<circle cx="350.0" cy="204.9" r="3" fill="#d1242f"/>
+<circle cx="630.0" cy="201.1" r="3" fill="#d1242f"/>
+<polyline points="70.0,84.8 710.0,84.8" fill="none" stroke="#2da44e" stroke-width="1.6" stroke-dasharray="6,4"/>
+<polyline points="70.0,183.7 710.0,183.7" fill="none" stroke="#2da44e" stroke-width="1.6" stroke-dasharray="2,3"/>
+<line x1="722" x2="746" y1="70" y2="70" stroke="#9aa5b1" stroke-width="2.2"/>
+<text x="752" y="74" font-size="11">entraînement (moy. glissante, ε-greedy)</text>
+<line x1="722" x2="746" y1="92" y2="92" stroke="#1f6feb" stroke-width="2.2"/>
+<text x="752" y="96" font-size="11">éval gloutonne : moyenne</text>
+<line x1="722" x2="746" y1="114" y2="114" stroke="#d1242f" stroke-width="2.2"/>
+<text x="752" y="118" font-size="11">éval gloutonne : 10ᵉ centile</text>
+<line x1="722" x2="746" y1="136" y2="136" stroke="#2da44e" stroke-width="2.2" stroke-dasharray="6,4"/>
+<text x="752" y="140" font-size="11">scripté : moyenne</text>
+<line x1="722" x2="746" y1="158" y2="158" stroke="#2da44e" stroke-width="2.2" stroke-dasharray="2,3"/>
+<text x="752" y="162" font-size="11">scripté : 10ᵉ centile</text>
+</svg>

@@ -1,0 +1,5065 @@
+{
+ "summary": {
+  "qlearned/default": {
+   "episodes": 50,
+   "mean": 2019.76,
+   "median": 1783.0,
+   "p10": 1745.9,
+   "alive": 0.08,
+   "combat": 0.08,
+   "physio": 0.84,
+   "kills": 0.02,
+   "pickups": 3.66,
+   "damage": 1.0049276825451483,
+   "options": {
+    "REST": 0.5789895829207431,
+    "EXPLORE": 0.1914583910959718,
+    "HIDE": 0.17221848140373114,
+    "FLEE": 0.03919277537925298,
+    "SEEK_ITEM": 0.016625737711411258,
+    "CONSUME": 0.0006832494949895037,
+    "FIGHT": 0.0006139343288311483,
+    "ARM": 0.00021784766506911712
+   }
+  },
+  "qlearned/hostile": {
+   "episodes": 50,
+   "mean": 1018.58,
+   "median": 611.5,
+   "p10": 39.0,
+   "alive": 0.0,
+   "combat": 0.54,
+   "physio": 0.46,
+   "kills": 0.02,
+   "pickups": 2.66,
+   "damage": 1.0786204960552022,
+   "options": {
+    "REST": 0.5480374639203597,
+    "EXPLORE": 0.2216615287949891,
+    "HIDE": 0.16735062538043158,
+    "FLEE": 0.03336016807712698,
+    "SEEK_ITEM": 0.025388285652575154,
+    "FIGHT": 0.003004182292996132,
+    "CONSUME": 0.0006086905299534646,
+    "ARM": 0.000589055351567869
+   }
+  },
+  "qlearned/scarce": {
+   "episodes": 50,
+   "mean": 1404.34,
+   "median": 1311.0,
+   "p10": 1273.6,
+   "alive": 0.0,
+   "combat": 0.02,
+   "physio": 0.98,
+   "kills": 0.04,
+   "pickups": 2.22,
+   "damage": 1.0512055338463888,
+   "options": {
+    "REST": 0.5079681558596921,
+    "EXPLORE": 0.29585428030249084,
+    "HIDE": 0.13898343705940158,
+    "FLEE": 0.04420581910363587,
+    "SEEK_ITEM": 0.010367859635131094,
+    "FIGHT": 0.0016662631556460686,
+    "CONSUME": 0.0006551120099121295,
+    "ARM": 0.00029907287409032003
+   }
+  },
+  "qlearned/blind": {
+   "episodes": 50,
+   "mean": 1919.34,
+   "median": 1783.0,
+   "p10": 1700.3,
+   "alive": 0.04,
+   "combat": 0.0,
+   "physio": 0.96,
+   "kills": 0.08,
+   "pickups": 3.32,
+   "damage": 1.095755211416746,
+   "options": {
+    "REST": 0.5766878197713797,
+    "EXPLORE": 0.1987870830598018,
+    "HIDE": 0.19352485750310003,
+    "FLEE": 0.0175164379422093,
+    "SEEK_ITEM": 0.011941604926693552,
+    "FIGHT": 0.0006773161607635959,
+    "CONSUME": 0.0006252149176279346,
+    "ARM": 0.0002396657184240416
+   }
+  },
+  "qlearned/big_map": {
+   "episodes": 50,
+   "mean": 1897.4,
+   "median": 1750.0,
+   "p10": 1748.8,
+   "alive": 0.02,
+   "combat": 0.02,
+   "physio": 0.96,
+   "kills": 0.02,
+   "pickups": 2.66,
+   "damage": 1.0057194727087126,
+   "options": {
+    "REST": 0.5279540423737746,
+    "EXPLORE": 0.2713713502687889,
+    "HIDE": 0.16175819542531886,
+    "FLEE": 0.026172657320543902,
+    "SEEK_ITEM": 0.012142932433856857,
+    "CONSUME": 0.00029514071887846527,
+    "ARM": 0.000168651839359123,
+    "FIGHT": 0.00013702961947928744
+   }
+  }
+ },
+ "episodes": [
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000000,
+   "survival": 1746,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0383320525533548,
+   "options": {
+    "SEEK_ITEM": 24,
+    "REST": 943,
+    "EXPLORE": 260,
+    "HIDE": 138,
+    "FLEE": 380,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000001,
+   "survival": 1775,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.3207959165022105,
+   "options": {
+    "EXPLORE": 498,
+    "FLEE": 242,
+    "REST": 862,
+    "SEEK_ITEM": 35,
+    "HIDE": 137,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000002,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 4,
+    "REST": 966,
+    "HIDE": 498,
+    "EXPLORE": 304,
+    "CONSUME": 1,
+    "FLEE": 10
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000003,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 544,
+    "FLEE": 15,
+    "REST": 1163,
+    "SEEK_ITEM": 22,
+    "HIDE": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000004,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 187,
+    "FLEE": 100,
+    "SEEK_ITEM": 31,
+    "REST": 1174,
+    "ARM": 1,
+    "HIDE": 234,
+    "FIGHT": 23
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000005,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 318,
+    "SEEK_ITEM": 17,
+    "REST": 1407,
+    "HIDE": 7,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000006,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 169,
+    "REST": 1128,
+    "SEEK_ITEM": 92,
+    "ARM": 1,
+    "HIDE": 360
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000007,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 349,
+    "REST": 1012,
+    "FLEE": 9,
+    "SEEK_ITEM": 26,
+    "ARM": 1,
+    "HIDE": 353
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000008,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 44,
+    "REST": 1741,
+    "EXPLORE": 282,
+    "HIDE": 254,
+    "SEEK_ITEM": 11,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000009,
+   "survival": 2923,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.5575046194752487,
+   "options": {
+    "EXPLORE": 974,
+    "FLEE": 20,
+    "REST": 1347,
+    "HIDE": 541,
+    "SEEK_ITEM": 36,
+    "ARM": 1,
+    "CONSUME": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000010,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 424,
+    "SEEK_ITEM": 28,
+    "FLEE": 32,
+    "REST": 984,
+    "ARM": 1,
+    "HIDE": 281
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000011,
+   "survival": 3000,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.218999999999992,
+   "options": {
+    "EXPLORE": 365,
+    "FLEE": 15,
+    "SEEK_ITEM": 42,
+    "REST": 1397,
+    "HIDE": 1176,
+    "CONSUME": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000012,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 90,
+    "EXPLORE": 229,
+    "REST": 706,
+    "HIDE": 750,
+    "CONSUME": 1,
+    "FLEE": 7
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000013,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.0,
+   "options": {
+    "EXPLORE": 31,
+    "SEEK_ITEM": 28,
+    "REST": 2182,
+    "FLEE": 10,
+    "CONSUME": 4,
+    "HIDE": 745
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000014,
+   "survival": 2417,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 489,
+    "REST": 1577,
+    "FLEE": 87,
+    "SEEK_ITEM": 14,
+    "CONSUME": 2,
+    "HIDE": 248
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000015,
+   "survival": 2195,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.1223848515039525,
+   "options": {
+    "EXPLORE": 485,
+    "SEEK_ITEM": 36,
+    "REST": 995,
+    "FLEE": 28,
+    "HIDE": 648,
+    "CONSUME": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000016,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 657,
+    "SEEK_ITEM": 48,
+    "REST": 735,
+    "FLEE": 45,
+    "ARM": 1,
+    "HIDE": 264
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000017,
+   "survival": 1698,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0480997620505141,
+   "options": {
+    "EXPLORE": 256,
+    "REST": 940,
+    "SEEK_ITEM": 6,
+    "HIDE": 305,
+    "FLEE": 191
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000018,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 249,
+    "REST": 940,
+    "SEEK_ITEM": 6,
+    "HIDE": 577,
+    "FLEE": 10,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000019,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 8,
+   "damage": 0.0,
+   "options": {
+    "EXPLORE": 404,
+    "SEEK_ITEM": 72,
+    "FLEE": 20,
+    "REST": 2498,
+    "CONSUME": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000020,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.1089469114430999,
+   "options": {
+    "EXPLORE": 559,
+    "REST": 811,
+    "SEEK_ITEM": 15,
+    "FLEE": 105,
+    "HIDE": 260
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000021,
+   "survival": 1777,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.1699312770253782,
+   "options": {
+    "EXPLORE": 530,
+    "REST": 1064,
+    "FLEE": 170,
+    "HIDE": 5,
+    "SEEK_ITEM": 7,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000022,
+   "survival": 1716,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.1027862015963565,
+   "options": {
+    "EXPLORE": 360,
+    "REST": 732,
+    "FLEE": 568,
+    "HIDE": 26,
+    "SEEK_ITEM": 30
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000023,
+   "survival": 2116,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 11,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 102,
+    "REST": 1062,
+    "HIDE": 498,
+    "EXPLORE": 431,
+    "CONSUME": 4,
+    "FLEE": 18,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000024,
+   "survival": 2366,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.1730282102401792,
+   "options": {
+    "EXPLORE": 441,
+    "FLEE": 80,
+    "REST": 1107,
+    "SEEK_ITEM": 23,
+    "HIDE": 713,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000025,
+   "survival": 2366,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.0999999999999963,
+   "options": {
+    "FLEE": 21,
+    "SEEK_ITEM": 68,
+    "REST": 1128,
+    "CONSUME": 3,
+    "EXPLORE": 402,
+    "HIDE": 744
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000026,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0454443047517419,
+   "options": {
+    "EXPLORE": 273,
+    "SEEK_ITEM": 28,
+    "REST": 985,
+    "FLEE": 450,
+    "HIDE": 14
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000027,
+   "survival": 482,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.1094141913219184,
+   "options": {
+    "EXPLORE": 294,
+    "SEEK_ITEM": 26,
+    "REST": 53,
+    "FLEE": 108,
+    "HIDE": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000028,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 35,
+    "EXPLORE": 626,
+    "REST": 1316,
+    "HIDE": 316,
+    "SEEK_ITEM": 38,
+    "CONSUME": 1,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000029,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 838,
+    "REST": 580,
+    "SEEK_ITEM": 24,
+    "FLEE": 40,
+    "ARM": 1,
+    "HIDE": 264,
+    "FIGHT": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000030,
+   "survival": 1772,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.164133231933171,
+   "options": {
+    "SEEK_ITEM": 22,
+    "EXPLORE": 330,
+    "REST": 981,
+    "FLEE": 297,
+    "HIDE": 140,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000031,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 520,
+    "FLEE": 20,
+    "REST": 1017,
+    "SEEK_ITEM": 25,
+    "CONSUME": 1,
+    "HIDE": 750
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000032,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 333,
+    "SEEK_ITEM": 60,
+    "REST": 886,
+    "HIDE": 502,
+    "CONSUME": 1,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000033,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 7,
+   "damage": 0.6630000000000005,
+   "options": {
+    "EXPLORE": 665,
+    "SEEK_ITEM": 48,
+    "FLEE": 105,
+    "REST": 1551,
+    "HIDE": 626,
+    "CONSUME": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000034,
+   "survival": 2417,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 16,
+    "EXPLORE": 530,
+    "REST": 1825,
+    "CONSUME": 2,
+    "FLEE": 32,
+    "HIDE": 12
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000035,
+   "survival": 2365,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 5,
+   "damage": 1.2065123191405382,
+   "options": {
+    "FLEE": 111,
+    "EXPLORE": 258,
+    "REST": 944,
+    "SEEK_ITEM": 63,
+    "HIDE": 969,
+    "CONSUME": 2,
+    "ARM": 1,
+    "FIGHT": 17
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000036,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 14,
+    "REST": 1262,
+    "ARM": 1,
+    "EXPLORE": 346,
+    "HIDE": 118,
+    "FIGHT": 4,
+    "FLEE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000037,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 331,
+    "FLEE": 15,
+    "SEEK_ITEM": 15,
+    "ARM": 1,
+    "REST": 1138,
+    "HIDE": 250
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000038,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 17,
+    "REST": 1156,
+    "ARM": 1,
+    "EXPLORE": 216,
+    "HIDE": 360
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000039,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0483863387455132,
+   "options": {
+    "FLEE": 169,
+    "EXPLORE": 309,
+    "REST": 971,
+    "SEEK_ITEM": 44,
+    "HIDE": 257
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000040,
+   "survival": 2341,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.130061399999989,
+   "options": {
+    "EXPLORE": 428,
+    "REST": 1380,
+    "FLEE": 7,
+    "SEEK_ITEM": 25,
+    "ARM": 1,
+    "HIDE": 495,
+    "CONSUME": 2,
+    "FIGHT": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000041,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 8,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 228,
+    "SEEK_ITEM": 49,
+    "ARM": 1,
+    "REST": 1192,
+    "HIDE": 248,
+    "FIGHT": 7,
+    "FLEE": 25
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000042,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 9,
+   "damage": 0.0,
+   "options": {
+    "SEEK_ITEM": 72,
+    "EXPLORE": 437,
+    "HIDE": 6,
+    "REST": 2449,
+    "CONSUME": 5,
+    "FLEE": 30,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000043,
+   "survival": 1745,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.0123095999999985,
+   "options": {
+    "SEEK_ITEM": 25,
+    "EXPLORE": 295,
+    "ARM": 1,
+    "REST": 1108,
+    "FLEE": 55,
+    "FIGHT": 5,
+    "HIDE": 256
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000044,
+   "survival": 792,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.067512901455307,
+   "options": {
+    "SEEK_ITEM": 30,
+    "REST": 596,
+    "HIDE": 51,
+    "EXPLORE": 55,
+    "FLEE": 59,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000045,
+   "survival": 2366,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 407,
+    "FLEE": 20,
+    "REST": 1167,
+    "SEEK_ITEM": 23,
+    "CONSUME": 2,
+    "HIDE": 746,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000046,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 396,
+    "SEEK_ITEM": 31,
+    "REST": 1669,
+    "CONSUME": 1,
+    "ARM": 1,
+    "HIDE": 235
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000047,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 340,
+    "SEEK_ITEM": 11,
+    "REST": 680,
+    "HIDE": 741,
+    "FLEE": 10,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000048,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.1388000375189793,
+   "options": {
+    "FLEE": 110,
+    "EXPLORE": 333,
+    "HIDE": 12,
+    "REST": 1313,
+    "SEEK_ITEM": 14,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "default",
+   "seed": 10000049,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 350,
+    "REST": 1651,
+    "SEEK_ITEM": 46,
+    "FLEE": 28,
+    "CONSUME": 2,
+    "ARM": 1,
+    "HIDE": 255
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000000,
+   "survival": 39,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0010719197707743,
+   "options": {
+    "SEEK_ITEM": 2,
+    "HIDE": 3,
+    "FLEE": 10,
+    "EXPLORE": 24
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000001,
+   "survival": 30,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0010693409742122,
+   "options": {
+    "EXPLORE": 3,
+    "FLEE": 25,
+    "REST": 1,
+    "SEEK_ITEM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000002,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 31,
+    "REST": 925,
+    "HIDE": 648,
+    "EXPLORE": 176,
+    "ARM": 1,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000003,
+   "survival": 8,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter1",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0021444842406877,
+   "options": {
+    "EXPLORE": 6,
+    "REST": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000004,
+   "survival": 2136,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.0052770000000004,
+   "options": {
+    "FLEE": 9,
+    "SEEK_ITEM": 73,
+    "HIDE": 455,
+    "EXPLORE": 351,
+    "ARM": 1,
+    "REST": 1246,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000005,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 253,
+    "SEEK_ITEM": 15,
+    "REST": 1157,
+    "HIDE": 247,
+    "FLEE": 74,
+    "ARM": 1,
+    "FIGHT": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000006,
+   "survival": 2962,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 11,
+   "damage": 1.5378984999999419,
+   "options": {
+    "EXPLORE": 775,
+    "REST": 1612,
+    "SEEK_ITEM": 68,
+    "ARM": 1,
+    "HIDE": 501,
+    "CONSUME": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000007,
+   "survival": 585,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.000000000000006,
+   "options": {
+    "EXPLORE": 324,
+    "FLEE": 71,
+    "REST": 10,
+    "HIDE": 156,
+    "SEEK_ITEM": 24
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000008,
+   "survival": 25,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0010680515759316,
+   "options": {
+    "FLEE": 15,
+    "EXPLORE": 9,
+    "HIDE": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000009,
+   "survival": 88,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0010719197707738,
+   "options": {
+    "EXPLORE": 36,
+    "FLEE": 50,
+    "HIDE": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000010,
+   "survival": 170,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.026028342639148,
+   "options": {
+    "EXPLORE": 78,
+    "FLEE": 27,
+    "REST": 52,
+    "SEEK_ITEM": 13
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000011,
+   "survival": 147,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0175428206668604,
+   "options": {
+    "EXPLORE": 60,
+    "FLEE": 13,
+    "REST": 54,
+    "SEEK_ITEM": 16,
+    "HIDE": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000012,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 48,
+    "EXPLORE": 217,
+    "FLEE": 16,
+    "REST": 989,
+    "HIDE": 510,
+    "CONSUME": 1,
+    "ARM": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000013,
+   "survival": 209,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0357170905554545,
+   "options": {
+    "EXPLORE": 72,
+    "SEEK_ITEM": 21,
+    "REST": 98,
+    "FLEE": 16,
+    "ARM": 1,
+    "FIGHT": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000014,
+   "survival": 535,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0100106878427915,
+   "options": {
+    "FLEE": 33,
+    "REST": 457,
+    "EXPLORE": 38,
+    "SEEK_ITEM": 7
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000015,
+   "survival": 373,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.022305363211747,
+   "options": {
+    "EXPLORE": 250,
+    "SEEK_ITEM": 18,
+    "REST": 50,
+    "FLEE": 42,
+    "HIDE": 7,
+    "ARM": 1,
+    "FIGHT": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000016,
+   "survival": 40,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0166478750963246,
+   "options": {
+    "FLEE": 11,
+    "REST": 6,
+    "EXPLORE": 23
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000017,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 65,
+    "EXPLORE": 687,
+    "REST": 964,
+    "SEEK_ITEM": 21,
+    "HIDE": 12,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000018,
+   "survival": 212,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.011171440619088,
+   "options": {
+    "EXPLORE": 101,
+    "FLEE": 5,
+    "REST": 66,
+    "SEEK_ITEM": 9,
+    "ARM": 1,
+    "FIGHT": 30
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000019,
+   "survival": 39,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0178268786287745,
+   "options": {
+    "FLEE": 16,
+    "REST": 6,
+    "EXPLORE": 15,
+    "HIDE": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000020,
+   "survival": 31,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0107143550512259,
+   "options": {
+    "EXPLORE": 12,
+    "FLEE": 9,
+    "SEEK_ITEM": 7,
+    "HIDE": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000021,
+   "survival": 2847,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 7,
+   "damage": 1.3768554819277,
+   "options": {
+    "EXPLORE": 1204,
+    "FLEE": 51,
+    "REST": 1366,
+    "HIDE": 156,
+    "SEEK_ITEM": 65,
+    "CONSUME": 4,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000022,
+   "survival": 2889,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 2.1973028878270173,
+   "options": {
+    "EXPLORE": 576,
+    "REST": 2035,
+    "HIDE": 172,
+    "FLEE": 36,
+    "SEEK_ITEM": 66,
+    "CONSUME": 3,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000023,
+   "survival": 1443,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0,
+   "options": {
+    "SEEK_ITEM": 4,
+    "REST": 915,
+    "HIDE": 498,
+    "EXPLORE": 13,
+    "FLEE": 13
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000024,
+   "survival": 1524,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0,
+   "options": {
+    "EXPLORE": 204,
+    "FLEE": 61,
+    "SEEK_ITEM": 14,
+    "HIDE": 504,
+    "REST": 741
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000025,
+   "survival": 207,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0652185753823307,
+   "options": {
+    "FLEE": 29,
+    "SEEK_ITEM": 41,
+    "REST": 51,
+    "EXPLORE": 85,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000026,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0199475736327026,
+   "options": {
+    "EXPLORE": 307,
+    "SEEK_ITEM": 31,
+    "REST": 1006,
+    "FLEE": 40,
+    "ARM": 2,
+    "FIGHT": 12,
+    "HIDE": 352
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000027,
+   "survival": 1550,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0,
+   "options": {
+    "EXPLORE": 383,
+    "SEEK_ITEM": 74,
+    "FLEE": 33,
+    "REST": 1031,
+    "HIDE": 7,
+    "ARM": 2,
+    "FIGHT": 20
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000028,
+   "survival": 44,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.017637465867875,
+   "options": {
+    "FLEE": 10,
+    "EXPLORE": 19,
+    "REST": 4,
+    "SEEK_ITEM": 11
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000029,
+   "survival": 1550,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.2409801947173325,
+   "options": {
+    "EXPLORE": 481,
+    "FLEE": 61,
+    "REST": 604,
+    "SEEK_ITEM": 32,
+    "ARM": 2,
+    "FIGHT": 18,
+    "HIDE": 352
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000030,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 83,
+    "EXPLORE": 92,
+    "SEEK_ITEM": 102,
+    "REST": 966,
+    "HIDE": 505,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000031,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 374,
+    "FLEE": 27,
+    "REST": 1638,
+    "SEEK_ITEM": 40,
+    "CONSUME": 2,
+    "ARM": 1,
+    "HIDE": 251
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000032,
+   "survival": 269,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0019626790831002,
+   "options": {
+    "EXPLORE": 134,
+    "FLEE": 79,
+    "REST": 41,
+    "SEEK_ITEM": 10,
+    "HIDE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000033,
+   "survival": 698,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.1085865344234644,
+   "options": {
+    "EXPLORE": 18,
+    "SEEK_ITEM": 10,
+    "REST": 650,
+    "HIDE": 2,
+    "FLEE": 17,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000034,
+   "survival": 77,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0090451111174041,
+   "options": {
+    "SEEK_ITEM": 6,
+    "REST": 12,
+    "EXPLORE": 44,
+    "FLEE": 10,
+    "HIDE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000035,
+   "survival": 329,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.001041618911171,
+   "options": {
+    "FLEE": 97,
+    "EXPLORE": 73,
+    "REST": 45,
+    "SEEK_ITEM": 56,
+    "HIDE": 58
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000036,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 12,
+    "REST": 1197,
+    "ARM": 1,
+    "HIDE": 250,
+    "EXPLORE": 268,
+    "FLEE": 16,
+    "FIGHT": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000037,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 211,
+    "FLEE": 44,
+    "SEEK_ITEM": 34,
+    "REST": 979,
+    "HIDE": 481,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000038,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 18,
+    "REST": 1105,
+    "ARM": 1,
+    "EXPLORE": 264,
+    "HIDE": 362
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000039,
+   "survival": 2041,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.4598200837065518,
+   "options": {
+    "FLEE": 199,
+    "REST": 113,
+    "EXPLORE": 966,
+    "SEEK_ITEM": 53,
+    "HIDE": 707,
+    "CONSUME": 2,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000040,
+   "survival": 63,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0093401929669894,
+   "options": {
+    "EXPLORE": 15,
+    "FLEE": 18,
+    "REST": 30
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000041,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 287,
+    "SEEK_ITEM": 15,
+    "ARM": 1,
+    "HIDE": 293,
+    "REST": 1127,
+    "FLEE": 23,
+    "FIGHT": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000042,
+   "survival": 3000,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 40,
+    "REST": 2261,
+    "EXPLORE": 375,
+    "FLEE": 7,
+    "CONSUME": 3,
+    "ARM": 1,
+    "HIDE": 313
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000043,
+   "survival": 636,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter2",
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0116328786993327,
+   "options": {
+    "SEEK_ITEM": 19,
+    "EXPLORE": 52,
+    "ARM": 1,
+    "REST": 543,
+    "FLEE": 15,
+    "FIGHT": 4,
+    "HIDE": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000044,
+   "survival": 293,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0407865899315105,
+   "options": {
+    "FLEE": 36,
+    "REST": 174,
+    "EXPLORE": 47,
+    "SEEK_ITEM": 36
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000045,
+   "survival": 124,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0107625112632455,
+   "options": {
+    "EXPLORE": 45,
+    "FLEE": 54,
+    "REST": 25
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000046,
+   "survival": 495,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "hunter3",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0326182432242037,
+   "options": {
+    "EXPLORE": 218,
+    "FLEE": 72,
+    "SEEK_ITEM": 32,
+    "REST": 101,
+    "HIDE": 72
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000047,
+   "survival": 965,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "copy1",
+   "kills": 0,
+   "pickups": 7,
+   "damage": 1.3088514131593716,
+   "options": {
+    "EXPLORE": 362,
+    "SEEK_ITEM": 44,
+    "REST": 486,
+    "HIDE": 2,
+    "FLEE": 16,
+    "CONSUME": 4,
+    "ARM": 1,
+    "FIGHT": 50
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000048,
+   "survival": 587,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0010686962750777,
+   "options": {
+    "FLEE": 41,
+    "REST": 16,
+    "EXPLORE": 397,
+    "SEEK_ITEM": 16,
+    "HIDE": 116,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "hostile",
+   "seed": 10000049,
+   "survival": 1770,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "copy0",
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0999999999999976,
+   "options": {
+    "EXPLORE": 265,
+    "REST": 954,
+    "SEEK_ITEM": 38,
+    "HIDE": 507,
+    "CONSUME": 1,
+    "ARM": 1,
+    "FLEE": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000000,
+   "survival": 1266,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0514646678658384,
+   "options": {
+    "EXPLORE": 328,
+    "REST": 602,
+    "FLEE": 291,
+    "HIDE": 28,
+    "SEEK_ITEM": 17
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000001,
+   "survival": 1270,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0978573776144271,
+   "options": {
+    "EXPLORE": 464,
+    "REST": 516,
+    "FLEE": 252,
+    "HIDE": 38
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000002,
+   "survival": 1755,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 19,
+    "EXPLORE": 449,
+    "REST": 1016,
+    "CONSUME": 3,
+    "FLEE": 43,
+    "HIDE": 224,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000003,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 581,
+    "REST": 931,
+    "SEEK_ITEM": 17,
+    "FLEE": 27,
+    "CONSUME": 2,
+    "HIDE": 164
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000004,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 304,
+    "SEEK_ITEM": 6,
+    "REST": 1242,
+    "CONSUME": 2,
+    "FLEE": 156,
+    "HIDE": 12
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000005,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 30,
+    "EXPLORE": 601,
+    "SEEK_ITEM": 23,
+    "REST": 1060,
+    "CONSUME": 2,
+    "HIDE": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000006,
+   "survival": 1277,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 13,
+    "ARM": 1,
+    "EXPLORE": 190,
+    "REST": 853,
+    "HIDE": 163,
+    "FLEE": 48,
+    "FIGHT": 9
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000007,
+   "survival": 1270,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0000000000000002,
+   "options": {
+    "EXPLORE": 173,
+    "REST": 779,
+    "SEEK_ITEM": 12,
+    "ARM": 1,
+    "HIDE": 175,
+    "FLEE": 130
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000008,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 317,
+    "SEEK_ITEM": 5,
+    "REST": 647,
+    "HIDE": 336,
+    "CONSUME": 1,
+    "FLEE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000009,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 326,
+    "SEEK_ITEM": 40,
+    "REST": 731,
+    "ARM": 1,
+    "HIDE": 162,
+    "FLEE": 15,
+    "FIGHT": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000010,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 593,
+    "FLEE": 54,
+    "SEEK_ITEM": 35,
+    "REST": 416,
+    "HIDE": 171,
+    "ARM": 1,
+    "FIGHT": 8
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000011,
+   "survival": 201,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.085003867112617,
+   "options": {
+    "EXPLORE": 121,
+    "FLEE": 52,
+    "REST": 18,
+    "HIDE": 7,
+    "SEEK_ITEM": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000012,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.113137787143688,
+   "options": {
+    "EXPLORE": 485,
+    "FLEE": 24,
+    "HIDE": 387,
+    "REST": 397,
+    "SEEK_ITEM": 16,
+    "CONSUME": 1,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000013,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0137385585501701,
+   "options": {
+    "EXPLORE": 341,
+    "REST": 1198,
+    "FLEE": 5,
+    "SEEK_ITEM": 10,
+    "CONSUME": 2,
+    "HIDE": 166
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000014,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.1046625943755228,
+   "options": {
+    "EXPLORE": 392,
+    "REST": 549,
+    "FLEE": 25,
+    "SEEK_ITEM": 6,
+    "HIDE": 338,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000015,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 5,
+    "EXPLORE": 433,
+    "REST": 1107,
+    "CONSUME": 2,
+    "HIDE": 170,
+    "FLEE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000016,
+   "survival": 1287,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.1178111015525218,
+   "options": {
+    "EXPLORE": 365,
+    "FLEE": 207,
+    "REST": 552,
+    "SEEK_ITEM": 6,
+    "HIDE": 156,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000017,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 4,
+    "REST": 665,
+    "HIDE": 331,
+    "EXPLORE": 295,
+    "FLEE": 15,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000018,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 414,
+    "REST": 738,
+    "FLEE": 20,
+    "SEEK_ITEM": 11,
+    "ARM": 1,
+    "HIDE": 94
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000019,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 11,
+    "ARM": 1,
+    "EXPLORE": 140,
+    "REST": 864,
+    "HIDE": 171,
+    "FIGHT": 4,
+    "FLEE": 87
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000020,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 16,
+    "REST": 834,
+    "ARM": 1,
+    "EXPLORE": 273,
+    "HIDE": 167,
+    "FIGHT": 4,
+    "FLEE": 15,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000021,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.166443997679806,
+   "options": {
+    "EXPLORE": 482,
+    "REST": 862,
+    "HIDE": 203,
+    "FLEE": 140,
+    "SEEK_ITEM": 32,
+    "CONSUME": 2,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000022,
+   "survival": 1266,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0589830102346038,
+   "options": {
+    "EXPLORE": 366,
+    "FLEE": 158,
+    "REST": 729,
+    "HIDE": 9,
+    "SEEK_ITEM": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000023,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 612,
+    "FLEE": 10,
+    "SEEK_ITEM": 28,
+    "REST": 812,
+    "CONSUME": 2,
+    "HIDE": 257,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000024,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 305,
+    "REST": 762,
+    "FLEE": 30,
+    "SEEK_ITEM": 12,
+    "ARM": 1,
+    "HIDE": 165,
+    "FIGHT": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000025,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0555277987520622,
+   "options": {
+    "EXPLORE": 325,
+    "REST": 708,
+    "FLEE": 73,
+    "HIDE": 172
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000026,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 483,
+    "REST": 546,
+    "SEEK_ITEM": 16,
+    "ARM": 1,
+    "HIDE": 232
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000027,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 346,
+    "FLEE": 10,
+    "REST": 612,
+    "SEEK_ITEM": 6,
+    "HIDE": 336,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000028,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 543,
+    "SEEK_ITEM": 12,
+    "REST": 1157,
+    "CONSUME": 2,
+    "HIDE": 7,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000029,
+   "survival": 1603,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 2,
+   "damage": 1.044452876805828,
+   "options": {
+    "EXPLORE": 601,
+    "FLEE": 23,
+    "REST": 554,
+    "SEEK_ITEM": 27,
+    "ARM": 1,
+    "FIGHT": 21,
+    "HIDE": 375,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000030,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 558,
+    "REST": 501,
+    "FLEE": 46,
+    "SEEK_ITEM": 7,
+    "HIDE": 166
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000031,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 356,
+    "SEEK_ITEM": 7,
+    "REST": 611,
+    "HIDE": 336,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000032,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0147649052253682,
+   "options": {
+    "FLEE": 46,
+    "REST": 617,
+    "EXPLORE": 441,
+    "SEEK_ITEM": 11,
+    "HIDE": 163
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000033,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 240,
+    "REST": 666,
+    "FLEE": 60,
+    "SEEK_ITEM": 7,
+    "HIDE": 337,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000034,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 113,
+    "SEEK_ITEM": 17,
+    "REST": 702,
+    "HIDE": 331,
+    "FLEE": 147,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000035,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 326,
+    "REST": 726,
+    "SEEK_ITEM": 13,
+    "ARM": 1,
+    "HIDE": 167,
+    "FIGHT": 10,
+    "FLEE": 35
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000036,
+   "survival": 1755,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 436,
+    "SEEK_ITEM": 19,
+    "REST": 967,
+    "CONSUME": 3,
+    "HIDE": 330
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000037,
+   "survival": 1755,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 662,
+    "FLEE": 15,
+    "REST": 617,
+    "SEEK_ITEM": 31,
+    "CONSUME": 3,
+    "HIDE": 427
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000038,
+   "survival": 1672,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.1298891613277997,
+   "options": {
+    "EXPLORE": 481,
+    "REST": 797,
+    "FLEE": 191,
+    "HIDE": 190,
+    "SEEK_ITEM": 12,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000039,
+   "survival": 1274,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0427897939156976,
+   "options": {
+    "EXPLORE": 369,
+    "SEEK_ITEM": 4,
+    "FLEE": 176,
+    "HIDE": 29,
+    "REST": 696
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000040,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 335,
+    "REST": 545,
+    "SEEK_ITEM": 24,
+    "HIDE": 260,
+    "ARM": 1,
+    "FLEE": 111,
+    "FIGHT": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000041,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 765,
+    "REST": 250,
+    "FLEE": 36,
+    "SEEK_ITEM": 13,
+    "ARM": 1,
+    "HIDE": 213
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000042,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 471,
+    "SEEK_ITEM": 42,
+    "REST": 1040,
+    "CONSUME": 2,
+    "FLEE": 10,
+    "HIDE": 157
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000043,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 77,
+    "REST": 645,
+    "EXPLORE": 381,
+    "SEEK_ITEM": 10,
+    "HIDE": 165
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000044,
+   "survival": 1722,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 473,
+    "SEEK_ITEM": 40,
+    "REST": 1018,
+    "CONSUME": 2,
+    "FLEE": 10,
+    "ARM": 1,
+    "HIDE": 178
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000045,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 940,
+    "REST": 318,
+    "FLEE": 20
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000046,
+   "survival": 1755,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 463,
+    "SEEK_ITEM": 17,
+    "REST": 926,
+    "CONSUME": 3,
+    "FLEE": 10,
+    "HIDE": 336
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000047,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 2,
+   "damage": 1.15721806880205,
+   "options": {
+    "EXPLORE": 537,
+    "FLEE": 64,
+    "REST": 470,
+    "SEEK_ITEM": 14,
+    "ARM": 1,
+    "FIGHT": 53,
+    "HIDE": 171,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000048,
+   "survival": 1278,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.106531125361485,
+   "options": {
+    "EXPLORE": 444,
+    "FLEE": 100,
+    "REST": 466,
+    "HIDE": 245,
+    "SEEK_ITEM": 22,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "scarce",
+   "seed": 10000049,
+   "survival": 1311,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 335,
+    "SEEK_ITEM": 6,
+    "REST": 633,
+    "HIDE": 336,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000000,
+   "survival": 2306,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 2.118973630945481,
+   "options": {
+    "SEEK_ITEM": 40,
+    "EXPLORE": 370,
+    "FLEE": 83,
+    "HIDE": 25,
+    "REST": 1786,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000001,
+   "survival": 1667,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.7523964326647086,
+   "options": {
+    "EXPLORE": 452,
+    "FLEE": 169,
+    "REST": 999,
+    "SEEK_ITEM": 35,
+    "HIDE": 11,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000002,
+   "survival": 2416,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0010526999999998,
+   "options": {
+    "SEEK_ITEM": 18,
+    "EXPLORE": 431,
+    "REST": 1685,
+    "CONSUME": 2,
+    "HIDE": 256,
+    "FLEE": 24
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000003,
+   "survival": 2837,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 2.358769412607401,
+   "options": {
+    "EXPLORE": 582,
+    "FLEE": 59,
+    "REST": 2150,
+    "HIDE": 7,
+    "SEEK_ITEM": 34,
+    "CONSUME": 4,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000004,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 240,
+    "SEEK_ITEM": 7,
+    "REST": 960,
+    "HIDE": 570,
+    "CONSUME": 1,
+    "FLEE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000005,
+   "survival": 1639,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.7476902099392326,
+   "options": {
+    "FLEE": 36,
+    "REST": 1252,
+    "EXPLORE": 347,
+    "SEEK_ITEM": 4
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000006,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 2,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 227,
+    "SEEK_ITEM": 23,
+    "REST": 1240,
+    "ARM": 1,
+    "HIDE": 257,
+    "FIGHT": 23,
+    "FLEE": 10,
+    "CONSUME": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000007,
+   "survival": 2366,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 628,
+    "REST": 915,
+    "FLEE": 36,
+    "SEEK_ITEM": 33,
+    "CONSUME": 3,
+    "HIDE": 750,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000008,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 277,
+    "SEEK_ITEM": 23,
+    "REST": 1168,
+    "ARM": 2,
+    "HIDE": 265,
+    "FLEE": 15
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000009,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 289,
+    "SEEK_ITEM": 15,
+    "REST": 963,
+    "HIDE": 501,
+    "CONSUME": 1,
+    "FLEE": 14
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000010,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 26,
+    "REST": 1181,
+    "ARM": 1,
+    "EXPLORE": 296,
+    "HIDE": 246
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000011,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 5,
+   "damage": 1.0120108343071499,
+   "options": {
+    "EXPLORE": 336,
+    "REST": 1002,
+    "FLEE": 20,
+    "SEEK_ITEM": 24,
+    "ARM": 1,
+    "HIDE": 356,
+    "FIGHT": 10,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000012,
+   "survival": 1527,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.099999999999998,
+   "options": {
+    "SEEK_ITEM": 7,
+    "EXPLORE": 50,
+    "REST": 902,
+    "HIDE": 498,
+    "FLEE": 67,
+    "CONSUME": 3
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000013,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 364,
+    "REST": 1126,
+    "SEEK_ITEM": 36,
+    "FLEE": 10,
+    "HIDE": 245,
+    "CONSUME": 1,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000014,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 228,
+    "SEEK_ITEM": 1,
+    "HIDE": 909,
+    "REST": 602,
+    "FLEE": 10
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000015,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 567,
+    "SEEK_ITEM": 25,
+    "FLEE": 5,
+    "REST": 1490,
+    "CONSUME": 1,
+    "HIDE": 245
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000016,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0403123160987764,
+   "options": {
+    "EXPLORE": 326,
+    "SEEK_ITEM": 22,
+    "HIDE": 263,
+    "FLEE": 55,
+    "REST": 1083,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000017,
+   "survival": 1743,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0553949724159002,
+   "options": {
+    "EXPLORE": 344,
+    "SEEK_ITEM": 11,
+    "REST": 1033,
+    "FLEE": 181,
+    "HIDE": 168,
+    "ARM": 1,
+    "FIGHT": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000018,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 3,
+   "damage": 1.0265239965415498,
+   "options": {
+    "SEEK_ITEM": 14,
+    "EXPLORE": 451,
+    "FLEE": 42,
+    "REST": 976,
+    "HIDE": 256,
+    "ARM": 2,
+    "FIGHT": 9
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000019,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 344,
+    "REST": 673,
+    "FLEE": 10,
+    "SEEK_ITEM": 6,
+    "HIDE": 749,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000020,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 680,
+    "REST": 583,
+    "FLEE": 15,
+    "SEEK_ITEM": 6,
+    "HIDE": 498,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000021,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 287,
+    "REST": 933,
+    "SEEK_ITEM": 21,
+    "FLEE": 40,
+    "HIDE": 469
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000022,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 420,
+    "SEEK_ITEM": 45,
+    "REST": 767,
+    "FLEE": 52,
+    "HIDE": 498,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000023,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 266,
+    "FLEE": 10,
+    "SEEK_ITEM": 13,
+    "ARM": 1,
+    "REST": 1181,
+    "HIDE": 266,
+    "FIGHT": 13
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000024,
+   "survival": 2417,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 7,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 389,
+    "REST": 1747,
+    "SEEK_ITEM": 26,
+    "CONSUME": 3,
+    "ARM": 1,
+    "HIDE": 251
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000025,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 2,
+    "REST": 958,
+    "HIDE": 504,
+    "EXPLORE": 264,
+    "FLEE": 22
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000026,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0033163405686754,
+   "options": {
+    "EXPLORE": 738,
+    "SEEK_ITEM": 25,
+    "FLEE": 39,
+    "REST": 700,
+    "HIDE": 248
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000027,
+   "survival": 1704,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999928,
+   "options": {
+    "EXPLORE": 207,
+    "SEEK_ITEM": 6,
+    "REST": 689,
+    "HIDE": 754,
+    "CONSUME": 1,
+    "FLEE": 47
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000028,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "FLEE": 32,
+    "REST": 1074,
+    "EXPLORE": 351,
+    "SEEK_ITEM": 18,
+    "ARM": 1,
+    "HIDE": 274
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000029,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 594,
+    "REST": 741,
+    "SEEK_ITEM": 25,
+    "FLEE": 25,
+    "HIDE": 364,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000030,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 302,
+    "REST": 1171,
+    "SEEK_ITEM": 20,
+    "HIDE": 247,
+    "FLEE": 10
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000031,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 593,
+    "REST": 1445,
+    "SEEK_ITEM": 24,
+    "FLEE": 20,
+    "CONSUME": 1,
+    "HIDE": 250
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000032,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 330,
+    "SEEK_ITEM": 79,
+    "REST": 864,
+    "HIDE": 498,
+    "FLEE": 11,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000033,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0869999999999969,
+   "options": {
+    "EXPLORE": 261,
+    "SEEK_ITEM": 46,
+    "REST": 966,
+    "FLEE": 6,
+    "HIDE": 1051,
+    "CONSUME": 1,
+    "ARM": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000034,
+   "survival": 107,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0010287249283671,
+   "options": {
+    "SEEK_ITEM": 6,
+    "REST": 6,
+    "FLEE": 27,
+    "EXPLORE": 68
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000035,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 325,
+    "SEEK_ITEM": 7,
+    "REST": 946,
+    "HIDE": 504,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000036,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 11,
+    "ARM": 1,
+    "EXPLORE": 265,
+    "REST": 1134,
+    "HIDE": 339
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000037,
+   "survival": 2159,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0160110000000016,
+   "options": {
+    "EXPLORE": 335,
+    "REST": 1106,
+    "FLEE": 35,
+    "SEEK_ITEM": 37,
+    "HIDE": 643,
+    "CONSUME": 2,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000038,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 7,
+   "damage": 0.10500000000000005,
+   "options": {
+    "SEEK_ITEM": 27,
+    "EXPLORE": 174,
+    "REST": 2545,
+    "CONSUME": 6,
+    "HIDE": 248
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000039,
+   "survival": 2417,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 449,
+    "REST": 1946,
+    "FLEE": 4,
+    "SEEK_ITEM": 10,
+    "CONSUME": 2,
+    "HIDE": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000040,
+   "survival": 2200,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.5711500587703477,
+   "options": {
+    "SEEK_ITEM": 54,
+    "EXPLORE": 1656,
+    "REST": 220,
+    "FLEE": 157,
+    "CONSUME": 3,
+    "HIDE": 110
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000041,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 360,
+    "FLEE": 10,
+    "REST": 908,
+    "SEEK_ITEM": 6,
+    "HIDE": 498,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000042,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 7,
+   "damage": 0.0,
+   "options": {
+    "EXPLORE": 432,
+    "REST": 2119,
+    "FLEE": 15,
+    "SEEK_ITEM": 56,
+    "CONSUME": 4,
+    "HIDE": 374
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000043,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 355,
+    "REST": 832,
+    "FLEE": 45,
+    "SEEK_ITEM": 14,
+    "HIDE": 504
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000044,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 187,
+    "SEEK_ITEM": 12,
+    "ARM": 1,
+    "REST": 1199,
+    "FLEE": 91,
+    "HIDE": 255,
+    "FIGHT": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000045,
+   "survival": 2975,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.113882999999979,
+   "options": {
+    "EXPLORE": 452,
+    "SEEK_ITEM": 25,
+    "REST": 1485,
+    "CONSUME": 3,
+    "HIDE": 1010
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000046,
+   "survival": 266,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0239743765798885,
+   "options": {
+    "SEEK_ITEM": 10,
+    "EXPLORE": 46,
+    "REST": 147,
+    "FLEE": 62,
+    "HIDE": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000047,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 313,
+    "FLEE": 30,
+    "REST": 835,
+    "SEEK_ITEM": 12,
+    "HIDE": 559,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000048,
+   "survival": 2460,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 11,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 359,
+    "FLEE": 15,
+    "SEEK_ITEM": 72,
+    "REST": 1238,
+    "CONSUME": 3,
+    "HIDE": 772,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "blind",
+   "seed": 10000049,
+   "survival": 2182,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.3532725644698893,
+   "options": {
+    "EXPLORE": 470,
+    "SEEK_ITEM": 27,
+    "REST": 1672,
+    "FLEE": 10,
+    "CONSUME": 2,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000000,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 747,
+    "REST": 693,
+    "FLEE": 54,
+    "SEEK_ITEM": 11,
+    "HIDE": 245
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000001,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 37,
+    "EXPLORE": 271,
+    "REST": 920,
+    "FLEE": 24,
+    "HIDE": 498
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000002,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 746,
+    "SEEK_ITEM": 11,
+    "FLEE": 50,
+    "REST": 696,
+    "HIDE": 247
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000003,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 304,
+    "SEEK_ITEM": 7,
+    "REST": 882,
+    "HIDE": 584,
+    "CONSUME": 1,
+    "FLEE": 5
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000004,
+   "survival": 2459,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 388,
+    "SEEK_ITEM": 61,
+    "REST": 1263,
+    "FLEE": 1,
+    "CONSUME": 2,
+    "HIDE": 744
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000005,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 231,
+    "REST": 1395,
+    "FLEE": 9,
+    "HIDE": 100,
+    "SEEK_ITEM": 14,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000006,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 760,
+    "REST": 765,
+    "FLEE": 62,
+    "SEEK_ITEM": 26,
+    "HIDE": 137
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000007,
+   "survival": 2417,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0354996492722683,
+   "options": {
+    "EXPLORE": 701,
+    "REST": 1568,
+    "FLEE": 108,
+    "SEEK_ITEM": 29,
+    "HIDE": 10,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000008,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0084987391615958,
+   "options": {
+    "EXPLORE": 290,
+    "REST": 1193,
+    "FLEE": 27,
+    "HIDE": 240
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000009,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.009749997196881,
+   "options": {
+    "EXPLORE": 436,
+    "REST": 1024,
+    "SEEK_ITEM": 14,
+    "HIDE": 261,
+    "FLEE": 15
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000010,
+   "survival": 2450,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "SEEK_ITEM": 13,
+    "REST": 1360,
+    "EXPLORE": 556,
+    "FLEE": 20,
+    "CONSUME": 3,
+    "HIDE": 498
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000011,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0159741450372557,
+   "options": {
+    "EXPLORE": 376,
+    "REST": 1036,
+    "SEEK_ITEM": 54,
+    "ARM": 1,
+    "FLEE": 26,
+    "FIGHT": 3,
+    "HIDE": 254
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000012,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 493,
+    "FLEE": 16,
+    "REST": 740,
+    "SEEK_ITEM": 35,
+    "HIDE": 498,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000013,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 556,
+    "FLEE": 23,
+    "REST": 1495,
+    "SEEK_ITEM": 11,
+    "CONSUME": 2,
+    "HIDE": 246
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000014,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 1,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 328,
+    "SEEK_ITEM": 11,
+    "ARM": 1,
+    "REST": 1189,
+    "HIDE": 219,
+    "FIGHT": 2
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000015,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 681,
+    "REST": 1368,
+    "SEEK_ITEM": 16,
+    "FLEE": 17,
+    "CONSUME": 2,
+    "HIDE": 249
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000016,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0222255098569184,
+   "options": {
+    "EXPLORE": 750,
+    "REST": 616,
+    "SEEK_ITEM": 20,
+    "FLEE": 106,
+    "HIDE": 258
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000017,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 420,
+    "REST": 1024,
+    "SEEK_ITEM": 22,
+    "ARM": 1,
+    "HIDE": 276,
+    "FLEE": 7
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000018,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 613,
+    "REST": 613,
+    "FLEE": 45,
+    "SEEK_ITEM": 22,
+    "HIDE": 488,
+    "ARM": 1,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000019,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 767,
+    "REST": 674,
+    "FLEE": 45,
+    "HIDE": 251,
+    "SEEK_ITEM": 13
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000020,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 711,
+    "FLEE": 10,
+    "REST": 845,
+    "SEEK_ITEM": 45,
+    "ARM": 1,
+    "HIDE": 138
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000021,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 784,
+    "REST": 675,
+    "FLEE": 35,
+    "HIDE": 256
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000022,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0546878415446053,
+   "options": {
+    "EXPLORE": 529,
+    "REST": 848,
+    "FLEE": 81,
+    "HIDE": 261,
+    "SEEK_ITEM": 30,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000023,
+   "survival": 1717,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0631540356926548,
+   "options": {
+    "EXPLORE": 510,
+    "REST": 753,
+    "FLEE": 370,
+    "SEEK_ITEM": 25,
+    "HIDE": 59
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000024,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0999999999999963,
+   "options": {
+    "EXPLORE": 417,
+    "SEEK_ITEM": 18,
+    "REST": 849,
+    "HIDE": 498,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000025,
+   "survival": 3000,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 1.004232912598493,
+   "options": {
+    "EXPLORE": 903,
+    "SEEK_ITEM": 56,
+    "REST": 1778,
+    "CONSUME": 3,
+    "FLEE": 10,
+    "HIDE": 250
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000026,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 548,
+    "REST": 943,
+    "FLEE": 5,
+    "SEEK_ITEM": 5,
+    "ARM": 1,
+    "HIDE": 248
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000027,
+   "survival": 1749,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.0624870252929997,
+   "options": {
+    "EXPLORE": 807,
+    "REST": 721,
+    "FLEE": 179,
+    "SEEK_ITEM": 32,
+    "HIDE": 10
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000028,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 533,
+    "REST": 1517,
+    "SEEK_ITEM": 28,
+    "FLEE": 5,
+    "CONSUME": 1,
+    "ARM": 1,
+    "HIDE": 248
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000029,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 778,
+    "REST": 722,
+    "FLEE": 5,
+    "HIDE": 245
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000030,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 24,
+    "ARM": 1,
+    "EXPLORE": 219,
+    "HIDE": 359,
+    "REST": 1147
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000031,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.157135167566645,
+   "options": {
+    "EXPLORE": 437,
+    "FLEE": 194,
+    "REST": 1648,
+    "SEEK_ITEM": 20,
+    "HIDE": 33,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000032,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 761,
+    "SEEK_ITEM": 27,
+    "REST": 712,
+    "HIDE": 250
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000033,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "SEEK_ITEM": 43,
+    "EXPLORE": 724,
+    "REST": 729,
+    "FLEE": 5,
+    "HIDE": 249
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000034,
+   "survival": 937,
+   "truncated": false,
+   "cause": "combat",
+   "killer": "bot_hunter",
+   "kills": 0,
+   "pickups": 1,
+   "damage": 1.0700342556563032,
+   "options": {
+    "EXPLORE": 310,
+    "REST": 517,
+    "FLEE": 86,
+    "SEEK_ITEM": 18,
+    "HIDE": 6
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000035,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 1.0184319904416423,
+   "options": {
+    "EXPLORE": 576,
+    "REST": 887,
+    "FLEE": 24,
+    "HIDE": 234,
+    "SEEK_ITEM": 28,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000036,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 1,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 507,
+    "FLEE": 5,
+    "REST": 732,
+    "SEEK_ITEM": 8,
+    "HIDE": 498
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000037,
+   "survival": 1783,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.1039950424653473,
+   "options": {
+    "EXPLORE": 349,
+    "SEEK_ITEM": 21,
+    "REST": 935,
+    "HIDE": 394,
+    "FLEE": 83,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000038,
+   "survival": 3000,
+   "truncated": true,
+   "cause": "alive",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.0,
+   "options": {
+    "EXPLORE": 371,
+    "SEEK_ITEM": 28,
+    "REST": 1809,
+    "CONSUME": 4,
+    "FLEE": 38,
+    "HIDE": 750
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000039,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 396,
+    "FLEE": 10,
+    "REST": 1089,
+    "SEEK_ITEM": 8,
+    "ARM": 1,
+    "HIDE": 246
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000040,
+   "survival": 1739,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.1119184652077132,
+   "options": {
+    "EXPLORE": 400,
+    "REST": 1072,
+    "HIDE": 29,
+    "FLEE": 238
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000041,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 6,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 421,
+    "FLEE": 10,
+    "REST": 928,
+    "SEEK_ITEM": 30,
+    "ARM": 1,
+    "HIDE": 360
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000042,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 518,
+    "SEEK_ITEM": 59,
+    "REST": 1478,
+    "FLEE": 25,
+    "CONSUME": 1,
+    "HIDE": 252
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000043,
+   "survival": 1742,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 1.0409043777941516,
+   "options": {
+    "EXPLORE": 466,
+    "REST": 820,
+    "HIDE": 194,
+    "FLEE": 262
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000044,
+   "survival": 1747,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 1.0,
+   "options": {
+    "EXPLORE": 245,
+    "SEEK_ITEM": 37,
+    "REST": 946,
+    "HIDE": 498,
+    "FLEE": 20,
+    "CONSUME": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000045,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 4,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 359,
+    "SEEK_ITEM": 45,
+    "REST": 1008,
+    "ARM": 1,
+    "HIDE": 337
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000046,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 0,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 238,
+    "REST": 1263,
+    "HIDE": 249
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000047,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 5,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 527,
+    "FLEE": 52,
+    "REST": 281,
+    "SEEK_ITEM": 39,
+    "HIDE": 842,
+    "ARM": 1,
+    "FIGHT": 8
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000048,
+   "survival": 1750,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 2,
+   "damage": 1.007044480650176,
+   "options": {
+    "EXPLORE": 286,
+    "SEEK_ITEM": 14,
+    "REST": 633,
+    "HIDE": 801,
+    "FLEE": 15,
+    "ARM": 1
+   }
+  },
+  {
+   "agent": "qlearned",
+   "scenario": "big_map",
+   "seed": 10000049,
+   "survival": 2333,
+   "truncated": false,
+   "cause": "physiology",
+   "killer": null,
+   "kills": 0,
+   "pickups": 3,
+   "damage": 0.9999999999999999,
+   "options": {
+    "EXPLORE": 701,
+    "SEEK_ITEM": 37,
+    "FLEE": 56,
+    "HIDE": 249,
+    "REST": 1288,
+    "CONSUME": 2
+   }
+  }
+ ]
+}

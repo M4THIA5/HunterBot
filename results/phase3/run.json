@@ -1,0 +1,27 @@
+{
+ "stages": "[0, 1]",
+ "episodes": "[800, 1200]",
+ "advance": "[]",
+ "round": "32",
+ "eval_every": "200",
+ "eval_episodes": "48",
+ "eps_start": "1.0",
+ "eps_end": "0.05",
+ "eps_frac": "0.6",
+ "explore_scripted": "0.3",
+ "init": "None",
+ "workers": "None",
+ "seed": "0",
+ "out": "results/phase3",
+ "best": "results/phase3/q_ep02000.json",
+ "options": [
+  "EXPLORE",
+  "FLEE",
+  "HIDE",
+  "REST",
+  "SEEK_ITEM",
+  "CONSUME",
+  "ARM",
+  "FIGHT"
+ ]
+}

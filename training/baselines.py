@@ -30,6 +30,14 @@ def make_agent(name: str):
         from agent.scripted import ScriptedAgent
 
         return ScriptedAgent()
+    if name == "qlearned":
+        # Q-table : variable d'environnement RL_QTABLE, sinon agent/q_table.json.
+        import os
+        from pathlib import Path
+
+        from agent.qpolicy import DEFAULT_TABLE, QAgent, QTable
+
+        return QAgent(QTable.load(Path(os.environ.get("RL_QTABLE", DEFAULT_TABLE))))
     if name == "student":
         from student_agent import MyAgent
 

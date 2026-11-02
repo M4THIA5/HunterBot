@@ -1,0 +1,21 @@
+[référence scriptée, étape 0] moyenne 2064  médiane 2100  p10 1348  combat 0%
+[référence scriptée, étape 1] moyenne 1460  médiane 1560  p10 236  combat 29%
+=== étape 0 (physiology) : budget 800 épisodes
+ep    32  ε=1.00  survie=  1967  états=  542  repli=0%  70s
+ep    64  ε=0.97  survie=  1943  états=  811  repli=6%  84s
+ep    96  ε=0.95  survie=  2013  états=  975  repli=2%  99s
+ep   128  ε=0.92  survie=  2011  états= 1111  repli=1%  113s
+ep   160  ε=0.90  survie=  2037  états= 1216  repli=1%  128s
+ep   192  ε=0.87  survie=  1952  états= 1314  repli=1%  143s
+ep   224  ε=0.85  survie=  1803  états= 1386  repli=1%  157s
+  [éval étape 0] moyenne 1586  médiane 1542  p10 1195  combat 0%
+ep   256  ε=0.82  survie=  2068  états= 1436  repli=1%  193s
+ep   288  ε=0.80  survie=  1965  états= 1519  repli=1%  207s
+ep   320  ε=0.77  survie=  2076  états= 1560  repli=0%  223s
+ep   352  ε=0.75  survie=  1988  états= 1604  repli=0%  237s
+ep   384  ε=0.72  survie=  1907  états= 1660  repli=1%  252s
+ep   416  ε=0.70  survie=  1957  états= 1696  repli=0%  267s
+ep   448  ε=0.67  survie=  2159  états= 1744  repli=1%  282s
+  [éval étape 0] moyenne 1607  médiane 1579  p10 1222  combat 0%
+ep   480  ε=0.65  survie=  2211  états= 1776  repli=0%  319s
+ep   512  ε=0.62  survie=  2112  états= 1793  repli=0%  334s
