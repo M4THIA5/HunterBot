@@ -24,7 +24,7 @@ class FeatureTests(unittest.TestCase):
             mem.update(obs)
             st = encode_state(obs, mem)
             self.assertIsInstance(st, State)
-            for v, hi in zip(st, (2, 2, 2, 1, 1, 3, 2, 1, 1, 1, 1, 1)):
+            for v, hi in zip(st, (2, 2, 2, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1)):
                 self.assertTrue(0 <= int(v) <= hi)
             self.assertEqual(len(st.key()), len(State._fields))
             self.assertEqual(State(*map(int, st.key())), State(*map(int, st)))

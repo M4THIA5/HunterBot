@@ -128,6 +128,7 @@ class Memory:
     seen_age: int = 10_000   # ticks depuis la dernière menace vue ou touchée
     heard_gunshot: bool = False
     threat_armed: bool = False
+    threat_closing: bool = False  # la menace vue s'est rapprochée depuis le tick précédent
     heard_threat: bool = False
     # Navigation.
     collisions_recent: int = 0
@@ -176,14 +177,24 @@ class Memory:
                 self.door_cooldown = 30
 
         agents = [d for d in obs.vision if d.kind is ObjectKind.AGENT]
+        seen_before = self.seen_age <= 1  # seen_age déjà incrémenté ce tick
         self.threat_seen = bool(agents)
+        self.threat_closing = False
         if agents:
             t = min(agents, key=lambda d: d.distance)
+            if seen_before:
+                # Pas d'identité entre ticks : on compare simplement l'agent le
+                # plus proche d'un tick à l'autre (bruit toléré par le seuil).
+                self.threat_closing = self.threat_distance - t.distance > 0.25
             self.threat_heading = wrap(s.orientation + t.bearing)
             self.threat_distance = t.distance
             self.threat_age = 0
             self.seen_age = 0
-            self.threat_armed = bool(t.properties.get("armed", False))
+            armed = t.properties.get("armed")
+            if armed is not None:
+                self.threat_armed = bool(armed)
+            elif not seen_before:
+                self.threat_armed = False  # trop loin pour le voir : inconnu
         else:
             # Un agent qui nous touche n'est pas forcément visible (dans le dos).
             touching = [c for c in obs.touch if c.kind is ObjectKind.AGENT]

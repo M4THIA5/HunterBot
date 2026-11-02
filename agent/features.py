@@ -26,6 +26,8 @@ class State(NamedTuple):
     has_medicine: bool
     threat: int          # agent vu le plus proche : aucun / > 8 m / 3–8 m / < 3 m
     side: int            # côté de cette menace (devant si aucune)
+    threat_armed: bool   # la menace la plus proche est perçue armée
+    closing: bool        # la menace se rapproche
     heard_threat: bool
     recent_damage: bool  # DAMAGE_RECEIVED dans les 4 derniers ticks
     armed: bool          # arme équipée (et munition si arme à distance)
@@ -67,6 +69,8 @@ def encode_state(obs: Observation, mem: Memory) -> State:
         has_medicine=ObjectKind.MEDICINE in inv_kinds,
         threat=threat,
         side=side,
+        threat_armed=threat != THREAT_NONE and mem.threat_armed,
+        closing=threat != THREAT_NONE and mem.threat_closing,
         heard_threat=mem.heard_threat,
         recent_damage=mem.ticks_since_damage <= 4,
         armed=is_armed(obs),

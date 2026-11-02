@@ -221,6 +221,21 @@ def _stage2(rng: Random, seed: int) -> EpisodeSpec:
 # Pool de politiques figées pour le self-play : la phase 3 y ajoutera les
 # meilleures Q-tables successives (fabriques sans argument).
 SELF_PLAY_POOL: list[Callable[[], object]] = []
+_TABLE_CACHE: dict[str, object] = {}
+
+
+def set_self_play_tables(paths) -> None:
+    """Remplit SELF_PLAY_POOL avec des QAgent gloutons sur ces Q-tables (cache par processus)."""
+    from pathlib import Path
+
+    from agent.qpolicy import QAgent, QTable
+
+    SELF_PLAY_POOL.clear()
+    for path in paths:
+        if path not in _TABLE_CACHE:
+            _TABLE_CACHE[path] = QTable.load(Path(path))
+        table = _TABLE_CACHE[path]
+        SELF_PLAY_POOL.append(lambda t=table: QAgent(t))
 
 
 def _stage3(rng: Random, seed: int) -> EpisodeSpec:
