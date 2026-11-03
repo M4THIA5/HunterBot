@@ -163,7 +163,7 @@ class Memory:
     use_blind_hit: bool = True
     # Fuite non interrompue par un choix « calme » + exploration dans le cap de fuite.
     # "off", "always" ou "serious" (dégâts récents ou adversaire armé).
-    flee_commit: str = "always"  # meilleur score combiné sur 200 seeds (results/hostile_ab.md)
+    flee_commit: str = "serious"  # meilleure survie moyenne sur 200 seeds (results/hostile_ab.md)
     blind_hit_tick: int = -10_000
 
     def heading_to_bearing(self, heading: float, orientation: float) -> float:

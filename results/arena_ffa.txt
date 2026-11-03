@@ -1,0 +1,10 @@
+100 parties, 8 agents, max 3000 ticks
+agent          moy    méd  rang  vivant   tué  kills  1er
+hybrid        1833   1750  3.92      0%    9%   0.08   15  hybride heard_10 (run 6)
+q_run5        1825   1750  4.01      0%    9%   0.06   16  Q-learning run 5
+q_run6        1804   1750  3.81      0%    7%   0.07   13  Q-learning run 6
+student       1797   1750  3.80      1%    5%   0.08   13  student_agent.MyAgent (scripté, fuite « serious »)
+s_v_map       1796   1750  3.56      1%   11%   0.16   18  scripté avant correctifs hostile (mémoire ressources)
+s_always      1792   1750  3.73      0%    5%   0.03   12  scripté, fuite « always »
+s_v_nomap     1723   1750  4.13      1%   13%   0.10   11  scripté sans mémoire spatiale (phase 1)
+s_nocommit    1705   1750  4.44      1%    6%   0.07    9  scripté, coup invisible seul
