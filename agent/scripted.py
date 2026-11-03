@@ -17,15 +17,17 @@ from .perception import Memory, is_armed, weapon_mode, equipped_item
 class OptionRunner:
     """Exécute une option choisie par une politique ; gère commutation et durée."""
 
-    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None) -> None:
+    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None,
+                 **mem_options) -> None:
         self._seed = seed
         self.use_spatial = use_spatial
         self.spatial_uses = spatial_uses
+        self.mem_options = mem_options  # champs de Memory à fixer (ablations)
         self.reset()
 
     def reset(self) -> None:
         self.rng = Random(self._seed)
-        self.mem = Memory(use_spatial=self.use_spatial)
+        self.mem = Memory(use_spatial=self.use_spatial, **self.mem_options)
         if self.spatial_uses is not None:
             self.mem.spatial_uses = frozenset(self.spatial_uses)
         self.options = make_options(self.rng)
@@ -91,11 +93,15 @@ def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> s
     return "EXPLORE"
 
 
+CALM_OPTIONS = frozenset({"EXPLORE", "SEEK_ITEM", "REST", "HIDE"})
+
+
 class ScriptedAgent:
     """Agent complet : runner d'options + politique scriptée."""
 
-    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None) -> None:
-        self.runner = OptionRunner(seed, use_spatial, spatial_uses)
+    def __init__(self, seed: int = 0, use_spatial: bool = True, spatial_uses: frozenset | None = None,
+                 **mem_options) -> None:
+        self.runner = OptionRunner(seed, use_spatial, spatial_uses, **mem_options)
 
     def reset(self) -> None:
         self.runner.reset()
@@ -104,6 +110,12 @@ class ScriptedAgent:
         r = self.runner
         r.mem.update(obs)
         choice = scripted_choice(obs, r.mem, r.options)
+        # Engagement dans la fuite : la menace sort du champ de vision dès qu'on
+        # lui tourne le dos ; sans cela on repasse en EXPLORE au tick suivant,
+        # on se retourne vers elle et on oscille.
+        if (r.mem.serious_threat() and r.current is not None and r.current.name == "FLEE"
+                and not r.needs_decision(obs) and choice in CALM_OPTIONS):
+            choice = "FLEE"
         # Les options longues ne sont interrompues que par un changement de
         # priorité ; sinon on les laisse se terminer.
         if r.current is None or r.current.name != choice or r.needs_decision(obs):

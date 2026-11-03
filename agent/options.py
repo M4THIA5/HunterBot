@@ -360,6 +360,10 @@ class Flee(Option):
         s = obs.self_state
         b = mem.threat_bearing(obs)
         away = wrap(b + pi) if b is not None else 0.0
+        if mem.serious_threat():
+            # L'exploration qui suivra garde le cap de fuite au lieu de revenir vers la menace.
+            mem.wander_heading = wrap(s.orientation + away)
+            mem.wander_ticks = 15
         speed = 3.2 if s.energy > 0.4 else (2.2 if s.energy > 0.15 else 1.4)
         door_act = door_interaction(obs, mem)
         mv, rot = steer(obs, away, speed, mem)

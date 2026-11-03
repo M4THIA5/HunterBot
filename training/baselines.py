@@ -35,6 +35,16 @@ def make_agent(name: str):
         from agent.scripted import ScriptedAgent
 
         return ScriptedAgent(spatial_uses=frozenset(name.removeprefix("scripted_map_").split("+")))
+    if name == "scripted_noblind":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(use_blind_hit=False)
+    if name.startswith("scripted_commit_"):
+        # scripted_commit_off / _always / _serious (+ suffixe _noblind)
+        from agent.scripted import ScriptedAgent
+
+        mode = name.removeprefix("scripted_commit_").removesuffix("_noblind")
+        return ScriptedAgent(flee_commit=mode, use_blind_hit=not name.endswith("_noblind"))
     if name == "scripted_nomap":
         from agent.scripted import ScriptedAgent
 

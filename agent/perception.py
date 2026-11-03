@@ -45,6 +45,9 @@ THREAT_SOUNDS = frozenset({SoundKind.GUNSHOT, SoundKind.AGENT, SoundKind.MOVEMEN
 
 # Valeurs par défaut prudentes quand `properties` ne précise rien.
 DEFAULT_GAIN = 0.3
+# Dégât d'un tick au-delà duquel on suppose un coup (et non un saignement ou
+# une carence, qui retirent quelques millièmes de santé par tick).
+HIT_DAMAGE = 0.03
 
 
 def prop_float(props, key: str, default: float) -> float:
@@ -156,6 +159,12 @@ class Memory:
     # (dérive de l'odométrie) ; seule la mémoire des ressources est conservée.
     spatial_uses: frozenset = frozenset({"items"})
     spatial: object = None
+    # Coup reçu d'un attaquant invisible (désactivable pour A/B).
+    use_blind_hit: bool = True
+    # Fuite non interrompue par un choix « calme » + exploration dans le cap de fuite.
+    # "off", "always" ou "serious" (dégâts récents ou adversaire armé).
+    flee_commit: str = "always"  # meilleur score combiné sur 200 seeds (results/hostile_ab.md)
+    blind_hit_tick: int = -10_000
 
     def heading_to_bearing(self, heading: float, orientation: float) -> float:
         return wrap(heading - orientation)
@@ -179,10 +188,12 @@ class Memory:
         self.fight_cooldown = max(0, self.fight_cooldown - 1)
         self.collisions_recent = max(0, self.collisions_recent - 1) if obs.tick % 4 == 0 else self.collisions_recent
 
+        hit = 0.0
         for ev in obs.events:
             if ev.kind is EventKind.DAMAGE_RECEIVED:
                 self.ticks_since_damage = 0
                 self.damage_recent += float(ev.value or 0.0)
+                hit += float(ev.value or 0.0)
             elif ev.kind is EventKind.COLLISION:
                 self.collisions_recent += 1
                 self.last_collision_tick = obs.tick
@@ -216,6 +227,15 @@ class Memory:
                 self.threat_distance = 0.5
                 self.threat_age = 0
                 self.seen_age = 0
+            elif self.use_blind_hit and hit >= HIT_DAMAGE:
+                # Coup reçu sans attaquant visible ni touché : il est hors du
+                # champ de vision, donc derrière nous. On le traite comme une
+                # menace perçue (sinon on continue d'explorer sous les coups).
+                self.threat_heading = wrap(s.orientation + pi)
+                self.threat_distance = 1.0
+                self.threat_age = 0
+                self.seen_age = 0
+                self.blind_hit_tick = obs.tick
 
         self.heard_threat = False
         self.heard_gunshot = any(h.kind is SoundKind.GUNSHOT and h.intensity > 0.3 for h in obs.hearing)
@@ -243,6 +263,12 @@ class Memory:
         if self.threat_heading is None:
             return None
         return self.heading_to_bearing(self.threat_heading, obs.self_state.orientation)
+
+    def serious_threat(self) -> bool:
+        """Menace qui justifie de s'engager dans la fuite : dégâts récents ou adversaire perçu armé."""
+        if self.flee_commit == "always":
+            return True
+        return self.flee_commit == "serious" and (self.under_attack(20) or self.threat_armed)
 
     def threat_active(self, horizon: int = 4) -> bool:
         """Menace vue ou touchée récemment (le son seul ne suffit pas)."""
