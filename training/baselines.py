@@ -47,6 +47,18 @@ def make_agent(name: str):
         from agent.qpolicy import DEFAULT_TABLE, QAgent, QTable
 
         return QAgent(QTable.load(Path(os.environ.get("RL_QTABLE", DEFAULT_TABLE))))
+    if name.startswith("hybrid"):
+        # hybrid, hybrid_<gate>, hybrid_<gate>_<hold> (Q-table : RL_QTABLE).
+        import os
+        from pathlib import Path
+
+        from agent.hybrid import HybridAgent
+        from agent.qpolicy import DEFAULT_TABLE, QTable
+
+        parts = name.split("_")
+        gate = parts[1] if len(parts) > 1 else "seen"
+        hold = int(parts[2]) if len(parts) > 2 else 0
+        return HybridAgent(QTable.load(Path(os.environ.get("RL_QTABLE", DEFAULT_TABLE))), gate, hold)
     if name == "student":
         from student_agent import MyAgent
 
