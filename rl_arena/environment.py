@@ -441,7 +441,9 @@ class TrainingEnvironment:
 
             self._advance_projectiles(dt, rewards)
 
-        for aid in collided_static:
+        # Ordre trié : itérer un set de chaînes dépend de PYTHONHASHSEED, or l'ordre
+        # des sons ajoutés ici fixe l'ordre des tirages rng.gauss de l'audition.
+        for aid in sorted(collided_static):
             st = self._runtimes[aid].state
             if st is None or not st.alive:
                 continue
