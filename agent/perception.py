@@ -139,6 +139,27 @@ class Memory:
     escape_heading: float | None = None
     escape_ticks: int = 0
     door_cooldown: int = 0
+    # Manipulate de porte sans effet (hors de portée : la distance perçue va au
+    # bord de la porte, la portée réelle peut être plus courte) : on s'approche,
+    # puis on abandonne temporairement les portes.
+    door_tries: int = 0
+    door_block: int = 0
+    use_door_giveup: bool = True
+    # Fuir aussi un agent proche non armé qui ne se rapproche pas (ancien comportement).
+    flee_harmless: bool = True
+    # Coincement : mêmes contacts aux mêmes directions absolues pendant
+    # plusieurs ticks alors qu'on commande un déplacement.
+    use_unwedge: bool = True
+    # Attraction des portes : (portée m, bonus porte fermée, malus bâtiment visité, mémoire ticks).
+    door_pref: tuple = (8.0, 0.0, 0.0, 0)
+    entered: dict = field(default_factory=dict)
+    touch_signature: tuple = ()
+    wedged_ticks: int = 0
+    unwedge_ticks: int = 0
+    unwedge_heading: float = 0.0
+    moving_cmd: bool = False
+    # Exploration : (virage max en rad, durée min, durée max) d'un segment de marche.
+    wander: tuple = (1.2, 10, 25)
     fight_cooldown: int = 0
     fight_best: float = 99.0
     fight_no_progress: int = 0
@@ -185,6 +206,7 @@ class Memory:
         self.seen_age += 1
         self.target_age += 1
         self.door_cooldown = max(0, self.door_cooldown - 1)
+        self.door_block = max(0, self.door_block - 1)
         self.fight_cooldown = max(0, self.fight_cooldown - 1)
         self.collisions_recent = max(0, self.collisions_recent - 1) if obs.tick % 4 == 0 else self.collisions_recent
 
@@ -199,6 +221,7 @@ class Memory:
                 self.last_collision_tick = obs.tick
             elif ev.kind is EventKind.INTERACTION and ev.properties.get("kind") == "door":
                 self.door_cooldown = 30
+                self.door_tries = 0
 
         agents = [d for d in obs.vision if d.kind is ObjectKind.AGENT]
         seen_before = self.seen_age <= 1  # seen_age déjà incrémenté ce tick
@@ -258,6 +281,16 @@ class Memory:
         if self.escape_ticks > 0:
             self.escape_ticks -= 1
 
+        sig = tuple(sorted((c.kind.value, round(wrap(s.orientation + c.bearing), 1)) for c in obs.touch
+                           if c.kind in SOLID_KINDS or c.kind is ObjectKind.DOOR))
+        if sig and sig == self.touch_signature and self.moving_cmd:
+            self.wedged_ticks += 1
+        else:
+            self.wedged_ticks = 0
+        self.touch_signature = sig
+        if self.unwedge_ticks > 0:
+            self.unwedge_ticks -= 1
+
     # Lecture pratique ---------------------------------------------------
     def threat_bearing(self, obs: Observation) -> float | None:
         if self.threat_heading is None:
@@ -269,6 +302,10 @@ class Memory:
         if self.flee_commit == "always":
             return True
         return self.flee_commit == "serious" and (self.under_attack(20) or self.threat_armed)
+
+    def threat_dangerous(self) -> bool:
+        """Agent vu qui mérite qu'on le fuie : armé, qui se rapproche, ou nous a frappés récemment."""
+        return self.flee_harmless or self.threat_armed or self.threat_closing or self.under_attack(20)
 
     def threat_active(self, horizon: int = 4) -> bool:
         """Menace vue ou touchée récemment (le son seul ne suffit pas)."""

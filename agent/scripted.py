@@ -6,12 +6,13 @@ pour les états jamais vus par la Q-table.
 
 from __future__ import annotations
 
+from math import cos, pi, sin
 from random import Random
 
-from rl_arena.arena_api import Action, ObjectKind, Observation
+from rl_arena.arena_api import Action, Movement, ObjectKind, Observation
 
 from .options import Option, make_options
-from .perception import Memory, is_armed, weapon_mode, equipped_item
+from .perception import Memory, equipped_item, is_armed, weapon_mode, wrap
 
 
 class OptionRunner:
@@ -42,14 +43,40 @@ class OptionRunner:
         opt.start(obs, self.mem)
         self.current = opt
 
+    def _unwedge(self, obs: Observation, action: Action) -> Action:
+        return _unwedge_action(obs, self.mem, action)
+
     def step(self, obs: Observation) -> Action:
         assert self.current is not None
         self.history[self.current.name] = self.history.get(self.current.name, 0) + 1
         action = self.current.step(obs, self.mem)
+        action = self._unwedge(obs, action)
+        self.mem.moving_cmd = action.movement is not None and not action.rest and action.movement.speed > 0.2
         if self.mem.spatial is not None:
             # Odométrie : le mouvement commandé sert à intégrer le tick suivant.
             self.mem.spatial.last_move = None if action.rest else action.movement
         return action
+
+
+UNWEDGE_AFTER = 12     # ticks coincé avant de forcer le dégagement
+UNWEDGE_STEP = 3       # ticks par direction essayée
+UNWEDGE_TRIES = 8      # directions balayées (tour complet)
+
+
+def _unwedge_action(obs: Observation, mem: Memory, action: Action) -> Action:
+    """Coincé (mêmes contacts plusieurs ticks) : balaie des directions absolues à pleine vitesse."""
+    if not mem.use_unwedge:
+        return action
+    if mem.unwedge_ticks == 0 and mem.wedged_ticks >= UNWEDGE_AFTER:
+        mem.unwedge_ticks = UNWEDGE_STEP * UNWEDGE_TRIES
+        mem.unwedge_heading = obs.self_state.orientation + pi  # d'abord : demi-tour
+        mem.wedged_ticks = 0
+    if mem.unwedge_ticks > 0:
+        if mem.unwedge_ticks % UNWEDGE_STEP == 0:
+            mem.unwedge_heading = wrap(mem.unwedge_heading + 2 * pi / UNWEDGE_TRIES * 3)  # pas de 135°
+        b = wrap(mem.unwedge_heading - obs.self_state.orientation)
+        return Action(movement=Movement(cos(b), sin(b), 2.0), interaction=action.interaction)
+    return action
 
 
 def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> str:
@@ -79,7 +106,7 @@ def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> s
     if agents and closest < 6.0:
         if ranged and avail("FIGHT"):
             return "FIGHT"
-        if avail("FLEE"):
+        if avail("FLEE") and mem.threat_dangerous():
             return "FLEE"
     # 5. Récupérer l'énergie au calme.
     if s.energy < 0.25 and not mem.threat_active(6):

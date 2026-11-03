@@ -45,6 +45,30 @@ def make_agent(name: str):
 
         mode = name.removeprefix("scripted_commit_").removesuffix("_noblind")
         return ScriptedAgent(flee_commit=mode, use_blind_hit=not name.endswith("_noblind"))
+    if name == "scripted_nodoorfix":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(use_door_giveup=False)
+    if name == "scripted_fleeall":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(flee_harmless=True)
+    if name.startswith("scripted_wander_"):
+        # scripted_wander_<virage>_<min>_<max>, ex. scripted_wander_0.6_40_80
+        from agent.scripted import ScriptedAgent
+
+        turn, lo, hi = name.removeprefix("scripted_wander_").split("_")
+        return ScriptedAgent(wander=(float(turn), int(lo), int(hi)))
+    if name == "scripted_nounwedge":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(use_unwedge=False)
+    if name.startswith("scripted_doors_"):
+        # scripted_doors_<portée>_<bonus fermée>_<malus visité>_<mémoire>
+        from agent.scripted import ScriptedAgent
+
+        r, c, v, m = name.removeprefix("scripted_doors_").split("_")
+        return ScriptedAgent(door_pref=(float(r), float(c), float(v), int(m)))
     if name == "scripted_nomap":
         from agent.scripted import ScriptedAgent
 

@@ -60,16 +60,56 @@ def face(bearing: float) -> Rotation:
     return Rotation(max(-pi, min(pi, bearing / TICK_SECONDS)))
 
 
+DOOR_APPROACH_TRIES = 3   # tentatives sans effet avant de s'approcher en manipulant
+DOOR_GIVEUP_TRIES = 8     # puis abandon temporaire des portes
+DOOR_BLOCK_TICKS = 40
+
+
 def door_interaction(obs: Observation, mem: Memory) -> Action | None:
     """Ouvre une porte fermée juste devant (sans jamais refermer une porte ouverte)."""
+    if mem.door_block > 0:
+        return None
+    target = None
     for d in obs.vision:
         if d.kind is ObjectKind.DOOR and d.distance < DOOR_DISTANCE and abs(d.bearing) < 1.0:
             if door_is_closed(d) is True:
-                return Action(interaction=Manipulate(d.ref), rotation=face(d.bearing))
-    for c in obs.touch:  # le toucher ne rapporte que les portes fermées
-        if c.kind is ObjectKind.DOOR:
-            return Action(interaction=Manipulate(c.ref), rotation=face(c.bearing))
-    return None
+                target = (d.ref, d.bearing)
+                break
+    if target is None:
+        for c in obs.touch:  # le toucher ne rapporte que les portes fermées
+            if c.kind is ObjectKind.DOOR:
+                target = (c.ref, c.bearing)
+                break
+    if target is None:
+        mem.door_tries = 0  # tentatives consécutives seulement
+        return None
+    ref, bearing = target
+    if mem.use_door_giveup:
+        mem.door_tries += 1
+        if mem.door_tries > DOOR_GIVEUP_TRIES:
+            mem.door_tries = 0
+            mem.door_block = DOOR_BLOCK_TICKS
+            mem.door_cooldown = DOOR_BLOCK_TICKS  # Explore cesse d'être attiré par les portes
+            mem.wander_heading = wrap(obs.self_state.orientation + pi)
+            mem.wander_ticks = 20
+            return None
+        if mem.door_tries > DOOR_APPROACH_TRIES:
+            mv, _ = drive(bearing, 0.6)
+            return Action(interaction=Manipulate(ref), rotation=face(bearing), movement=mv)
+    return Action(interaction=Manipulate(ref), rotation=face(bearing))
+
+
+def door_score(d, mem: Memory, tick: int) -> float:
+    """Plus petit = plus attractif. Porte fermée : intérieur probablement inexploré ;
+    bâtiment récemment visité (étiquette perçue) : moins utile d'y retourner."""
+    _, closed_bonus, visited_malus, memory = mem.door_pref
+    score = d.distance
+    if door_is_closed(d) is True:
+        score -= closed_bonus
+    label = d.properties.get("building") if d.properties else None
+    if label is not None and tick - mem.entered.get(label, -10**9) < memory:
+        score += visited_malus
+    return score
 
 
 # ----------------------------------------------------------------------
@@ -220,12 +260,15 @@ class Explore(Option):
             if lm is not None:
                 desired, _ = sp.bearing_to(lm.x, lm.y, s.orientation)
         if desired is None and mem.door_cooldown == 0:
-            doors = [d for d in obs.vision if d.kind is ObjectKind.DOOR and d.distance < 8.0]
+            doors = [d for d in obs.vision if d.kind is ObjectKind.DOOR and d.distance < mem.door_pref[0]]
             if doors:
-                d = min(doors, key=lambda x: x.distance)
+                d = min(doors, key=lambda x: door_score(x, mem, obs.tick))
                 desired, ignore = d.bearing, d.ref
                 if d.distance < 0.4 and door_is_closed(d) is not True:
                     mem.door_cooldown = 25  # on vient de franchir la porte
+                    label = d.properties.get("building")
+                    if label is not None:
+                        mem.entered[label] = obs.tick
         if desired is None and sp is not None and "doors" in uses and mem.door_cooldown == 0:
             # 2. Porte mémorisée jamais franchie (accès probable à un bâtiment).
             door = sp.unvisited_door()
@@ -239,8 +282,9 @@ class Explore(Option):
                     # 3. Direction la moins visitée.
                     mem.wander_heading = wrap(sp.novelty_heading(s.orientation) + self.rng.uniform(-0.3, 0.3))
                 else:
-                    mem.wander_heading = wrap(s.orientation + self.rng.uniform(-1.2, 1.2))
-                mem.wander_ticks = self.rng.randint(10, 25)
+                    turn, lo, hi = mem.wander
+                    mem.wander_heading = wrap(s.orientation + self.rng.uniform(-turn, turn))
+                mem.wander_ticks = self.rng.randint(mem.wander[1], mem.wander[2])
             mem.wander_ticks -= 1
             desired = mem.heading_to_bearing(mem.wander_heading, s.orientation)
             # Si on bute régulièrement, on change de cap.
