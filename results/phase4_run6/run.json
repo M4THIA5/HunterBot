@@ -1,0 +1,31 @@
+{
+ "stages": "[0, 1, 2, 3]",
+ "episodes": "[1500, 2500, 3000, 2000]",
+ "advance": "[]",
+ "round": "32",
+ "eval_every": "500",
+ "eval_episodes": "64",
+ "eps_start": "1.0",
+ "eps_end": "0.05",
+ "eps_frac": "0.6",
+ "explore_scripted": "0.3",
+ "init": "None",
+ "prior_bonus": "1.5",
+ "prior_kappa": "0.0",
+ "skip_reference": "False",
+ "selfplay_size": "3",
+ "workers": "None",
+ "seed": "0",
+ "out": "results/phase4_run6",
+ "best": "results/phase4_run6/q_ep07512.json",
+ "options": [
+  "EXPLORE",
+  "FLEE",
+  "HIDE",
+  "REST",
+  "SEEK_ITEM",
+  "CONSUME",
+  "ARM",
+  "FIGHT"
+ ]
+}
