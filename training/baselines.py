@@ -77,6 +77,10 @@ def make_agent(name: str):
         from agent.scripted import ScriptedAgent
 
         return ScriptedAgent(flee_hold=0)
+    if name == "scripted_limit":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(fight_limit=True)
     if name == "scripted_nolimit":
         from agent.scripted import ScriptedAgent
 
@@ -89,7 +93,7 @@ def make_agent(name: str):
         # scripted_counter_<santé min>
         from agent.scripted import ScriptedAgent
 
-        return ScriptedAgent(counter_min_health=float(name.removeprefix("scripted_counter_")))
+        return ScriptedAgent(counter_attack=True, counter_min_health=float(name.removeprefix("scripted_counter_")))
     if name == "scripted_nomap":
         from agent.scripted import ScriptedAgent
 
