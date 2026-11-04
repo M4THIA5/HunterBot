@@ -4,17 +4,13 @@ L'arène finale aura « une carte, des distributions d'objets et une complexité
 différentes ». Ce module produit des mondes variés à partir de profils :
 
 - disposition aléatoire des bâtiments (nombre, taille, côté de la porte) ;
-- proportions d'objets propres à chaque profil, dont de nouveaux objets
-  (armes de mêlée et à distance avec leurs munitions, nourriture hydratante,
-  boisson énergisante, aliment avarié, trousse de soins...) ;
+- proportions d'objets propres à chaque profil. Seuls les objets du kit
+  sont utilisés (l'arène finale ne fait varier que leur quantité) ;
 - conditions : eau, glace, vapeur, zones dangereuses (feu, produit
   toxique), brouillard, obscurité, taille de carte, rythme de la
   physiologie.
 
-Les nouveaux objets n'utilisent que des propriétés lues par le moteur
-généralisé (`attack`, `ammo_type`, `reach`, `projectile_speed`, `energy`,
-`toxicity`, `damage_per_tick`...). Rien ici n'est visible par la politique
-autrement que via l'Observation.
+Rien ici n'est visible par la politique autrement que via l'Observation.
 
 Usage :
     python -m training.worldgen                       # liste des profils
@@ -67,17 +63,6 @@ def _med(label, heal, mass=0.25, medical_type="medicine"):
     return ItemTemplate(ObjectKind.MEDICINE, mass, {"label": label, "medical_type": medical_type, "heal": heal}, "medical")
 
 
-def _melee(label, damage, reach, mass):
-    return ItemTemplate(ObjectKind.WEAPON, mass, {"label": label, "weapon_type": label, "attack": "melee",
-                                                  "damage": damage, "reach": reach}, "industrial")
-
-
-def _ranged(label, ammo, damage, speed, mass, loudness=1.0):
-    return ItemTemplate(ObjectKind.WEAPON, mass, {"label": label, "weapon_type": label, "attack": "ranged",
-                                                  "ammo_type": ammo, "damage": damage, "projectile_speed": speed,
-                                                  "loudness": loudness}, "armory")
-
-
 def _ammo(label, mass=0.18):
     return ItemTemplate(ObjectKind.AMMUNITION, mass, {"label": label, "ammo_type": label}, "armory")
 
@@ -100,28 +85,8 @@ CATALOG: dict[str, ItemTemplate] = {
                                       "modifier": "projectile_speed", "factor": 1.15}, "industrial"),
     "wood": ItemTemplate(ObjectKind.RAW_MATERIAL, 0.8, {"label": "wood", "material": "wood"}),
     "metal": ItemTemplate(ObjectKind.RAW_MATERIAL, 1.2, {"label": "metal", "material": "metal"}, "industrial"),
-    # Nouveaux consommables.
-    "canned_food": _food("canned_food", 0.45, mass=0.5),
-    "watermelon": _food("watermelon", 0.20, mass=1.6, hydration=0.25),
-    "soup": _food("soup", 0.25, mass=0.6, hydration=0.15),
-    "spoiled_meat": _food("spoiled_meat", 0.30, mass=0.4, toxicity=0.10, spoiled=True),
-    "soda": _drink("soda", 0.25, mass=0.35, energy=0.10),
-    "energy_drink": _drink("energy_drink", 0.15, mass=0.30, energy=0.35),
-    "water_jug": _drink("water_jug", 0.60, mass=2.2),
-    "milk": _drink("milk", 0.25, mass=0.6, nutrition=0.15),
-    "first_aid_kit": _med("first_aid_kit", 0.30, mass=0.8),
-    "painkiller": _med("painkiller", 0.06, mass=0.05),
-    # Nouvelles armes de mêlée.
-    "kitchen_knife": _melee("kitchen_knife", 0.09, 0.45, 0.3),
-    "baseball_bat": _melee("baseball_bat", 0.16, 0.75, 1.0),
-    "crowbar": _melee("crowbar", 0.14, 0.60, 2.0),
-    # Nouvelles armes à distance et munitions assorties.
-    "slingshot": _ranged("slingshot", "pebble", 0.10, 8.0, 0.4, loudness=0.4),
-    "crossbow": _ranged("crossbow", "bolt", 0.26, 10.0, 2.8, loudness=0.5),
-    "nail_gun": _ranged("nail_gun", "nail", 0.12, 9.0, 1.8),
-    "pebble": _ammo("pebble", 0.10),
-    "bolt": _ammo("bolt", 0.15),
-    "nail": _ammo("nail", 0.05),
+    "cloth": ItemTemplate(ObjectKind.RAW_MATERIAL, 0.5, {"label": "cloth", "material": "cloth"}),
+    "plastic": ItemTemplate(ObjectKind.RAW_MATERIAL, 1.0, {"label": "plastic", "material": "plastic"}, "industrial"),
 }
 
 
@@ -170,61 +135,51 @@ class MapProfile:
 
 BALANCED = {"sandwich": 3, "fruit": 3, "bottle": 3, "water_bottle": 4, "bandage": 2, "medicine": 2,
             "rolling_pin": 1, "potato_launcher": 1, "potato": 3, "reinforced_spring": 0.5,
-            "wood": 2, "metal": 1}
-NEW_ITEMS = {"canned_food": 1.5, "watermelon": 1, "soup": 1, "spoiled_meat": 1, "soda": 1.5, "energy_drink": 1,
-             "water_jug": 0.7, "milk": 1, "first_aid_kit": 0.6, "painkiller": 1, "kitchen_knife": 1,
-             "baseball_bat": 0.8, "crowbar": 0.6, "slingshot": 0.8, "crossbow": 0.5, "nail_gun": 0.5,
-             "pebble": 2, "bolt": 1.2, "nail": 1.5}
+            "wood": 2, "metal": 1, "cloth": 1, "plastic": 1}
 
 
-def _mix(*dicts: dict, scale: dict | None = None) -> dict:
-    out: dict = {}
-    for d in dicts:
-        for k, v in d.items():
-            out[k] = out.get(k, 0.0) + v
+def _mix(base: dict, scale: dict | None = None) -> dict:
+    out = dict(base)
     for k, f in (scale or {}).items():
         out[k] = out.get(k, 0.0) * f
     return out
 
 
 PROFILES: dict[str, MapProfile] = {p.name: p for p in (
-    MapProfile("town", "ville aléatoire, objets du kit et nouveaux à parts égales",
-               weights=_mix(BALANCED, NEW_ITEMS)),
+    MapProfile("town", "ville aléatoire, proportions du kit", weights=dict(BALANCED)),
     MapProfile("desert", "grande carte, peu de bâtiments, boissons très rares, soif x1.4, zones brûlantes",
                size=(40.0, 46.0), buildings=(2, 3), water=(0, 0), hazards=(2, 4), item_count=(8, 13),
                inside_ratio=0.4, physiology=1.4,
-               weights=_mix(BALANCED, NEW_ITEMS, scale={"bottle": 0.3, "water_bottle": 0.3, "water_jug": 0.4,
-                                                      "soda": 0.5, "watermelon": 2.0, "spoiled_meat": 2.0})),
+               weights=_mix(BALANCED, {"bottle": 0.3, "water_bottle": 0.3})),
     MapProfile("abundance", "beaucoup d'objets, nourriture et eau partout",
                item_count=(28, 40), inside_ratio=0.4,
-               weights=_mix(BALANCED, NEW_ITEMS, scale={"water_jug": 2, "canned_food": 2, "first_aid_kit": 2})),
+               weights=_mix(BALANCED, {"sandwich": 2, "fruit": 2, "bottle": 2, "water_bottle": 2})),
     MapProfile("armory", "beaucoup d'armes et de munitions, peu de soins",
                buildings=(4, 6), item_count=(18, 26),
                building_themes=("armory", "armory", "industrial", "shop"),
-               weights=_mix(BALANCED, NEW_ITEMS, scale={"kitchen_knife": 3, "baseball_bat": 3, "crowbar": 3,
-                                                      "slingshot": 3, "crossbow": 3, "nail_gun": 3, "pebble": 3,
-                                                      "bolt": 3, "nail": 3, "potato_launcher": 2, "potato": 2,
-                                                      "medicine": 0.3, "bandage": 0.3, "first_aid_kit": 0.3})),
+               weights=_mix(BALANCED, {"rolling_pin": 4, "potato_launcher": 4, "potato": 4,
+                                       "reinforced_spring": 3, "medicine": 0.3, "bandage": 0.3})),
+    MapProfile("famine", "nourriture et boissons rares, beaucoup de matériaux inutiles",
+               item_count=(12, 18),
+               weights=_mix(BALANCED, {"sandwich": 0.3, "fruit": 0.3, "bottle": 0.3, "water_bottle": 0.3,
+                                       "wood": 3, "metal": 3, "cloth": 3, "plastic": 3})),
     MapProfile("maze", "petite carte encombrée : nombreux bâtiments et obstacles, couloirs étroits",
                size=(30.0, 34.0), buildings=(6, 9), building_size=(3.5, 6.0), obstacles=(12, 18),
-               trees=(4, 8), moving=(2, 4), inside_ratio=0.75, weights=_mix(BALANCED, NEW_ITEMS)),
-    MapProfile("toxic", "zones toxiques, aliments avariés, soins abondants",
+               trees=(4, 8), moving=(2, 4), inside_ratio=0.75, weights=dict(BALANCED)),
+    MapProfile("toxic", "zones toxiques, soins abondants",
                hazards=(4, 7), hazard_damage=(0.006, 0.02), steam=(2, 4), fog_probability=0.6,
-               weights=_mix(BALANCED, NEW_ITEMS, scale={"spoiled_meat": 4, "first_aid_kit": 3, "medicine": 2,
-                                                      "painkiller": 2})),
+               weights=_mix(BALANCED, {"medicine": 3, "bandage": 3})),
     MapProfile("frozen", "glace et eau, brouillard fréquent, faim x1.3",
                ice=(3, 6), water=(1, 2), fog_probability=0.8, physiology=1.3,
-               weights=_mix(BALANCED, NEW_ITEMS, scale={"soup": 3, "canned_food": 2})),
+               weights=_mix(BALANCED, {"sandwich": 2, "fruit": 2})),
     MapProfile("dark", "nuit noire et brouillard permanents, vapeur",
-               fog_probability=1.0, low_light_probability=1.0, steam=(2, 4), weights=_mix(BALANCED, NEW_ITEMS)),
+               fog_probability=1.0, low_light_probability=1.0, steam=(2, 4), weights=dict(BALANCED)),
     MapProfile("tiny", "carte 20x20 bondée, peu d'objets",
                size=(20.0, 22.0), buildings=(2, 3), building_size=(4.0, 5.5), obstacles=(3, 6), trees=(1, 2),
-               item_count=(8, 12), weights=_mix(BALANCED, NEW_ITEMS)),
+               item_count=(8, 12), weights=dict(BALANCED)),
     MapProfile("huge", "carte 56x56 clairsemée, objets dispersés dehors",
                size=(52.0, 56.0), buildings=(5, 8), obstacles=(12, 20), trees=(6, 12), water=(1, 3),
-               item_count=(18, 28), inside_ratio=0.35, weights=_mix(BALANCED, NEW_ITEMS)),
-    MapProfile("new_only", "uniquement les nouveaux objets (aucun objet du kit)",
-               weights=dict(NEW_ITEMS)),
+               item_count=(18, 28), inside_ratio=0.35, weights=dict(BALANCED)),
 )}
 
 BUILDING_NAMES = {

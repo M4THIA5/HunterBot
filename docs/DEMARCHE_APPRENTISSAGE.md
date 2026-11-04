@@ -204,14 +204,13 @@ L'arène finale étant inconnue, `training/worldgen.py` génère des cartes selo
   - `frozen` : glace ;
   - `dark` : obscurité ;
   - `tiny`, `huge` : très petite ou très grande carte ;
-  - `new_only` : uniquement les nouveaux objets.
-- **Nouvelles armes :**
-  - au corps à corps : couteau, batte, pied-de-biche, chacun avec sa portée ;
-  - à distance : fronde, arbalète, cloueuse, chacune avec sa propre munition, sa vitesse et son bruit.
-- **Nouveaux consommables :** conserve, pastèque (nourrit et hydrate), soupe, viande avariée (toxique), soda et boisson énergisante, lait, trousse de secours.
-- **Nouvelles conditions :** zones `HAZARD` qui infligent des dégâts à chaque tick, zones `ICE` qui ralentissent et coûtent de l'énergie, brouillard et faible luminosité aléatoires.
+  - `famine` : nourriture et boissons rares, beaucoup de matériaux inutiles.
+- **Objets :** uniquement ceux du kit. Seule leur **quantité** varie d'un profil à l'autre, comme dans l'arène finale.
+- **Conditions :** zones `HAZARD` qui infligent des dégâts à chaque tick, zones `ICE` qui ralentissent et coûtent de l'énergie, brouillard et faible luminosité aléatoires, taille de carte, rythme de la soif et de la faim.
 
-**Ce que ces cartes ont révélé :** l'agent supposait implicitement les armes du kit. Il ne reconnaissait pas une arbalète comme arme à distance et ne vérifiait pas que la munition correspondait à l'arme. La reconnaissance repose maintenant sur les propriétés de l'objet (`attack`, `ammo_type`), avec des mots-clés en repli. Une arme à distance n'est considérée comme utilisable qu'avec une munition compatible.
+**Historique :** une première version ajoutait de nouvelles armes (couteau, batte, arbalète, fronde…) et de nouveaux consommables, avec un profil `new_only` réservé à ces objets. Elle a été retirée, car l'arène finale ne contient que les objets définis au début du projet. Les résultats `maps_eval`, `combat_ab` et `counter_ab` ont été obtenus sur cette première version.
+
+**Ce que cette version a révélé :** l'agent supposait implicitement les noms des armes du kit, et ne vérifiait pas que la munition correspondait à l'arme. La reconnaissance repose maintenant sur les propriétés de l'objet (`attack`, `ammo_type`), avec des mots-clés en repli. Une arme à distance n'est considérée comme utilisable qu'avec une munition compatible. C'est sans effet sur les objets du kit, mais plus robuste si leurs `properties` sont partielles.
 
 ### 7.5 Combats : fuite prolongée, limitation, riposte
 
@@ -250,8 +249,8 @@ Options présentes mais désactivées, faute de gain mesuré : limitation des co
 1. **Mesurer la régularité, pas seulement la moyenne.** Le p10 a souvent contredit la moyenne : une variante peut survivre plus longtemps en moyenne tout en mourant plus souvent très tôt.
 2. **Le déterminisme et un nombre suffisant de seeds sont des prérequis.** Sans eux, plusieurs « gains » observés sur 50 seeds n'étaient que du bruit.
 3. **Le Q-learning tabulaire sur options apprend des réflexes, pas une stratégie.** Il bat les règles là où la réaction immédiate compte (combat), mais un état aussi grossier ne lui permet pas de planifier la collecte de ressources. L'a priori scripté évite d'oublier ce que l'on sait déjà, sans suffire à dépasser les règles.
-4. **Les diagnostics hors ligne trouvent les vrais problèmes.** Les coups dans le dos, la fuite trop courte et les armes non reconnues ont tous été trouvés en rejouant les morts, pas en réglant des hyperparamètres.
-5. **Varier les cartes est indispensable pour généraliser.** Les cartes procédurales ont révélé des hypothèses implicites (armes du kit, munitions) qui auraient coûté cher dans l'arène finale.
+4. **Les diagnostics hors ligne trouvent les vrais problèmes.** Les coups dans le dos et la fuite trop courte ont tous été trouvés en rejouant les morts, pas en réglant des hyperparamètres.
+5. **Varier les cartes est indispensable pour généraliser.** Les cartes procédurales ont révélé des hypothèses implicites (noms d'armes, munitions) et des morts précoces que la carte du kit ne montrait pas.
 
 ---
 
@@ -259,7 +258,7 @@ Options présentes mais désactivées, faute de gain mesuré : limitation des co
 
 ```bash
 source .venv/bin/activate
-python -m unittest discover -s tests -v                       # 27 tests
+python -m unittest discover -s tests -v                       # 24 tests
 python -m training.train --stages 0 1 2 3 --episodes 1500 2500 3000 2000 \
        --prior-bonus 1.5 --out results/phase4_runX              # entraînement Q-learning
 python -m training.evaluate --agents scripted scripted_nocounter \

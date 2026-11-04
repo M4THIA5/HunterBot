@@ -5,7 +5,7 @@ from __future__ import annotations
 import unittest
 from random import Random
 
-from rl_arena.arena_api import Action, Ingest, Movement, ObjectKind, Shoot, Use
+from rl_arena.arena_api import Action, Movement, ObjectKind, Shoot
 from rl_arena.geometry import Rect
 from rl_arena.world import AreaEffect, InventoryEntry
 
@@ -47,6 +47,16 @@ class WorldgenTests(unittest.TestCase):
                     env.register_agent(f"a{i}")
                 env.reset(seed=seed)  # lève si moins de 8 points d'apparition libres
 
+    def test_only_kit_items_are_generated(self):
+        kit = {"sandwich", "fruit", "bottle", "water_bottle", "bandage", "medicine", "rolling_pin",
+               "potato_launcher", "potato", "reinforced_spring", "wood", "metal", "cloth", "plastic"}
+        self.assertLessEqual(set(CATALOG), kit)
+        for name, prof in PROFILES.items():
+            rng = Random(0)
+            world = generate(prof, prof.config(rng), rng)
+            labels = {o.properties.get("label") for o in world.objects if o.portable}
+            self.assertLessEqual(labels, kit, name)
+
     def test_generation_is_deterministic(self):
         prof = PROFILES["town"]
         w1 = generate(prof, prof.config(Random(3)), Random(4))
@@ -64,30 +74,6 @@ class WorldgenTests(unittest.TestCase):
 
 
 class EngineExtensionTests(unittest.TestCase):
-    def test_new_melee_weapon_damages_in_reach(self):
-        env = _duel(1.4)
-        st = env._runtimes["a"].state
-        st.inventory[0] = _entry(env, "baseball_bat")  # portée 0.75
-        st.equipped_slot = 0
-        ref = next(d.ref for d in env._last_observations["a"].vision if d.kind is ObjectKind.AGENT)
-        env.step({"a": Action(interaction=Use(0, ref))})
-        self.assertLess(env._runtimes["b"].state.health, 1.0)
-
-    def test_ranged_weapon_needs_matching_ammo(self):
-        env = _duel(4.0)
-        st = env._runtimes["a"].state
-        st.inventory[0] = _entry(env, "slingshot")
-        st.inventory[1] = _entry(env, "potato")  # mauvaise munition
-        st.equipped_slot = 0
-        env.step({"a": Action(interaction=Shoot(0.0))})
-        self.assertEqual(len(env._projectiles), 0)
-        st.inventory[2] = _entry(env, "pebble")
-        env.step({"a": Action(interaction=Shoot(0.0))})
-        self.assertNotIn(2, st.inventory)
-        for _ in range(4):
-            env.step({})
-        self.assertLess(env._runtimes["b"].state.health, 1.0)
-
     def test_kit_weapons_still_work(self):
         env = _duel(4.0)
         st = env._runtimes["a"].state
@@ -108,28 +94,6 @@ class EngineExtensionTests(unittest.TestCase):
         env.step({"a": Action(movement=Movement(1.0, 0.0, 3.2))})
         self.assertLessEqual(env._runtimes["a"].state.speed, 1.6 + 1e-6)
 
-    def test_new_consumables_side_effects(self):
-        env = _duel(5.0)
-        st = env._runtimes["a"].state
-        st.energy, st.hydration, st.satiety = 0.2, 0.5, 0.5
-        st.inventory[0] = _entry(env, "energy_drink")
-        st.inventory[1] = _entry(env, "watermelon")
-        st.inventory[2] = _entry(env, "spoiled_meat")
-        env.step({"a": Action(interaction=Ingest(0))})
-        self.assertGreater(st.energy, 0.5)
-        h = st.hydration
-        env.step({"a": Action(interaction=Ingest(1))})
-        self.assertGreater(st.hydration, h + 0.2)
-        env.step({"a": Action(interaction=Ingest(2))})
-        self.assertLess(st.health, 0.95)
-
-    def test_lethal_spoiled_food_does_not_crash(self):
-        env = _duel(5.0)
-        st = env._runtimes["a"].state
-        st.health = 0.05
-        st.inventory[0] = _entry(env, "spoiled_meat")
-        env.step({"a": Action(interaction=Ingest(0))})
-        self.assertFalse(st.alive)
 
 
 if __name__ == "__main__":
