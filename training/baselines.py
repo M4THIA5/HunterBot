@@ -69,6 +69,27 @@ def make_agent(name: str):
 
         r, c, v, m = name.removeprefix("scripted_doors_").split("_")
         return ScriptedAgent(door_pref=(float(r), float(c), float(v), int(m)))
+    if name == "scripted_combat_old":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(flee_hold=0, fight_limit=False)
+    if name == "scripted_nohold":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(flee_hold=0)
+    if name == "scripted_nolimit":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(fight_limit=False)
+    if name == "scripted_nocounter":
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(counter_attack=False)
+    if name.startswith("scripted_counter_"):
+        # scripted_counter_<santé min>
+        from agent.scripted import ScriptedAgent
+
+        return ScriptedAgent(counter_min_health=float(name.removeprefix("scripted_counter_")))
     if name == "scripted_nomap":
         from agent.scripted import ScriptedAgent
 

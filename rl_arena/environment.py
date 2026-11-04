@@ -77,6 +77,19 @@ class AgentStepInfo:
     damage_inflicted: float
 
 
+def _weapon_attack(props: dict) -> str | None:
+    """Mode d'attaque d'une arme : propriété `attack`, sinon armes historiques du kit."""
+    attack = props.get("attack")
+    if attack in {"melee", "ranged"}:
+        return attack
+    wt = props.get("weapon_type")
+    if wt == "rolling_pin":
+        return "melee"
+    if wt == "potato_launcher":
+        return "ranged"
+    return None
+
+
 @dataclass(frozen=True, slots=True)
 class StepResult:
     observations: dict[AgentId, Observation]
@@ -114,6 +127,9 @@ class TrainingEnvironment:
         self.seed: int | None = None
         self.rng = Random()
         self.world: GeneratedWorld | None = None
+        # Générateur de monde (config, rng) -> GeneratedWorld ; remplaçable pour
+        # l'entraînement (training/worldgen.py). Par défaut : la ville du kit.
+        self.world_generator = generate_city
         self._runtimes: dict[AgentId, _Runtime] = {}
         self._projectiles: list[Projectile] = []
         self._sounds: list[SoundEventInternal] = []
@@ -153,7 +169,7 @@ class TrainingEnvironment:
         self.rng = Random(seed)
         self.tick = 0
         self._truncated = False
-        self.world = generate_city(self.config, self.rng)
+        self.world = self.world_generator(self.config, self.rng)
         self._projectiles.clear()
         self._sounds.clear()
         self._events = {aid: [] for aid in self._runtimes}
@@ -334,6 +350,7 @@ class TrainingEnvironment:
         injury_penalty = 1.0 - min(0.45, sum(i.severity for i in st.injuries) * 0.12)
         energy_penalty = 0.35 + 0.65 * st.energy
         water_factor = self._area_factor(st.x, st.y, ObjectKind.WATER, "speed_factor", 1.0)
+        water_factor *= self._area_factor(st.x, st.y, ObjectKind.ICE, "speed_factor", 1.0)
         max_speed = self.config.agent.max_speed * injury_penalty * energy_penalty * water_factor
         speed = clamp(movement.speed, 0.0, max_speed)
         return dx * speed, dy * speed, speed
@@ -572,10 +589,17 @@ class TrainingEnvironment:
         used = False
         if entry.kind is ObjectKind.FOOD:
             st.satiety = clamp(st.satiety + float(entry.properties.get("nutrition", 0.25)), 0, 1)
+            if "hydration" in entry.properties:  # fruit juteux, soupe...
+                st.hydration = clamp(st.hydration + float(entry.properties["hydration"]), 0, 1)
             used = True
         elif entry.kind is ObjectKind.DRINK:
             st.hydration = clamp(st.hydration + float(entry.properties.get("hydration", 0.30)), 0, 1)
+            if "nutrition" in entry.properties:
+                st.satiety = clamp(st.satiety + float(entry.properties["nutrition"]), 0, 1)
             used = True
+        if used and entry.kind in {ObjectKind.FOOD, ObjectKind.DRINK}:
+            if "energy" in entry.properties:  # boisson énergisante...
+                st.energy = clamp(st.energy + float(entry.properties["energy"]), 0, 1)
         elif entry.kind is ObjectKind.MEDICINE:
             medical_type = entry.properties.get("medical_type")
             if medical_type == "bandage":
@@ -594,6 +618,10 @@ class TrainingEnvironment:
             if st.equipped_slot == slot:
                 st.equipped_slot = None
             self._events[aid].append(Event(EventKind.ITEM_USED, properties={"slot": slot}))
+            # Aliment avarié : dégâts APRÈS retrait de l'objet (la mort vide l'inventaire).
+            toxicity = float(entry.properties.get("toxicity", 0.0))
+            if toxicity > 0:
+                self._apply_damage(aid, toxicity, None, {aid: 0.0})  # hors boucle de récompense
 
     def _use(self, aid: str, use: Use) -> tuple[str, float, str | None] | None:
         st = self._runtimes[aid].state
@@ -602,7 +630,7 @@ class TrainingEnvironment:
         if entry is None:
             return None
 
-        if entry.kind is ObjectKind.WEAPON and entry.properties.get("weapon_type") == "rolling_pin":
+        if entry.kind is ObjectKind.WEAPON and _weapon_attack(entry.properties) == "melee":
             if use.target_ref is None:
                 return None
             uid = self._resolve_ref(aid, use.target_ref)
@@ -612,10 +640,10 @@ class TrainingEnvironment:
             target = self._runtimes[target_id].state
             if target is None or not target.alive:
                 return None
-            reach = st.radius + target.radius + 0.55
+            reach = st.radius + target.radius + float(entry.properties.get("reach", 0.55))
             if torus_distance(st.x, st.y, target.x, target.y, self.config.map_width, self.config.map_height) <= reach:
                 damage = float(entry.properties.get("damage", 0.12))
-                self._events[aid].append(Event(EventKind.ITEM_USED, properties={"weapon": "rolling_pin"}))
+                self._events[aid].append(Event(EventKind.ITEM_USED, properties={"weapon": str(entry.properties.get("weapon_type", "melee"))}))
                 self._sounds.append(SoundEventInternal(target.x, target.y, SoundKind.IMPACT, 0.55, aid))
                 return target_id, damage, aid
 
@@ -638,9 +666,10 @@ class TrainingEnvironment:
         if st.equipped_slot is None:
             return
         weapon = st.inventory.get(st.equipped_slot)
-        if weapon is None or weapon.kind is not ObjectKind.WEAPON or weapon.properties.get("weapon_type") != "potato_launcher":
+        if weapon is None or weapon.kind is not ObjectKind.WEAPON or _weapon_attack(weapon.properties) != "ranged":
             return
-        ammo_slot = next((slot for slot, item in sorted(st.inventory.items()) if item.kind is ObjectKind.AMMUNITION and item.properties.get("ammo_type") == "potato"), None)
+        ammo_type = weapon.properties.get("ammo_type", "potato")
+        ammo_slot = next((slot for slot, item in sorted(st.inventory.items()) if item.kind is ObjectKind.AMMUNITION and item.properties.get("ammo_type") == ammo_type), None)
         if ammo_slot is None:
             return
         del st.inventory[ammo_slot]
@@ -649,7 +678,7 @@ class TrainingEnvironment:
 
         angle = wrap_angle(st.orientation + shoot.bearing)
         dx, dy = heading_vector(angle)
-        speed = 6.0 * float(weapon.properties.get("projectile_speed_factor", 1.0))
+        speed = float(weapon.properties.get("projectile_speed", 6.0)) * float(weapon.properties.get("projectile_speed_factor", 1.0))
         self._projectiles.append(
             Projectile(
                 uid=self._alloc_uid(),
@@ -660,12 +689,12 @@ class TrainingEnvironment:
                 vy=dy * speed,
                 radius=0.13,
                 damage=float(weapon.properties.get("damage", 0.18)),
-                ttl=3.0,
-                properties={"label": "potato", "kind": "potato"},
+                ttl=float(weapon.properties.get("projectile_ttl", 3.0)),
+                properties={"label": str(ammo_type), "kind": str(ammo_type)},
             )
         )
         self._events[aid].append(Event(EventKind.SHOT_FIRED))
-        self._sounds.append(SoundEventInternal(st.x, st.y, SoundKind.GUNSHOT, 1.0, aid))
+        self._sounds.append(SoundEventInternal(st.x, st.y, SoundKind.GUNSHOT, float(weapon.properties.get("loudness", 1.0)), aid))
 
     def _throw(self, aid: str, throw: Throw) -> None:
         st = self._runtimes[aid].state
@@ -762,6 +791,7 @@ class TrainingEnvironment:
             carry_factor = 1.0 + 0.65 * (st.carried_mass / max(0.001, self.config.agent.max_carry_mass))
             injury_factor = 1.0 + 0.25 * sum(i.severity for i in st.injuries)
             water_factor = self._area_factor(st.x, st.y, ObjectKind.WATER, "energy_factor", 1.0)
+            water_factor *= self._area_factor(st.x, st.y, ObjectKind.ICE, "energy_factor", 1.0)
             movement_cost = cfg.movement_energy_cost_scale * (speed_ratio ** 2) * carry_factor * injury_factor * water_factor
             st.energy = clamp(st.energy - movement_cost, 0, 1)
 
@@ -770,6 +800,12 @@ class TrainingEnvironment:
                 st.energy = clamp(st.energy + cfg.rest_energy_gain_per_tick * (0.25 + 0.75 * resource_factor), 0, 1)
             elif requested.get(aid, 0.0) < 0.2:
                 st.energy = clamp(st.energy + cfg.idle_energy_gain_per_tick * resource_factor, 0, 1)
+
+            hazard = self._hazard_damage(st.x, st.y)
+            if hazard > 0:
+                self._apply_damage(aid, hazard, None, rewards)
+                if not st.alive:
+                    continue
 
             bleeding = sum(i.bleeding * i.severity for i in st.injuries) * 0.004
             if bleeding > 0:
@@ -1105,6 +1141,12 @@ class TrainingEnvironment:
                 obj.y = wrap_pos(origin_y + amp * sin(phase), self.config.map_height)
             else:
                 obj.x = wrap_pos(origin_x + amp * sin(phase), self.config.map_width)
+
+    def _hazard_damage(self, x: float, y: float) -> float:
+        if self.world is None:
+            return 0.0
+        return sum(float(a.properties.get("damage_per_tick", 0.0)) for a in self.world.areas
+                   if a.kind is ObjectKind.HAZARD and point_in_rect(x, y, a.rect))
 
     def _area_factor(self, x: float, y: float, kind: ObjectKind, key: str, default: float) -> float:
         if self.world is None:

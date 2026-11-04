@@ -90,18 +90,42 @@ def equipped_item(obs: Observation) -> InventoryItem | None:
     return next((i for i in s.inventory if i.slot == s.equipped_slot), None)
 
 
+RANGED_WORDS = ("launcher", "gun", "bow", "sling", "rifle", "pistol", "blaster", "cannon", "shooter", "dart")
+
+
 def weapon_mode(item: InventoryItem | None) -> str | None:
-    """'ranged', 'melee' ou None, d'après les propriétés perçues."""
+    """'ranged', 'melee' ou None, d'après les propriétés perçues.
+
+    Ordre : propriété explicite (`attack`), présence d'un type de munition
+    (`ammo_type` : arme à projectiles), puis mots-clés du type ou de
+    l'étiquette ; à défaut, mêlée.
+    """
     if item is None or item.kind is not ObjectKind.WEAPON:
         return None
-    wt = str(item.properties.get("weapon_type", item.properties.get("label", "")))
-    if "launcher" in wt or "gun" in wt or "bow" in wt:
+    props = item.properties or {}
+    attack = props.get("attack")
+    if attack in ("melee", "ranged"):
+        return attack
+    if props.get("ammo_type") is not None:
+        return "ranged"
+    wt = f"{props.get('weapon_type', '')} {props.get('label', '')}".lower()
+    if any(w in wt for w in RANGED_WORDS):
         return "ranged"
     return "melee"
 
 
-def has_ammo(obs: Observation) -> bool:
-    return any(i.kind is ObjectKind.AMMUNITION for i in obs.self_state.inventory)
+def ammo_matches(weapon: InventoryItem | None, ammo: InventoryItem) -> bool:
+    """Munition utilisable par cette arme : même `ammo_type` si les deux sont connus."""
+    want = (weapon.properties or {}).get("ammo_type") if weapon is not None else None
+    have = (ammo.properties or {}).get("ammo_type")
+    return want is None or have is None or want == have
+
+
+def has_ammo(obs: Observation, weapon: InventoryItem | None = None) -> bool:
+    """Munition assortie à `weapon` (par défaut : l'arme équipée) dans l'inventaire."""
+    if weapon is None:
+        weapon = equipped_item(obs)
+    return any(i.kind is ObjectKind.AMMUNITION and ammo_matches(weapon, i) for i in obs.self_state.inventory)
 
 
 def is_armed(obs: Observation) -> bool:
@@ -182,6 +206,13 @@ class Memory:
     spatial: object = None
     # Coup reçu d'un attaquant invisible (désactivable pour A/B).
     use_blind_hit: bool = True
+    # Fuite maintenue tant qu'on a été frappé dans les `flee_hold` derniers ticks (0 : désactivé).
+    flee_hold: int = 15
+    # Mêlée seulement avec l'avantage ou acculé.
+    # Armé et frappé dans le dos : se retourner et riposter plutôt que fuir.
+    counter_attack: bool = False  # A/B results/counter_ab.md : neutre à légèrement négatif
+    counter_min_health: float = 0.3
+    fight_limit: bool = False  # A/B results/combat_ab.md : neutre à légèrement négatif
     # Fuite non interrompue par un choix « calme » + exploration dans le cap de fuite.
     # "off", "always" ou "serious" (dégâts récents ou adversaire armé).
     flee_commit: str = "serious"  # meilleure survie moyenne sur 200 seeds (results/hostile_ab.md)

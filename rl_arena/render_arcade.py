@@ -377,6 +377,17 @@ class ArenaWindow(arcade.Window):
                         start += stripe * 1.1
                     yy += stripe
                     phase += 1
+            elif area.kind is ObjectKind.HAZARD:
+                arcade.draw_lbwh_rectangle_filled(x, y, w, h, (214, 84, 38, 110))
+                arcade.draw_lbwh_rectangle_outline(x, y, w, h, (244, 152, 52, 220), 2)
+                step = max(8, 0.5 * scale)
+                xx = x
+                while xx < x + w:
+                    arcade.draw_line(xx, y, min(xx + h, x + w), min(y + (x + w - xx), y + h), (250, 196, 70, 120), 2)
+                    xx += step
+            elif area.kind is ObjectKind.ICE:
+                arcade.draw_lbwh_rectangle_filled(x, y, w, h, (196, 228, 244, 150))
+                arcade.draw_lbwh_rectangle_outline(x, y, w, h, (240, 250, 255, 220), 1.5)
             elif area.kind is ObjectKind.STEAM:
                 arcade.draw_lbwh_rectangle_filled(x, y, w, h, (213, 221, 223, 38))
                 for fx, fy, rr in ((0.22, 0.30, 0.22), (0.55, 0.62, 0.30), (0.78, 0.35, 0.18), (0.35, 0.78, 0.16)):
@@ -517,6 +528,12 @@ class ArenaWindow(arcade.Window):
             arcade.draw_lbwh_rectangle_filled(sx - r * 0.95, sy - r * 0.32, r * 1.65, r * 0.64, (78, 115, 83))
             arcade.draw_circle_outline(sx + r * 0.73, sy, r * 0.36, (188, 207, 187), 2)
             arcade.draw_line(sx - r * 0.35, sy - r * 0.3, sx - r * 0.72, sy - r * 0.95, (108, 75, 49), 4)
+        elif obj.kind is ObjectKind.WEAPON and obj.properties.get("attack") == "melee":
+            arcade.draw_line(sx - r, sy - r * 0.6, sx + r, sy + r * 0.6, (190, 196, 204), max(3, int(r * 0.35)))
+            arcade.draw_line(sx - r * 1.2, sy - r * 0.72, sx - r * 0.6, sy - r * 0.36, (100, 63, 37), 4)
+        elif obj.kind is ObjectKind.WEAPON and obj.properties.get("attack") == "ranged":
+            arcade.draw_lbwh_rectangle_filled(sx - r * 0.95, sy - r * 0.28, r * 1.7, r * 0.56, (92, 84, 140))
+            arcade.draw_line(sx - r * 0.3, sy - r * 0.3, sx - r * 0.6, sy - r * 0.95, (70, 60, 50), 4)
         elif obj.kind is ObjectKind.AMMUNITION:
             arcade.draw_circle_filled(sx, sy, r * 0.80, (169, 125, 72))
             for dx, dy in ((-0.3, 0.2), (0.25, -0.28), (0.25, 0.35)):

@@ -152,12 +152,12 @@ def best_weapon(obs: Observation) -> InventoryItem | None:
     weapons = items_of(obs.self_state.inventory, ObjectKind.WEAPON)
     if not weapons:
         return None
-    ammo = has_ammo(obs)
 
     def score(w: InventoryItem) -> float:
         mode = weapon_mode(w)
         dmg = prop_float(w.properties, "damage", 0.1)
-        return (2.0 if (mode == "ranged" and ammo) else 1.0 if mode == "melee" else 0.0) + dmg
+        # Arme à distance sans munition assortie : inutilisable.
+        return (2.0 if (mode == "ranged" and has_ammo(obs, w)) else 1.0 if mode == "melee" else 0.0) + dmg
 
     return max(weapons, key=score)
 
@@ -170,6 +170,8 @@ def wanted_item(obs: Observation, mem: Memory) -> object | None:
     has_weapon = ObjectKind.WEAPON in inv_kinds
     weapon_labels = {i.properties.get("label") for i in inv if i.kind is ObjectKind.WEAPON}
     ranged = any(weapon_mode(i) == "ranged" for i in inv)
+    ranged_types = {i.properties.get("ammo_type") for i in inv
+                    if weapon_mode(i) == "ranged" and i.properties.get("ammo_type") is not None}
     best, best_score = None, 1e9
     for d in obs.vision:
         if d.kind not in USEFUL_KINDS or d.kind in mem.kind_cooldown:
@@ -181,6 +183,9 @@ def wanted_item(obs: Observation, mem: Memory) -> object | None:
             continue  # doublon inutile (poids)
         if d.kind is ObjectKind.AMMUNITION and inv_kinds.count(ObjectKind.AMMUNITION) >= (6 if ranged else 3):
             continue
+        if d.kind is ObjectKind.AMMUNITION and ranged_types and d.properties.get("ammo_type") is not None \
+                and d.properties.get("ammo_type") not in ranged_types:
+            continue  # munition d'une autre arme que les nôtres
         priority = 0.0
         if d.kind is ObjectKind.DRINK:
             priority = -2.0 * (1.0 - s.hydration)
@@ -398,6 +403,10 @@ class Flee(Option):
         return mem.threat_heading is not None and mem.threat_active(6)
 
     def done(self, obs: Observation, mem: Memory) -> bool:
+        if mem.flee_hold and mem.under_attack(mem.flee_hold) and obs.self_state.energy > 0.1:
+            # Frappé récemment : le poursuivant est sans doute juste derrière, hors du
+            # champ de vision ; ralentir maintenant, c'est se faire rattraper.
+            return False
         return self.ticks >= self.max_ticks or not mem.threat_active(4)
 
     def act(self, obs: Observation, mem: Memory) -> Action:
@@ -416,6 +425,14 @@ class Flee(Option):
         return Action(movement=mv, rotation=rot)
 
 
+COUNTER_WINDOW = 2  # ticks après un coup invisible pendant lesquels on peut riposter
+
+
+def counter_ready(obs: Observation, mem: Memory) -> bool:
+    return mem.counter_attack and obs.tick - mem.blind_hit_tick <= COUNTER_WINDOW \
+        and obs.self_state.health >= mem.counter_min_health
+
+
 class Fight(Option):
     """Fait face à l'agent le plus proche et attaque avec l'arme équipée."""
 
@@ -423,17 +440,22 @@ class Fight(Option):
     max_ticks = 5
 
     def available(self, obs: Observation, mem: Memory) -> bool:
-        return mem.fight_cooldown == 0 and is_armed(obs) and any(d.kind is ObjectKind.AGENT for d in obs.vision)
+        if mem.fight_cooldown > 0 or not is_armed(obs):
+            return False
+        # Riposte : frappé à l'instant par un attaquant invisible (dans le dos).
+        return any(d.kind is ObjectKind.AGENT for d in obs.vision) or counter_ready(obs, mem)
 
     def start(self, obs: Observation, mem: Memory) -> None:
         super().start(obs, mem)
         self.lost = 0
+        # En riposte, laisser le temps de faire demi-tour (π rad/s : ~2 ticks).
+        self.max_lost = 3 if counter_ready(obs, mem) else 2
         if mem.tick - mem.fight_last_tick > 3:  # nouvel engagement
             mem.fight_best, mem.fight_no_progress = 99.0, 0
         self.strafe = 1.0 if obs.tick % 2 else -1.0
 
     def done(self, obs: Observation, mem: Memory) -> bool:
-        return self.ticks >= self.max_ticks or self.lost >= 2 or not is_armed(obs) or mem.fight_cooldown > 0
+        return self.ticks >= self.max_ticks or self.lost >= self.max_lost or not is_armed(obs) or mem.fight_cooldown > 0
 
     def act(self, obs: Observation, mem: Memory) -> Action:
         target = nearest(obs, {ObjectKind.AGENT})

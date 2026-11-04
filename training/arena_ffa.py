@@ -3,6 +3,7 @@
 Usage :
     python -m training.arena_ffa                 # une partie (seed 10000000) détaillée
     python -m training.arena_ffa --games 100     # classement sur 100 parties
+    python -m training.arena_ffa --gui [--seed N] # partie visualisée (Arcade)
 
 Carte et physiologie du kit, max_ticks=3000, 8 agents (limite du moteur).
 La cause de mort lit l'état interne du moteur : diagnostic uniquement.
@@ -94,7 +95,19 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--games", type=int, default=1)
     p.add_argument("--seed", type=int, default=EVAL_SEEDS[0])
+    p.add_argument("--gui", action="store_true", help="visualiser la partie (Tab : changer d'agent suivi)")
     a = p.parse_args()
+
+    if a.gui:
+        from rl_arena.render_arcade import run_arcade
+
+        env = ArenaEnvironment(EnvironmentConfig(max_ticks=LONG_EPISODE), render=True)
+        for aid in ROSTER:
+            env.register_agent(aid, _make(aid))
+        env.reset(seed=a.seed)
+        print(f"Partie seed {a.seed} : " + ", ".join(ROSTER))
+        run_arcade(env)
+        return
 
     if a.games == 1:
         print(f"Partie seed {a.seed}, {len(ROSTER)} agents, max {LONG_EPISODE} ticks")

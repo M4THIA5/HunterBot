@@ -92,7 +92,16 @@ def scripted_choice(obs: Observation, mem: Memory, opts: dict[str, Option]) -> s
 
     # 1. Danger immédiat.
     if attacked or touched or closest < 2.5:
-        if avail("FIGHT") and (ranged or closest < 1.6 or s.health > 0.5):
+        if mem.fight_limit:
+            # Mêlée seulement avec l'avantage (bonne santé, adversaire non perçu armé)
+            # ou acculé (impossible de fuir) ; le tir à distance reste permis.
+            cornered = not avail("FLEE")
+            melee_ok = (s.health >= 0.6 and not mem.threat_armed) or cornered
+            if avail("FIGHT") and (ranged or melee_ok):
+                return "FIGHT"
+        elif avail("FIGHT") and (ranged or closest < 1.6 or s.health > 0.5
+                                 or (mem.counter_attack and mem.tick - mem.blind_hit_tick <= 2
+                                     and s.health >= mem.counter_min_health)):
             return "FIGHT"
         if avail("FLEE"):
             return "FLEE"

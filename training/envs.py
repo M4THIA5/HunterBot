@@ -46,14 +46,16 @@ class EpisodeSpec:
     config: EnvironmentConfig
     opponents: Opponents
     loadouts: dict[str, Loadout] = field(default_factory=dict)
+    world_generator: Callable | None = None  # None : ville du kit (training/worldgen.py sinon)
 
 
-def build_env(spec: EpisodeSpec, student=None, student_loadout: Loadout | None = None) -> ArenaEnvironment:
+def build_env(spec: EpisodeSpec, student=None, student_loadout: Loadout | None = None,
+              render: bool = False) -> ArenaEnvironment:
     """`student=None` : agent contrôlé de l'extérieur (boucle d'entraînement)."""
     loadouts = dict(spec.loadouts)
     if student_loadout:
         loadouts[STUDENT_ID] = student_loadout
-    env = ArenaEnvironment(spec.config, loadouts=loadouts)
+    env = ArenaEnvironment(spec.config, render=render, loadouts=loadouts, world_generator=spec.world_generator)
     env.register_agent(STUDENT_ID, student)
     for aid, bot in spec.opponents:
         env.register_agent(aid, bot)
@@ -122,9 +124,32 @@ def _big_map(seed: int) -> EpisodeSpec:
     return spec
 
 
+def map_spec(profile: str, seed: int) -> EpisodeSpec:
+    """Carte procédurale du profil `profile` (training/worldgen.py) ; adversaires du kit
+    + un chasseur agressif armé une fois sur deux. Configuration tirée de la seed."""
+    from training.worldgen import PROFILES
+
+    prof = PROFILES[profile]
+    rng = Random(seed * 7919 + 17)
+    opponents: Opponents = [("bot_random", RandomBot(seed=101 + seed)), ("bot_hunter", HunterBot(seed=202 + seed)),
+                            ("hunter0", AggressiveHunter(seed=303 + seed))]
+    loadouts: dict[str, Loadout] = {}
+    if rng.random() < 0.5:
+        loadouts["hunter0"] = launcher_loadout(rng.randint(2, 6)) if rng.random() < 0.5 else melee_loadout()
+    return EpisodeSpec(prof.config(rng, LONG_EPISODE), opponents, loadouts, prof.generator())
+
+
+def _map_scenarios() -> list[Scenario]:
+    from training.worldgen import PROFILES
+
+    return [Scenario(f"map_{name}", (lambda s, n=name: map_spec(n, s)), f"carte « {name} » : {p.description}")
+            for name, p in PROFILES.items()]
+
+
 SCENARIOS: dict[str, Scenario] = {
     s.name: s
     for s in (
+        *_map_scenarios(),
         Scenario("default", _default, "kit fourni, max_ticks=3000"),
         Scenario("hostile", _hostile, "4 AggressiveHunter armés + 2 copies scriptées"),
         Scenario("hostile_v1", _hostile_v1, "4 HunterBot non armés (phase 1)"),
@@ -134,6 +159,7 @@ SCENARIOS: dict[str, Scenario] = {
     )
 }
 MAIN_SCENARIOS = ("default", "hostile", "scarce", "blind", "big_map")
+MAP_SCENARIOS = tuple(name for name in SCENARIOS if name.startswith("map_"))
 
 # Seeds d'évaluation : disjointes des seeds d'entraînement [0, 1_000_000).
 EVAL_SEEDS = range(10_000_000, 10_000_200)

@@ -101,9 +101,12 @@ def melee_loadout() -> Loadout:
 class ArenaEnvironment(TrainingEnvironment):
     """TrainingEnvironment avec équipements de départ par agent."""
 
-    def __init__(self, config=None, render: bool = False, loadouts: dict[str, Loadout] | None = None):
+    def __init__(self, config=None, render: bool = False, loadouts: dict[str, Loadout] | None = None,
+                 world_generator=None):
         super().__init__(config, render)
         self.loadouts = loadouts or {}
+        if world_generator is not None:
+            self.world_generator = world_generator
 
     def reset(self, seed: int | None = None):
         super().reset(seed)
