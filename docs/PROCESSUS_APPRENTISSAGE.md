@@ -319,7 +319,7 @@ On conserve, pour chaque évaluation, la Q-table correspondante : la version liv
 ## 9. Livraison dans `student_agent.py`
 
 - La Q-table est sérialisée en JSON (clé = état encodé en chaîne, valeur = liste de Q par option) dans un fichier livré avec l'agent, chargé via un chemin relatif à `__file__`.
-- `MyAgent.act` : encode l'état, choisit `argmax Q` (ε = 0) parmi les options valides, délègue au contrôleur bas niveau. Pour un état jamais vu, repli sur la politique scriptée.
+- `MyAgent.act` : encode l'état, choisit `argmax Q` (ε = 0) parmi les options valides, délègue au contrôleur bas niveau. Pour un état jamais vu, décision des états connus les plus proches dans la Q-table (mode `pure`, voir `DEMARCHE_APPRENTISSAGE.md` §8) ; la politique scriptée n'intervient plus dans l'agent livré.
 - `MyAgent.reset` réinitialise uniquement la mémoire de l'épisode (pas la Q-table).
 - Tout `act()` est protégé par un `try/except` qui renvoie une action sûre (`Action(rest=True)` ou une fuite simple) : une exception dans l'arène finale ne doit jamais coûter l'épisode.
 - Imports limités à `rl_arena.arena_api` et à la bibliothèque standard (+ nos propres modules).

@@ -138,7 +138,7 @@ Paramètres du run 6 : étapes 0 à 3 avec 1 500, 2 500, 3 000 et 2 000 épisode
 
 **Agent hybride** (`agent/hybrid.py`) : la politique scriptée quand tout est calme, la Q-table dès qu'une menace est vue ou entendue. La meilleure variante, déclenchée par une menace entendue et maintenue 10 ticks, atteint 1 283 contre 1 320. Elle reste une expérience.
 
-**Bilan de l'apprentissage par renforcement :** la Q-table apprend des réflexes de combat utiles, ce qui se voit nettement sur `hostile`. Elle généralise moins bien que les règles pour la gestion des ressources. Avec 14 caractéristiques discrètes, l'état est trop grossier pour distinguer les situations où explorer paie : l'apprentissage améliore localement, mais dégrade la régularité (p10). **Le score combiné a donc été jugé déterminant : la politique livrée est la politique scriptée, et les enseignements de l'apprentissage y ont été réintégrés à la main.**
+**Bilan de l'apprentissage par renforcement :** la Q-table apprend des réflexes de combat utiles, ce qui se voit nettement sur `hostile`. Elle généralise moins bien que les règles pour la gestion des ressources. Avec 14 caractéristiques discrètes, l'état est trop grossier pour distinguer les situations où explorer paie : l'apprentissage améliore localement, mais dégrade la régularité (p10). **Le score combiné a donc été jugé déterminant : la politique livrée est la politique scriptée, et les enseignements de l'apprentissage y ont été réintégrés à la main.** Cette décision a été révisée en phase 6 (§8) : l'agent livré est désormais une Q-table seule.
 
 ---
 
@@ -229,38 +229,85 @@ La **fuite prolongée** est gardée et la limitation des combats est désactivé
 
 ---
 
-## 8. État actuel de l'agent livré
+## 8. Phase 6 : agent Q-table pur (run 7)
 
-`student_agent.MyAgent` utilise `ScriptedAgent` avec les réglages par défaut suivants :
+Le projet demande un agent **d'apprentissage par renforcement**. Or, jusqu'au run 6, la Q-table dépendait encore du scripté à trois endroits :
 
-- coups invisibles pris en compte ;
-- engagement de fuite « serious » et fuite prolongée de 15 ticks ;
-- mémoire spatiale des ressources par odométrie ;
-- approche puis abandon des portes récalcitrantes, échappement quand l'agent est coincé ;
-- reconnaissance générique des armes et des munitions ;
-- toute exception levée dans `act()` est rattrapée et remplacée par `Action(rest=True)`, pour qu'une erreur ne coûte jamais un épisode.
+- **à priori** : bonus de 1,5 sur l'option scriptée, la Q-table ne s'en écartait que si elle y voyait un avantage net ;
+- **repli** : un état jamais visité était décidé par `scripted_choice` ;
+- **exploration** : 30 % des actions aléatoires d'entraînement étaient en fait des choix scriptés.
 
-Options présentes mais désactivées, faute de gain mesuré : limitation des combats, riposte, préférence pour les portes, errance plus rectiligne, fuite face aux menaces inoffensives.
+**Mode `pure`** (`QAgent(pure=True)`, ou méta-donnée `pure` de la table ; `--pure` dans `training/train.py`) : les trois dépendances sont supprimées.
+
+- pas d'à priori ;
+- exploration ε uniforme sur les options valides ;
+- état inconnu : option aléatoire à l'entraînement ; à l'inférence, décision des **états connus les plus proches** (`QTable.nearest_greedy` : distance L1 sur les 14 caractéristiques discrètes, Q des voisins à égale distance moyennés et pondérés par leurs visites).
+
+Les options (contrôleurs bas niveau) et le masque des options valides restent écrits à la main : ce sont l'espace d'actions du SMDP, pas une politique. Un test vérifie que `scripted_choice` n'est jamais appelé en mode `pure`.
+
+**Run 7** : même plan que le run 6 (étapes 0 à 3, 1 500 / 2 500 / 3 000 / 2 000 épisodes, self-play à 3 copies), en mode `pure`. Durée : 1 h 30, 12 293 états. Version retenue : fin de l'étape 3 (épisode 9 000).
+
+Pendant l'entraînement, l'agent pur reste derrière le scripté sur l'étape 0 (moyenne 1 620 contre 2 150 : il ne sait pas se nourrir), mais le dépasse sur les étapes 2 et 3 (morts au combat 23 % contre 33 % sur l'étape 3).
+
+**Évaluation** (5 scénarios × 50 seeds, `results/phase4_run7_pure/eval_scenarios.md`) :
+
+| | Q-table pure (run 7) | Scripté | Q-table + à priori (run 6) |
+|---|---|---|---|
+| **Score combiné (moyenne des p10)** | **1 315** | 1 235 | 1 288 |
+| Survie moyenne, tous scénarios | 1 681 | **1 869** | 1 863 |
+| `hostile` : moyenne | **1 206** | 939 | 870 |
+| `hostile` : morts au combat | **40 %** | 54 % | 66 % |
+| `default` : moyenne | 1 954 | **2 472** | 2 466 |
+| `default` : pickups par épisode | 2,5 | 8,4 | 8,5 |
+
+**Stratégie apprise : se terrer.** L'agent choisit `HIDE` 67 % du temps et `REST` 19 %. Il ne combat jamais et ne ramasse presque rien. Il évite bien les combats, mais meurt de soif ou de faim vers le tick 1 750 (médiane exactement 1 750 sur `default`, `blind` et `big_map`) et ne survit presque jamais jusqu'aux 3 000 ticks (2 à 4 %, contre 12 à 20 % pour le scripté).
+
+Cette régularité donne un p10 élevé, donc le meilleur score combiné, alors que la survie moyenne, qui reflète mieux le classement du tournoi, est environ 10 % sous celle du scripté. La faiblesse reste la même qu'aux runs précédents : la collecte de ressources, à horizon long, n'est pas apprise.
+
+**Pistes**, toujours sans scripté :
+
+- shaping de récompense sur la consommation quand le besoin est bas ;
+- une caractéristique « ressource connue en mémoire » dans l'état : aujourd'hui seul `item_visible` existe, donc `HIDE` vaut autant qu'`EXPLORE` ;
+- une étape 0 (physiologie) plus longue dans le curriculum.
 
 ---
 
-## 9. Enseignements
+## 9. État actuel de l'agent livré
+
+`student_agent.MyAgent` utilise `QAgent` en mode `pure` sur `agent/q_table.json`, copie de la Q-table retenue du run 7 :
+
+- à chaque point de décision (fin d'option ou interruption), argmax Q sur les options valides de l'état encodé ;
+- état jamais visité : décision des états connus les plus proches ;
+- table absente ou illisible : table vide, donc `EXPLORE` partout (jamais le scripté) ;
+- toute exception levée dans `act()` est rattrapée et remplacée par `Action(rest=True)`, pour qu'une erreur ne coûte jamais un épisode.
+
+La politique scriptée (`ScriptedAgent`) reste la **référence de comparaison**, avec les réglages par défaut suivants : coups invisibles pris en compte ; engagement de fuite « serious » et fuite prolongée de 15 ticks ; mémoire spatiale des ressources par odométrie ; approche puis abandon des portes récalcitrantes, échappement quand l'agent est coincé ; reconnaissance générique des armes et des munitions. Options présentes mais désactivées, faute de gain mesuré : limitation des combats, riposte, préférence pour les portes, errance plus rectiligne, fuite face aux menaces inoffensives.
+
+---
+
+## 10. Enseignements
 
 1. **Mesurer la régularité, pas seulement la moyenne.** Le p10 a souvent contredit la moyenne : une variante peut survivre plus longtemps en moyenne tout en mourant plus souvent très tôt.
 2. **Le déterminisme et un nombre suffisant de seeds sont des prérequis.** Sans eux, plusieurs « gains » observés sur 50 seeds n'étaient que du bruit.
 3. **Le Q-learning tabulaire sur options apprend des réflexes, pas une stratégie.** Il bat les règles là où la réaction immédiate compte (combat), mais un état aussi grossier ne lui permet pas de planifier la collecte de ressources. L'a priori scripté évite d'oublier ce que l'on sait déjà, sans suffire à dépasser les règles.
 4. **Les diagnostics hors ligne trouvent les vrais problèmes.** Les coups dans le dos et la fuite trop courte ont tous été trouvés en rejouant les morts, pas en réglant des hyperparamètres.
 5. **Varier les cartes est indispensable pour généraliser.** Les cartes procédurales ont révélé des hypothèses implicites (noms d'armes, munitions) et des morts précoces que la carte du kit ne montrait pas.
+6. **Une métrique peut être exploitée par la politique apprise.** Sans scripté, la Q-table a trouvé une stratégie très régulière (se cacher jusqu'à mourir de soif) qui maximise le p10 et le score combiné, mais pas la survie moyenne. Il faut toujours lire plusieurs métriques et le comportement réel (fréquence des options).
 
 ---
 
-## 10. Reproduire
+## 11. Reproduire
 
 ```bash
 source .venv/bin/activate
-python -m unittest discover -s tests -v                       # 24 tests
+python -m unittest discover -s tests -v                       # 26 tests
+python -m training.train --pure --stages 0 1 2 3 --episodes 1500 2500 3000 2000 \
+       --eval-every 500 --eval-episodes 64 --out results/phase4_run7_pure   # Q-table pure (run 7)
+cp results/phase4_run7_pure/q_best.json agent/q_table.json      # livrer la table
+python -m training.evaluate --agents student scripted --episodes 50 \
+       --markdown out.md                                         # agent livré contre le scripté
 python -m training.train --stages 0 1 2 3 --episodes 1500 2500 3000 2000 \
-       --prior-bonus 1.5 --out results/phase4_runX              # entraînement Q-learning
+       --prior-bonus 1.5 --out results/phase4_runX              # variante avec à priori scripté (run 6)
 python -m training.evaluate --agents scripted scripted_nocounter \
        --scenarios hostile default --episodes 200 --markdown out.md  # A/B (variantes : training/baselines.py)
 python -m training.hostile_diag --agent scripted --scenario hostile
@@ -268,4 +315,4 @@ python -m training.worldgen --gui town --seed 3                 # visualiser une
 python -m training.arena_ffa --games 100 [--gui]                # arène à 8 agents
 ```
 
-Les résultats détaillés sont dans `results/` : `baselines.md`, `phase*/eval_scenarios.md`, `hostile_ab.md`, `resources_ab.md`, `maps_eval.md`, `combat_ab.md` et `counter_ab.md`.
+Les résultats détaillés sont dans `results/` : `baselines.md`, `phase*/eval_scenarios.md` (dont `phase4_run7_pure` pour l'agent livré), `hostile_ab.md`, `resources_ab.md`, `maps_eval.md`, `combat_ab.md` et `counter_ab.md`.
