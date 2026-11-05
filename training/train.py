@@ -67,7 +67,7 @@ class EpisodeOutcome:
 
 def play_episode(table: QTable, epsilon: float, stage: int, seed: int, explore_scripted: float,
                  learn: bool = True, replay: float = 0.2, spec=None, prior: tuple[float, float] = (0.0, 0.0),
-                 selfplay: tuple[str, ...] = ()) -> EpisodeOutcome:
+                 selfplay: tuple[str, ...] = (), pure: bool = False) -> EpisodeOutcome:
     set_self_play_tables(selfplay)
     rng = Random(seed)
     if spec is None:
@@ -76,7 +76,7 @@ def play_episode(table: QTable, epsilon: float, stage: int, seed: int, explore_s
     transitions: list[Transition] = []
     agent = QAgent(table, epsilon=epsilon, seed=seed, gamma=GAMMA,
                    transition_sink=transitions.append if learn else None, explore_scripted=explore_scripted,
-                   prior_bonus=prior[0], prior_kappa=prior[1])
+                   prior_bonus=prior[0], prior_kappa=prior[1], pure=pure)
     env = build_env(spec)  # contrôle externe : on récupère les récompenses
     obs = env.reset(seed=seed)[STUDENT_ID]
     agent.reset()
@@ -100,11 +100,11 @@ def _collect(args) -> EpisodeOutcome:
 
 
 def _eval_one(args) -> tuple[int, bool, str | None]:
-    table, stage, seed, prior, selfplay = args
+    table, stage, seed, prior, selfplay, pure = args
     set_self_play_tables(selfplay)
     rng = Random(seed)
     spec = STAGES[stage].sample_spec(rng, seed)  # pas de rejeu : étape pure
-    out = play_episode(table, 0.0, stage, seed, 0.0, learn=False, spec=spec, prior=prior)
+    out = play_episode(table, 0.0, stage, seed, 0.0, learn=False, spec=spec, prior=prior, pure=pure)
     return out.survival, out.died, out.killer
 
 
@@ -141,9 +141,10 @@ def epsilon_at(episode: int, total: int, start: float, end: float, frac: float) 
     return max(end, start - (start - end) * episode / horizon)
 
 
-def evaluate_stage(pool, table: QTable, stage: int, episodes: int, prior=(0.0, 0.0), selfplay=()) -> dict:
+def evaluate_stage(pool, table: QTable, stage: int, episodes: int, prior=(0.0, 0.0), selfplay=(),
+                   pure: bool = False) -> dict:
     seeds = list(EVAL_SEEDS)[:episodes]
-    rows = list(pool.map(_eval_one, [(table, stage, s, prior, tuple(selfplay)) for s in seeds], chunksize=1))
+    rows = list(pool.map(_eval_one, [(table, stage, s, prior, tuple(selfplay), pure) for s in seeds], chunksize=1))
     surv = [r[0] for r in rows]
     return {
         "mean": statistics.fmean(surv), "median": statistics.median(surv), "p10": percentile(surv, 0.1),
@@ -174,12 +175,16 @@ def main() -> None:
     p.add_argument("--skip-reference", action="store_true", help="ne pas réévaluer le scripté")
     p.add_argument("--selfplay-size", type=int, default=3,
                    help="nombre de sauvegardes récentes de ce run utilisées comme adversaires (étape 3)")
+    p.add_argument("--pure", action="store_true",
+                   help="Q-table seule : ni à priori, ni exploration ni repli scriptés")
     p.add_argument("--workers", type=int, default=None)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--out", type=Path, default=Path("results/phase3"))
     args = p.parse_args()
+    if args.pure:
+        args.prior_bonus, args.prior_kappa, args.explore_scripted = 0.0, 0.0, 0.0
     prior = (args.prior_bonus, args.prior_kappa)
-    prior_meta = {"prior": {"bonus": args.prior_bonus, "kappa": args.prior_kappa}}
+    prior_meta = {"prior": {"bonus": args.prior_bonus, "kappa": args.prior_kappa}, "pure": args.pure}
 
     args.out.mkdir(parents=True, exist_ok=True)
     learner = Learner(QTable.load(args.init) if args.init else None)
@@ -219,7 +224,8 @@ def main() -> None:
                 n = min(args.round, budget - done_in_stage)
                 seeds = [rng.randrange(0, 1_000_000) for _ in range(n)]
                 selfplay = tuple(snapshots[-args.selfplay_size:])
-                jobs = [(learner.table, eps, stage, s, args.explore_scripted, True, 0.2, None, prior, selfplay)
+                jobs = [(learner.table, eps, stage, s, args.explore_scripted, True, 0.2, None, prior, selfplay,
+                         args.pure)
                         for s in seeds]
                 outcomes = list(pool.map(_collect, jobs, chunksize=1))
                 for out in outcomes:
@@ -244,7 +250,7 @@ def main() -> None:
                 if since_eval >= args.eval_every or last:
                     since_eval = 0
                     m = evaluate_stage(pool, learner.table, stage, args.eval_episodes, prior,
-                                       snapshots[-args.selfplay_size:])
+                                       snapshots[-args.selfplay_size:], pure=args.pure)
                     snap = args.out / f"q_ep{episode:05d}.json"
                     learner.table.save(snap, {"episode": episode, "stage": stage, "eval": m} | prior_meta)
                     snapshots.append(str(snap))

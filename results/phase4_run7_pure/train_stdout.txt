@@ -1,0 +1,310 @@
+[référence scriptée, étape 0] moyenne 2151  médiane 2177  p10 1357  combat 0%
+[référence scriptée, étape 1] moyenne 1551  médiane 1754  p10 315  combat 28%
+[référence scriptée, étape 2] moyenne 1174  médiane 1290  p10 135  combat 38%
+[référence scriptée, étape 3] moyenne 1185  médiane 1337  p10 197  combat 33%
+=== étape 0 (physiology) : budget 1500 épisodes
+ep    32  ε=1.00  survie=  1839  états=  450  repli=0%  128s
+ep    64  ε=0.99  survie=  1912  états=  703  repli=9%  141s
+ep    96  ε=0.99  survie=  2032  états=  913  repli=7%  154s
+ep   128  ε=0.98  survie=  1972  états= 1126  repli=5%  167s
+ep   160  ε=0.98  survie=  2060  états= 1242  repli=2%  182s
+ep   192  ε=0.97  survie=  2009  états= 1371  repli=2%  196s
+ep   224  ε=0.97  survie=  2049  états= 1477  repli=1%  210s
+ep   256  ε=0.96  survie=  2100  états= 1565  repli=1%  224s
+ep   288  ε=0.95  survie=  1960  états= 1647  repli=1%  237s
+ep   320  ε=0.95  survie=  2227  états= 1698  repli=1%  252s
+ep   352  ε=0.94  survie=  2107  états= 1754  repli=1%  266s
+ep   384  ε=0.94  survie=  1913  états= 1809  repli=1%  279s
+ep   416  ε=0.93  survie=  1892  états= 1891  repli=1%  292s
+ep   448  ε=0.93  survie=  2100  états= 1976  repli=1%  306s
+ep   480  ε=0.92  survie=  2080  états= 2046  repli=1%  321s
+ep   512  ε=0.92  survie=  2111  états= 2108  repli=1%  336s
+  [éval étape 0] moyenne 1629  médiane 1542  p10 1227  combat 0%
+ep   544  ε=0.91  survie=  1950  états= 2179  repli=1%  375s
+ep   576  ε=0.90  survie=  1874  états= 2232  repli=1%  387s
+ep   608  ε=0.90  survie=  1769  états= 2339  repli=1%  401s
+ep   640  ε=0.89  survie=  2096  états= 2376  repli=0%  415s
+ep   672  ε=0.89  survie=  1942  états= 2435  repli=0%  428s
+ep   704  ε=0.88  survie=  1907  états= 2494  repli=1%  442s
+ep   736  ε=0.88  survie=  1967  états= 2524  repli=0%  455s
+ep   768  ε=0.87  survie=  2069  états= 2566  repli=0%  468s
+ep   800  ε=0.86  survie=  2008  états= 2610  repli=1%  483s
+ep   832  ε=0.86  survie=  2104  états= 2640  repli=0%  496s
+ep   864  ε=0.85  survie=  2103  états= 2670  repli=0%  509s
+ep   896  ε=0.85  survie=  1993  états= 2697  repli=1%  523s
+ep   928  ε=0.84  survie=  2026  états= 2741  repli=0%  537s
+ep   960  ε=0.84  survie=  1889  états= 2785  repli=1%  550s
+ep   992  ε=0.83  survie=  2011  états= 2839  repli=1%  564s
+ep  1024  ε=0.83  survie=  2098  états= 2882  repli=1%  578s
+  [éval étape 0] moyenne 1696  médiane 1704  p10 1219  combat 0%
+ep  1056  ε=0.82  survie=  1986  états= 2897  repli=0%  616s
+ep  1088  ε=0.81  survie=  1932  états= 2936  repli=0%  630s
+ep  1120  ε=0.81  survie=  1996  états= 2962  repli=0%  644s
+ep  1152  ε=0.80  survie=  2117  états= 3002  repli=1%  657s
+ep  1184  ε=0.80  survie=  2098  états= 3040  repli=1%  670s
+ep  1216  ε=0.79  survie=  2092  états= 3069  repli=0%  685s
+ep  1248  ε=0.79  survie=  1925  états= 3121  repli=0%  698s
+ep  1280  ε=0.78  survie=  1998  états= 3134  repli=0%  711s
+ep  1312  ε=0.77  survie=  1978  états= 3154  repli=0%  725s
+ep  1344  ε=0.77  survie=  2080  états= 3165  repli=0%  739s
+ep  1376  ε=0.76  survie=  1974  états= 3198  repli=0%  752s
+ep  1408  ε=0.76  survie=  2033  états= 3217  repli=0%  765s
+ep  1440  ε=0.75  survie=  1999  états= 3239  repli=0%  778s
+ep  1472  ε=0.75  survie=  1908  états= 3274  repli=0%  791s
+ep  1500  ε=0.74  survie=  2045  états= 3351  repli=2%  803s
+  [éval étape 0] moyenne 1619  médiane 1564  p10 1240  combat 0%
+=== étape 1 (first_threats) : budget 2500 épisodes
+ep  1532  ε=0.74  survie=  1709  états= 3471  repli=3%  844s
+ep  1564  ε=0.73  survie=  1714  états= 3733  repli=5%  862s
+ep  1596  ε=0.72  survie=  1523  états= 4077  repli=9%  879s
+ep  1628  ε=0.72  survie=  1640  états= 4175  repli=2%  895s
+ep  1660  ε=0.71  survie=  1714  états= 4328  repli=3%  913s
+ep  1692  ε=0.71  survie=  1696  états= 4565  repli=3%  931s
+ep  1724  ε=0.70  survie=  1489  états= 4707  repli=2%  948s
+ep  1756  ε=0.70  survie=  1267  états= 4857  repli=2%  962s
+ep  1788  ε=0.69  survie=  1510  états= 4976  repli=3%  977s
+ep  1820  ε=0.69  survie=  1688  états= 5091  repli=2%  994s
+ep  1852  ε=0.68  survie=  1572  états= 5148  repli=1%  1009s
+ep  1884  ε=0.67  survie=  1489  états= 5252  repli=2%  1027s
+ep  1916  ε=0.67  survie=  1746  états= 5345  repli=3%  1045s
+ep  1948  ε=0.66  survie=  1707  états= 5441  repli=3%  1061s
+ep  1980  ε=0.66  survie=  1497  états= 5527  repli=2%  1077s
+ep  2012  ε=0.65  survie=  1396  états= 5643  repli=3%  1091s
+  [éval étape 1] moyenne 1474  médiane 1498  p10 224  combat 14%
+ep  2044  ε=0.65  survie=  1649  états= 5748  repli=2%  1142s
+ep  2076  ε=0.64  survie=  1563  états= 5847  repli=1%  1158s
+ep  2108  ε=0.63  survie=  1694  états= 5929  repli=1%  1176s
+ep  2140  ε=0.63  survie=  1623  états= 5990  repli=1%  1196s
+ep  2172  ε=0.62  survie=  1692  états= 6048  repli=1%  1214s
+ep  2204  ε=0.62  survie=  1460  états= 6115  repli=1%  1229s
+ep  2236  ε=0.61  survie=  1492  états= 6184  repli=1%  1245s
+ep  2268  ε=0.61  survie=  1563  états= 6338  repli=4%  1262s
+ep  2300  ε=0.60  survie=  1674  états= 6436  repli=1%  1279s
+ep  2332  ε=0.60  survie=  1609  états= 6501  repli=1%  1296s
+ep  2364  ε=0.59  survie=  1405  états= 6545  repli=1%  1309s
+ep  2396  ε=0.58  survie=  1699  états= 6612  repli=1%  1326s
+ep  2428  ε=0.58  survie=  1555  états= 6653  repli=1%  1343s
+ep  2460  ε=0.57  survie=  1543  états= 6746  repli=1%  1358s
+ep  2492  ε=0.57  survie=  1460  états= 6792  repli=1%  1374s
+ep  2524  ε=0.56  survie=  1500  états= 6884  repli=1%  1389s
+  [éval étape 1] moyenne 1473  médiane 1508  p10 435  combat 17%
+ep  2556  ε=0.56  survie=  1745  états= 6932  repli=1%  1441s
+ep  2588  ε=0.55  survie=  1525  états= 6988  repli=1%  1457s
+ep  2620  ε=0.54  survie=  1522  états= 7050  repli=2%  1473s
+ep  2652  ε=0.54  survie=  1581  états= 7113  repli=1%  1489s
+ep  2684  ε=0.53  survie=  1424  états= 7261  repli=2%  1505s
+ep  2716  ε=0.53  survie=  1743  états= 7312  repli=1%  1522s
+ep  2748  ε=0.52  survie=  1354  états= 7365  repli=1%  1535s
+ep  2780  ε=0.52  survie=  1244  états= 7428  repli=1%  1548s
+ep  2812  ε=0.51  survie=  1509  états= 7483  repli=1%  1563s
+ep  2844  ε=0.51  survie=  1657  états= 7547  repli=2%  1580s
+ep  2876  ε=0.50  survie=  1272  états= 7631  repli=1%  1594s
+ep  2908  ε=0.49  survie=  1586  états= 7701  repli=1%  1611s
+ep  2940  ε=0.49  survie=  1262  états= 7786  repli=1%  1625s
+ep  2972  ε=0.48  survie=  1544  états= 7857  repli=1%  1643s
+ep  3004  ε=0.48  survie=  1596  états= 7930  repli=1%  1659s
+ep  3036  ε=0.47  survie=  1597  états= 7983  repli=1%  1676s
+  [éval étape 1] moyenne 1423  médiane 1464  p10 381  combat 14%
+ep  3068  ε=0.47  survie=  1591  états= 8018  repli=0%  1729s
+ep  3100  ε=0.46  survie=  1686  états= 8074  repli=1%  1747s
+ep  3132  ε=0.45  survie=  1723  états= 8131  repli=1%  1766s
+ep  3164  ε=0.45  survie=  1566  états= 8195  repli=1%  1783s
+ep  3196  ε=0.44  survie=  1663  états= 8246  repli=2%  1800s
+ep  3228  ε=0.44  survie=  1832  états= 8278  repli=0%  1818s
+ep  3260  ε=0.43  survie=  1491  états= 8354  repli=1%  1833s
+ep  3292  ε=0.43  survie=  1552  états= 8394  repli=0%  1850s
+ep  3324  ε=0.42  survie=  1867  états= 8418  repli=0%  1868s
+ep  3356  ε=0.42  survie=  1585  états= 8454  repli=1%  1885s
+ep  3388  ε=0.41  survie=  1454  états= 8478  repli=0%  1900s
+ep  3420  ε=0.40  survie=  1752  états= 8503  repli=0%  1918s
+ep  3452  ε=0.40  survie=  1394  états= 8549  repli=1%  1933s
+ep  3484  ε=0.39  survie=  1686  états= 8580  repli=1%  1952s
+ep  3516  ε=0.39  survie=  1526  états= 8683  repli=2%  1969s
+ep  3548  ε=0.38  survie=  1537  états= 8728  repli=0%  1985s
+  [éval étape 1] moyenne 1397  médiane 1466  p10 356  combat 14%
+ep  3580  ε=0.38  survie=  1764  états= 8788  repli=1%  2038s
+ep  3612  ε=0.37  survie=  1429  états= 8829  repli=1%  2056s
+ep  3644  ε=0.36  survie=  1277  états= 8850  repli=0%  2071s
+ep  3676  ε=0.36  survie=  1590  états= 8887  repli=0%  2088s
+ep  3708  ε=0.35  survie=  1801  états= 8919  repli=0%  2109s
+ep  3740  ε=0.35  survie=  1546  états= 8960  repli=0%  2128s
+ep  3772  ε=0.34  survie=  1672  états= 9015  repli=0%  2147s
+ep  3804  ε=0.34  survie=  1477  états= 9059  repli=1%  2166s
+ep  3836  ε=0.33  survie=  1750  états= 9081  repli=0%  2188s
+ep  3868  ε=0.33  survie=  1576  états= 9156  repli=2%  2206s
+ep  3900  ε=0.32  survie=  1690  états= 9223  repli=1%  2223s
+ep  3932  ε=0.31  survie=  1704  états= 9252  repli=0%  2240s
+ep  3964  ε=0.31  survie=  1790  états= 9274  repli=0%  2260s
+ep  3996  ε=0.30  survie=  1582  états= 9325  repli=1%  2276s
+ep  4000  ε=0.30  survie=  1480  états= 9334  repli=1%  2282s
+  [éval étape 1] moyenne 1331  médiane 1459  p10 183  combat 16%
+=== étape 2 (degraded) : budget 3000 épisodes
+ep  4032  ε=0.30  survie=  1262  états= 9364  repli=0%  2331s
+ep  4064  ε=0.29  survie=  1219  états= 9403  repli=1%  2345s
+ep  4096  ε=0.29  survie=  1292  états= 9431  repli=0%  2360s
+ep  4128  ε=0.28  survie=  1412  états= 9457  repli=0%  2376s
+ep  4160  ε=0.27  survie=  1403  états= 9483  repli=0%  2391s
+ep  4192  ε=0.27  survie=  1377  états= 9514  repli=0%  2407s
+ep  4224  ε=0.26  survie=  1518  états= 9532  repli=0%  2423s
+ep  4256  ε=0.26  survie=  1345  états= 9558  repli=0%  2437s
+ep  4288  ε=0.25  survie=  1238  états= 9582  repli=0%  2451s
+ep  4320  ε=0.25  survie=  1249  états= 9618  repli=1%  2469s
+ep  4352  ε=0.24  survie=  1256  états= 9630  repli=0%  2484s
+ep  4384  ε=0.23  survie=  1137  états= 9674  repli=1%  2500s
+ep  4416  ε=0.23  survie=  1363  états= 9691  repli=0%  2513s
+ep  4448  ε=0.22  survie=  1360  états= 9721  repli=0%  2529s
+ep  4480  ε=0.22  survie=  1308  états= 9794  repli=1%  2545s
+ep  4512  ε=0.21  survie=  1388  états= 9817  repli=0%  2560s
+  [éval étape 2] moyenne 1298  médiane 1405  p10 205  combat 19%
+ep  4544  ε=0.21  survie=  1202  états= 9844  repli=0%  2607s
+ep  4576  ε=0.20  survie=  1303  états= 9874  repli=0%  2621s
+ep  4608  ε=0.19  survie=  1300  états= 9900  repli=0%  2637s
+ep  4640  ε=0.19  survie=  1373  états= 9929  repli=0%  2654s
+ep  4672  ε=0.18  survie=  1368  états= 9944  repli=0%  2671s
+ep  4704  ε=0.18  survie=  1313  états= 9977  repli=0%  2685s
+ep  4736  ε=0.17  survie=  1324  états=10010  repli=0%  2700s
+ep  4768  ε=0.17  survie=  1356  états=10045  repli=0%  2716s
+ep  4800  ε=0.16  survie=  1318  états=10055  repli=0%  2730s
+ep  4832  ε=0.16  survie=  1431  états=10089  repli=0%  2748s
+ep  4864  ε=0.15  survie=  1477  états=10128  repli=0%  2767s
+ep  4896  ε=0.14  survie=  1511  états=10178  repli=1%  2784s
+ep  4928  ε=0.14  survie=  1218  états=10195  repli=0%  2798s
+ep  4960  ε=0.13  survie=  1212  états=10227  repli=0%  2813s
+ep  4992  ε=0.13  survie=   975  états=10242  repli=0%  2825s
+ep  5024  ε=0.12  survie=  1159  états=10288  repli=1%  2842s
+  [éval étape 2] moyenne 1309  médiane 1422  p10 191  combat 9%
+ep  5056  ε=0.12  survie=  1294  états=10307  repli=0%  2889s
+ep  5088  ε=0.11  survie=  1231  états=10322  repli=0%  2903s
+ep  5120  ε=0.10  survie=  1282  états=10353  repli=0%  2916s
+ep  5152  ε=0.10  survie=  1291  états=10362  repli=0%  2932s
+ep  5184  ε=0.09  survie=  1415  états=10379  repli=0%  2948s
+ep  5216  ε=0.09  survie=  1304  états=10398  repli=0%  2963s
+ep  5248  ε=0.08  survie=  1351  états=10424  repli=0%  2978s
+ep  5280  ε=0.08  survie=  1356  états=10442  repli=0%  2995s
+ep  5312  ε=0.07  survie=  1351  états=10454  repli=0%  3012s
+ep  5344  ε=0.07  survie=  1319  états=10474  repli=1%  3029s
+ep  5376  ε=0.06  survie=  1304  états=10494  repli=0%  3044s
+ep  5408  ε=0.05  survie=  1372  états=10498  repli=0%  3062s
+ep  5440  ε=0.05  survie=  1516  états=10510  repli=0%  3080s
+ep  5472  ε=0.05  survie=  1315  états=10544  repli=0%  3096s
+ep  5504  ε=0.05  survie=  1398  états=10554  repli=0%  3114s
+ep  5536  ε=0.05  survie=  1372  états=10564  repli=0%  3133s
+  [éval étape 2] moyenne 1279  médiane 1405  p10 305  combat 20%
+ep  5568  ε=0.05  survie=  1318  états=10597  repli=0%  3183s
+ep  5600  ε=0.05  survie=  1179  états=10607  repli=0%  3195s
+ep  5632  ε=0.05  survie=  1248  états=10639  repli=0%  3211s
+ep  5664  ε=0.05  survie=  1352  états=10665  repli=0%  3228s
+ep  5696  ε=0.05  survie=  1320  états=10678  repli=0%  3245s
+ep  5728  ε=0.05  survie=  1301  états=10682  repli=0%  3262s
+ep  5760  ε=0.05  survie=  1526  états=10689  repli=0%  3278s
+ep  5792  ε=0.05  survie=  1232  états=10708  repli=0%  3294s
+ep  5824  ε=0.05  survie=  1424  états=10717  repli=0%  3311s
+ep  5856  ε=0.05  survie=  1403  états=10733  repli=0%  3327s
+ep  5888  ε=0.05  survie=  1206  états=10752  repli=0%  3345s
+ep  5920  ε=0.05  survie=  1248  états=10769  repli=0%  3360s
+ep  5952  ε=0.05  survie=  1126  états=10785  repli=0%  3374s
+ep  5984  ε=0.05  survie=  1346  états=10809  repli=0%  3390s
+ep  6016  ε=0.05  survie=  1268  états=10830  repli=0%  3406s
+ep  6048  ε=0.05  survie=  1308  états=10841  repli=0%  3423s
+  [éval étape 2] moyenne 1252  médiane 1403  p10 112  combat 14%
+ep  6080  ε=0.05  survie=  1479  états=10845  repli=0%  3469s
+ep  6112  ε=0.05  survie=  1182  états=10870  repli=0%  3484s
+ep  6144  ε=0.05  survie=  1371  états=10883  repli=0%  3502s
+ep  6176  ε=0.05  survie=  1494  états=10891  repli=0%  3518s
+ep  6208  ε=0.05  survie=  1332  états=10916  repli=0%  3535s
+ep  6240  ε=0.05  survie=  1303  états=10927  repli=0%  3548s
+ep  6272  ε=0.05  survie=  1217  états=10944  repli=0%  3563s
+ep  6304  ε=0.05  survie=  1338  états=10954  repli=0%  3581s
+ep  6336  ε=0.05  survie=  1204  états=10966  repli=0%  3595s
+ep  6368  ε=0.05  survie=  1259  états=10971  repli=0%  3611s
+ep  6400  ε=0.05  survie=  1397  états=11004  repli=0%  3626s
+ep  6432  ε=0.05  survie=  1217  états=11041  repli=0%  3640s
+ep  6464  ε=0.05  survie=  1276  états=11057  repli=0%  3655s
+ep  6496  ε=0.05  survie=  1376  états=11072  repli=0%  3672s
+ep  6528  ε=0.05  survie=  1306  états=11079  repli=0%  3687s
+ep  6560  ε=0.05  survie=  1308  états=11097  repli=0%  3700s
+  [éval étape 2] moyenne 1404  médiane 1494  p10 651  combat 14%
+ep  6592  ε=0.05  survie=  1355  états=11119  repli=0%  3748s
+ep  6624  ε=0.05  survie=  1521  états=11132  repli=0%  3766s
+ep  6656  ε=0.05  survie=  1443  états=11160  repli=0%  3785s
+ep  6688  ε=0.05  survie=  1213  états=11173  repli=0%  3798s
+ep  6720  ε=0.05  survie=  1275  états=11178  repli=0%  3813s
+ep  6752  ε=0.05  survie=  1435  états=11186  repli=0%  3832s
+ep  6784  ε=0.05  survie=  1270  états=11200  repli=0%  3848s
+ep  6816  ε=0.05  survie=  1298  états=11218  repli=0%  3862s
+ep  6848  ε=0.05  survie=  1360  états=11229  repli=0%  3877s
+ep  6880  ε=0.05  survie=  1410  états=11240  repli=0%  3892s
+ep  6912  ε=0.05  survie=  1284  états=11257  repli=0%  3907s
+ep  6944  ε=0.05  survie=  1266  états=11276  repli=0%  3923s
+ep  6976  ε=0.05  survie=  1355  états=11286  repli=0%  3940s
+ep  7000  ε=0.05  survie=  1370  états=11297  repli=0%  3952s
+  [éval étape 2] moyenne 1296  médiane 1386  p10 89  combat 31%
+=== étape 3 (self_play) : budget 2000 épisodes
+ep  7032  ε=0.05  survie=  1319  états=11309  repli=0%  4004s
+ep  7064  ε=0.05  survie=  1388  états=11322  repli=0%  4027s
+ep  7096  ε=0.05  survie=  1254  états=11339  repli=0%  4049s
+ep  7128  ε=0.05  survie=  1385  états=11378  repli=0%  4069s
+ep  7160  ε=0.05  survie=  1280  états=11385  repli=0%  4087s
+ep  7192  ε=0.05  survie=  1349  états=11400  repli=0%  4108s
+ep  7224  ε=0.05  survie=  1242  états=11416  repli=0%  4128s
+ep  7256  ε=0.05  survie=  1402  états=11456  repli=0%  4150s
+ep  7288  ε=0.05  survie=  1325  états=11481  repli=0%  4171s
+ep  7320  ε=0.05  survie=  1331  états=11498  repli=0%  4194s
+ep  7352  ε=0.05  survie=  1298  états=11514  repli=0%  4213s
+ep  7384  ε=0.05  survie=  1398  états=11520  repli=0%  4235s
+ep  7416  ε=0.05  survie=  1396  états=11538  repli=0%  4258s
+ep  7448  ε=0.05  survie=  1446  états=11547  repli=0%  4281s
+ep  7480  ε=0.05  survie=  1236  états=11559  repli=0%  4300s
+ep  7512  ε=0.05  survie=  1314  états=11572  repli=0%  4320s
+  [éval étape 3] moyenne 1312  médiane 1384  p10 320  combat 22%
+ep  7544  ε=0.05  survie=  1408  états=11600  repli=0%  4382s
+ep  7576  ε=0.05  survie=  1252  états=11625  repli=0%  4402s
+ep  7608  ε=0.05  survie=  1337  états=11631  repli=0%  4423s
+ep  7640  ε=0.05  survie=  1363  états=11643  repli=0%  4444s
+ep  7672  ε=0.05  survie=  1396  états=11678  repli=0%  4469s
+ep  7704  ε=0.05  survie=  1300  états=11696  repli=0%  4488s
+ep  7736  ε=0.05  survie=  1342  états=11735  repli=0%  4509s
+ep  7768  ε=0.05  survie=  1354  états=11742  repli=0%  4529s
+ep  7800  ε=0.05  survie=  1330  états=11753  repli=0%  4549s
+ep  7832  ε=0.05  survie=  1177  états=11759  repli=0%  4566s
+ep  7864  ε=0.05  survie=  1468  états=11767  repli=0%  4589s
+ep  7896  ε=0.05  survie=  1390  états=11778  repli=0%  4616s
+ep  7928  ε=0.05  survie=  1418  états=11793  repli=0%  4640s
+ep  7960  ε=0.05  survie=  1353  états=11816  repli=0%  4661s
+ep  7992  ε=0.05  survie=  1336  états=11838  repli=0%  4683s
+ep  8024  ε=0.05  survie=  1368  états=11843  repli=0%  4705s
+  [éval étape 3] moyenne 1239  médiane 1376  p10 170  combat 33%
+ep  8056  ε=0.05  survie=  1415  états=11854  repli=0%  4765s
+ep  8088  ε=0.05  survie=  1387  états=11864  repli=0%  4786s
+ep  8120  ε=0.05  survie=  1447  états=11878  repli=0%  4808s
+ep  8152  ε=0.05  survie=  1365  états=11886  repli=0%  4829s
+ep  8184  ε=0.05  survie=  1369  états=11891  repli=0%  4852s
+ep  8216  ε=0.05  survie=  1182  états=11906  repli=0%  4872s
+ep  8248  ε=0.05  survie=  1388  états=11913  repli=0%  4895s
+ep  8280  ε=0.05  survie=  1201  états=11933  repli=0%  4915s
+ep  8312  ε=0.05  survie=  1426  états=11949  repli=0%  4938s
+ep  8344  ε=0.05  survie=  1298  états=11955  repli=0%  4957s
+ep  8376  ε=0.05  survie=  1332  états=11977  repli=0%  4978s
+ep  8408  ε=0.05  survie=  1275  états=11998  repli=0%  4998s
+ep  8440  ε=0.05  survie=  1291  états=12019  repli=0%  5018s
+ep  8472  ε=0.05  survie=  1413  états=12031  repli=0%  5041s
+ep  8504  ε=0.05  survie=  1177  états=12045  repli=0%  5061s
+ep  8536  ε=0.05  survie=  1290  états=12076  repli=0%  5079s
+  [éval étape 3] moyenne 1257  médiane 1365  p10 201  combat 28%
+ep  8568  ε=0.05  survie=  1266  états=12088  repli=0%  5138s
+ep  8600  ε=0.05  survie=  1173  états=12105  repli=0%  5157s
+ep  8632  ε=0.05  survie=  1423  états=12120  repli=0%  5179s
+ep  8664  ε=0.05  survie=  1297  états=12131  repli=0%  5198s
+ep  8696  ε=0.05  survie=  1282  états=12139  repli=0%  5221s
+ep  8728  ε=0.05  survie=  1390  états=12153  repli=0%  5246s
+ep  8760  ε=0.05  survie=  1309  états=12162  repli=0%  5268s
+ep  8792  ε=0.05  survie=  1232  états=12186  repli=0%  5289s
+ep  8824  ε=0.05  survie=  1357  états=12200  repli=0%  5309s
+ep  8856  ε=0.05  survie=  1208  états=12216  repli=0%  5329s
+ep  8888  ε=0.05  survie=  1342  états=12230  repli=0%  5348s
+ep  8920  ε=0.05  survie=  1332  états=12250  repli=0%  5366s
+ep  8952  ε=0.05  survie=  1532  états=12265  repli=0%  5390s
+ep  8984  ε=0.05  survie=  1212  états=12275  repli=0%  5411s
+ep  9000  ε=0.05  survie=  1258  états=12293  repli=0%  5422s
+  [éval étape 3] moyenne 1295  médiane 1384  p10 487  combat 23%
+terminé : 9000 épisodes, 12293 états, meilleure version results/phase4_run7_pure/q_ep09000.json

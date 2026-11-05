@@ -93,6 +93,41 @@ class RobustnessTests(unittest.TestCase):
             self.assertIsInstance(action, Action)
 
 
+class PureQAgentTests(unittest.TestCase):
+    def test_pure_agent_never_calls_scripted_policy(self) -> None:
+        from unittest import mock
+
+        from agent import qpolicy
+        from agent.qpolicy import QAgent, QTable
+
+        table = QTable()
+        table.meta["pure"] = True
+        q, n = table.ensure("2" * 14)
+        q[0], n[0] = 1.0, 3
+        rng = Random(1)
+        with mock.patch.object(qpolicy, "scripted_choice", side_effect=AssertionError("scripted appelé")):
+            for eps in (0.0, 0.3):
+                agent = QAgent(table, epsilon=eps, seed=2, explore_scripted=1.0, prior_bonus=5.0)
+                self.assertTrue(agent.pure)
+                agent.reset()
+                for t in range(300):
+                    self.assertIsInstance(agent.act(_random_observation(rng, t)), Action)
+                self.assertEqual(agent.prior_bonus, 0.0)
+
+    def test_nearest_greedy_uses_closest_known_state(self) -> None:
+        from agent.qpolicy import QTable
+
+        table = QTable(n_options=3)
+        q, n = table.ensure("000")
+        q[:], n[:] = [0.0, 5.0, 1.0], [1, 1, 1]
+        q, n = table.ensure("222")
+        q[:], n[:] = [9.0, 0.0, 0.0], [1, 1, 1]
+        self.assertEqual(table.nearest_greedy("001", [0, 1, 2]), 1)
+        self.assertEqual(table.nearest_greedy("122", [0, 1, 2]), 0)
+        self.assertEqual(table.nearest_greedy("001", [0, 2]), 2)
+        self.assertIsNone(QTable().nearest_greedy("001", [0]))
+
+
 class EpisodeTests(unittest.TestCase):
     def test_my_agent_runs_full_default_episode(self) -> None:
         env = TrainingEnvironment()

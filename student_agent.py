@@ -4,19 +4,21 @@ Vous pouvez modifier librement ce fichier et ajouter vos propres modules.
 Pour rester compatible avec l'arène finale, le code de décision doit dépendre
 uniquement de rl_arena.arena_api et des données reçues dans Observation.
 
-Phase 1 : politique scriptée sur options (agent/scripted.py). Les phases
-suivantes remplaceront le choix d'option par une Q-table apprise, la
-politique scriptée restant le repli pour les états inconnus.
+Politique livrée : Q-table seule (agent/qpolicy.py, mode `pure`), apprise par
+Q-learning SMDP sur les options (agent/options.py). Aucune décision n'est
+déléguée à la politique scriptée : les états jamais visités prennent la
+décision de l'état connu le plus proche dans la table.
 """
 
 from rl_arena.arena_api import Action, Observation
 
-from agent.scripted import ScriptedAgent
+from agent.qpolicy import QAgent, QTable, load_default_agent
 
 
 class MyAgent:
     def __init__(self) -> None:
-        self._policy = ScriptedAgent()
+        # Table absente/illisible : table vide (option EXPLORE partout), jamais le scripté.
+        self._policy = load_default_agent(pure=True) or QAgent(QTable(), pure=True)
 
     def reset(self) -> None:
         """Appelé au début de chaque épisode : réinitialise la mémoire d'épisode."""

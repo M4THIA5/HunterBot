@@ -6,7 +6,12 @@
 
 Parmi les options valides (masque), il prend argmax Q sur les couples déjà
 visités ; si l'état n'a jamais été visité, il se replie sur la politique
-scriptée. En entraînement, `epsilon > 0` et un `transition_sink` reçoivent les
+scriptée.
+
+Mode `pure` (méta-donnée `pure` de la table, ou argument) : aucune décision
+n'est déléguée au scripté. Pas d'à priori, exploration uniforme, et un état
+inconnu prend la décision de l'état connu le plus proche (voisin dans la
+Q-table, distance L1 sur les caractéristiques discrètes). En entraînement, `epsilon > 0` et un `transition_sink` reçoivent les
 transitions (s, o, R, k, s', valides(s'), terminal) pour la mise à jour.
 
 Dépend uniquement de rl_arena.arena_api (via les modules agent.*) et de la
@@ -37,6 +42,8 @@ class QTable:
         self.q: dict[str, list[float]] = {}
         self.n: dict[str, list[int]] = {}
         self.meta: dict = {}
+        self._nn_cache: dict[tuple[str, tuple[int, ...]], int | None] = {}
+        self._nn_size = -1
 
     def values(self, key: str) -> list[float] | None:
         return self.q.get(key)
@@ -89,6 +96,40 @@ class QTable:
         w = bonus if kappa <= 0 else bonus * kappa / (kappa + sum(n))
         return max(tried, key=lambda i: q[i] + (w if i == prior else 0.0))
 
+    def nearest_greedy(self, key: str, valid: list[int]) -> int | None:
+        """argmax Q sur les états connus les plus proches de `key` (distance L1).
+
+        Les caractéristiques sont des entiers (ordinaux ou booléens), d'où la
+        distance chiffre à chiffre. À égalité de distance, les Q des voisins
+        sont moyennés, pondérés par leurs visites. Résultat mis en cache.
+        """
+        ck = (key, tuple(valid))
+        if self._nn_size != len(self.q):
+            self._nn_cache.clear()
+            self._nn_size = len(self.q)
+        if ck in self._nn_cache:
+            return self._nn_cache[ck]
+        target = [int(c) for c in key]
+        best_d, acc = None, {}
+        for k, q in self.q.items():
+            if len(k) != len(target):
+                continue
+            n = self.n[k]
+            tried = [i for i in valid if n[i] > 0]
+            if not tried:
+                continue
+            d = sum(abs(int(a) - b) for a, b in zip(k, target))
+            if best_d is not None and d > best_d:
+                continue
+            if best_d is None or d < best_d:
+                best_d, acc = d, {}
+            for i in tried:
+                tot, w = acc.get(i, (0.0, 0))
+                acc[i] = (tot + q[i] * n[i], w + n[i])
+        choice = max(acc, key=lambda i: acc[i][0] / acc[i][1]) if acc else None
+        self._nn_cache[ck] = choice
+        return choice
+
     # Sérialisation ------------------------------------------------------
     def to_json(self, meta: dict | None = None) -> dict:
         return {"options": list(OPTION_NAMES), "fields": list(State._fields), "meta": meta or {},
@@ -133,8 +174,9 @@ class QAgent:
     def __init__(self, table: QTable | None = None, epsilon: float = 0.0, seed: int = 0,
                  gamma: float = 0.998, transition_sink: Callable[[Transition], None] | None = None,
                  explore_scripted: float = 0.0, prior_bonus: float | None = None,
-                 prior_kappa: float | None = None) -> None:
+                 prior_kappa: float | None = None, pure: bool | None = None) -> None:
         self.table = table if table is not None else QTable()
+        self.pure = bool(self.table.meta.get("pure", False)) if pure is None else pure
         # Paramètres de l'à priori scripté : arguments, sinon méta-données de la table.
         prior = self.table.meta.get("prior", {})
         self.prior_bonus = prior_bonus if prior_bonus is not None else float(prior.get("bonus", 0.0))
@@ -143,6 +185,9 @@ class QAgent:
         self.gamma = gamma
         self.sink = transition_sink
         self.explore_scripted = explore_scripted
+        if self.pure:  # aucune décision déléguée au scripté
+            self.prior_bonus = 0.0
+            self.explore_scripted = 0.0
         self._seed = seed
         self.runner = OptionRunner(seed)
         self.rng = Random(seed + 7919)
@@ -183,6 +228,14 @@ class QAgent:
             best = self.table.greedy_with_prior(key, valid, OPTION_INDEX[name], self.prior_bonus, self.prior_kappa)
         else:
             best = self.table.greedy(key, valid)
+        if best is None and self.pure:
+            self.decisions["fallback"] += 1
+            if self.epsilon > 0:  # entraînement : état inconnu => exploration uniforme
+                return self.rng.choice(valid)
+            best = self.table.nearest_greedy(key, valid)
+            if best is None:  # table vide
+                return OPTION_INDEX["EXPLORE"] if OPTION_INDEX["EXPLORE"] in valid else valid[0]
+            return best
         if best is None:
             self.decisions["fallback"] += 1
             name = scripted_choice(obs, self.runner.mem, self.runner.options)
@@ -228,9 +281,9 @@ class QAgent:
             self._close(st.key(), valid, terminal=False)
 
 
-def load_default_agent() -> QAgent | None:
+def load_default_agent(pure: bool | None = None) -> QAgent | None:
     """QAgent glouton sur la Q-table livrée, ou None si elle est absente/illisible."""
     try:
-        return QAgent(QTable.load(DEFAULT_TABLE))
+        return QAgent(QTable.load(DEFAULT_TABLE), pure=pure)
     except (OSError, ValueError, KeyError, TypeError):
         return None
